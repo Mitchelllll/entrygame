@@ -16,7 +16,8 @@ module.exports.run = async (client, message, args) => {
     message.channel.send(`Succesfully tempbanned ${tempbanUser} for ${tempbanTime}.`);
 
     setTimeout(() => {
-        tempbanUser.unban();
+
+        message.guild.members.unban(tempbanUser);
         message.channel.send(`${tempbanUser}'s tempban has ended.`);
     }, ms(tempbanTime));
 

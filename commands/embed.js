@@ -19,7 +19,7 @@ module.exports.run = async (client, message, args, prefix) => {
     var argsList = args.join(" ").split(seperator);
 
     if (argsList[2] === undefined) argsList[2] = "#0B33BF";
-    if (argsList[3] === undefined) argsList[3] = message.channel;
+    if (argsList[3] === undefined) argsList[3] = "general";
 
     var options = {
         title: argsList[0],

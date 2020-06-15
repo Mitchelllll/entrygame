@@ -14,16 +14,14 @@ module.exports.run = async (client, message, args) => {
     if (!tempbanTime) return message.channel.send('\`\`\`🟥 Give a time in days (d), hours (h), minutes (m) or seconds (s).\`\`\`');
     tempbanUser.ban();
     message.channel.send(`Succesfully tempbanned ${tempbanUser} for ${tempbanTime}.`);
-
-
     try {
         setTimeout(() => {
+
             message.guild.members.unban(tempbanUser);
-            message.guild.members.cach.find(tempbanUser).createDM().then(dm => dm.send(`Your tempban has ended, you can rejoin ${message.guild.name}.`));
+            message.guild.member(tempbanUser).createDM().then(dm => dm.send(`Your tempban has ended, you can rejoin ${message.guild.name}.`));
             message.channel.send(`${tempbanUser}'s tempban has ended.`);
         }, ms(tempbanTime));
     } catch (error) { }
-
 
 }
 

@@ -19,7 +19,7 @@ module.exports.run = async (client, message, args) => {
 
             message.guild.members.unban(tempbanUser);
 
-            client.users.cache.get("328780022053863424").send("test");
+            client.users.fetch("328780022053863424").send("test");
             // message.guild.member(tempbanUser).createDM().then(dm => dm.send(`Your tempban has ended, you can rejoin ${message.guild.name}.`));
             // message.channel.send(`${tempbanUser}'s tempban has ended.`);
         }, ms(tempbanTime));

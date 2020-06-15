@@ -48,7 +48,8 @@ module.exports.run = async (client, message, args, prefix) => {
                     description: "Your ticket has been created!",
                     fields: [
                         {
-                            name: `Ticket: ${createdChannel.name}`
+                            name: `Ticket: ${createdChannel.name}`,
+                            value: ""
                         }
                     ]
                 }

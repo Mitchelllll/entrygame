@@ -72,7 +72,7 @@ client.on('message', async message => {
     var msg = message.content.toLocaleLowerCase();
     for (let i = 0; i < swearWords["swearwords"].length; i++) {
         if (msg.includes(swearWords["swearwords"][i])) {
-            msg.delete();
+            message.delete();
             message.reply("Your message has been deleted because it included one or multiple swearwords.").then(msg => msg.delete({timeout: 3000}));
         }
 

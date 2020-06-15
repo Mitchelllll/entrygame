@@ -74,6 +74,8 @@ client.on('message', async message => {
     var messageArray = message.content.split(" ");
     var command = messageArray[0];
 
+    if(!message.content.startsWith(prefix)) return;
+
     var args = messageArray.slice(1);
     var commands = client.commands.get(command.slice(prefix.length));
     if (commands) {

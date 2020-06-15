@@ -30,7 +30,7 @@ module.exports.run = async (client, message, args, prefix) => {
     var admin = "**Admin commands**";
 
     for (let i = 0; i < commandsList.length; i++) {
-        const element = commandsList[i];
+        const command = commandsList[i];
 
         if (command["category"] == "Normal commands") {
             normal += `${prefix}${command["name"]} - ${prefix}${$command["aliases"]} - ${command["description"]}\n${prefix}${command["usage"]}\n\n`;

@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 module.exports.run = async (client, message, args, prefix) => {
 
     var userName = message.author.username;
-    var ticketNumber = 0000;
+    var ticketNumber = 0;
 
     var ticketExcists = false;
     message.guild.channels.cache.forEach(channel => {
@@ -20,16 +20,16 @@ module.exports.run = async (client, message, args, prefix) => {
             ticketNumber++;
             createdChannel.updateOverwrite(message.guild.roles.cache.find(x => x.name === "@everyone"), {
                 SEND_MESSAGES: false,
-                VIEW_MESSAGES: false
+                VIEW_CHANNEL: false
             });
 
             createdChannel.updateOverwrite(message.author.id, {
-                CREATE_INSTAND_INVITE: false,
-                READ_MESSAGES: true,
+                CREATE_INSTANT_INVITE: false,
                 SEND_MESSAGES: true,
                 ATTACH_FILES: true,
                 CONNECT: true,
-                VIEW_MESSAGES: false,
+                READ_MESSAGE_HISTORY: true,
+                VIEW_CHANNEL: false,
                 ADD_REACTIONS: true
             });
 

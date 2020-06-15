@@ -49,7 +49,6 @@ module.exports.run = async (client, message, args, prefix) => {
 
 module.exports.help = {
     name: "embed",
-    aliases: [],
     description: "Send a nice message!",
     category: "Admin commands",
     usage: `embed <title> | [message] | [color] | [channel]`

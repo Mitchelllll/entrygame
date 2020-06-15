@@ -80,7 +80,6 @@ module.exports.run = async (client, message, args, prefix) => {
 
 module.exports.help = {
     name: "ban",
-    aliases: [],
     description: "Ban a member!",
     category: "Admin commands",
     usage: `ban <usertag> <reason>`

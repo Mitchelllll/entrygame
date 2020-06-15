@@ -18,7 +18,6 @@ module.exports.run = async (client, message, args, prefix) => {
 
 module.exports.help = {
     name: "close",
-    aliases: [],
     description: "Close a ticket!",
     category: "Admin commands",
     usage: "close"

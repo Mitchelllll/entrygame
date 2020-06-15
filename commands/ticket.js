@@ -40,7 +40,7 @@ module.exports.run = async (client, message, args, prefix) => {
                     fields: [
                         {
                             name: "Staff is on it's way, wait patiently.",
-                            value: ""
+                            value: " "
                         }
                     ]
                 }
@@ -53,7 +53,7 @@ module.exports.run = async (client, message, args, prefix) => {
                     fields: [
                         {
                             name: `Ticket: ${createdChannel.name}`,
-                            value: ""
+                            value: " "
                         }
                     ]
                 }

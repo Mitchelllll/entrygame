@@ -16,7 +16,7 @@ module.exports.run = async (client, message, args, prefix) => {
     // if (ticketExcists) return;
 
     message.guild.channels.create(userName.toLowerCase() + "-" + ticketNumber, { type: 'text' }).then(
-        (createdChannel) => {
+        (createdChannel, ticketNumber) => {
             ticketNumber++;
             createdChannel.updateOverwrite(message.guild.roles.cache.find(x => x.name === "@everyone"), {
                 SEND_MESSAGES: false,

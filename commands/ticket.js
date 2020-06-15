@@ -4,14 +4,14 @@ module.exports.run = async (client, message, args, prefix) => {
     var userName = message.author.username;
     var ticketNumber = 0;
 
-    var ticketExcists = false;
-    message.guild.channels.cache.forEach(channel => {
-        if (channel.name == userName.toLowerCase() + "-" + ticketNumber) {
-            ticketExcists = true;
-            message.channel.send("You already have an open ticket.");
-            return;
-        }
-    });
+    // var ticketExcists = false;
+    // message.guild.channels.cache.forEach(channel => {
+    //     if (channel.name == userName.toLowerCase() + "-" + ticketNumber) {
+    //         ticketExcists = true;
+    //         message.channel.send("You already have an open ticket.");
+    //         return;
+    //     }
+    // });
 
     if (ticketExcists) return;
 

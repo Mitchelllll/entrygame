@@ -52,6 +52,6 @@ module.exports.help = {
     aliases: [],
     description: "Send a nice message!",
     category: "Admin commands",
-    usage: `embed <title> ${seperator} [message] ${seperator} [color] ${seperator} [channel]`
+    usage: `embed <title> | [message] | [color] | [channel]`
     
 }

@@ -36,9 +36,13 @@ module.exports.run = async (client, message, args, prefix) => {
             createdChannel.send({
                 embed: {
                     title: `Hello ${message.author.username}`,
-                    footer: {
-                        text: `Staff is on it's way, wait patiently.`
-                    }
+
+                    fields: [
+                        {
+                            name: "Staff is on it's way, wait patiently.",
+                            value: ""
+                        }
+                    ]
                 }
             });
 

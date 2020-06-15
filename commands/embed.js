@@ -18,8 +18,8 @@ module.exports.run = async (client, message, args) => {
 
     var argsList = args.join(" ").split(seperator);
 
-    if (argsList[2] === undefined) argsList[2] == "#0B33BF";
-    if (argsList[3] === undefined) argsList[3] == message.channel;
+    if (argsList[2] === undefined) argsList[2] = "#0B33BF";
+    if (argsList[3] === undefined) argsList[3] = message.channel;
 
     var options = {
         title: argsList[0],

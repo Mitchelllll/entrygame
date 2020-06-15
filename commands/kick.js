@@ -77,5 +77,7 @@ module.exports.run = async (client, message, args, prefix) => {
 }
 
 module.exports.help = {
-    name: "kick"
+    name: "kick",
+    description: "Kick a member!",
+    category: "Admin commands"
 }

@@ -25,5 +25,9 @@ module.exports.run = async (client, message, args, prefix) => {
 }
 
 module.exports.help = {
-    name: "tempban"
+    name: "tempban",
+    aliases: ["tban"],
+    description: "Ban a member for a specief time!",
+    category: "Admin commands",
+    usage: `${prefix}tempban <usertag> <time (s, m, h, d)>`
 }

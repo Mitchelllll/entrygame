@@ -21,5 +21,9 @@ module.exports.run = async (client, message, args, prefix) => {
 }
 
 module.exports.help = {
-    name: "serverinfo"
+    name: "serverinfo",
+    aliases: ["sinfo"],
+    description: "Get information about this server!",
+    category: "Normal commands",
+    usage: `${prefix}serverinfo`
 }

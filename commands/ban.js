@@ -21,47 +21,47 @@ module.exports.run = async (client, message, args, prefix) => {
         **Banned by:** ${message.author}
         **Reason:** ${reason}`);
 
-    // message.channel.send(embedPrompt).then(async msg => {
+    message.channel.send(embedPrompt).then(async msg => {
 
-    //     var emoji = await promptMessage(msg, message.author, 30, ["✅", "❌"])
+        var emoji = await promptMessage(msg, message.author, 30, ["✅", "❌"])
 
-    //     if (emoji === "✅") {
-    //         msg.delete();
-    //         banUser.ban(reason).catch(err => {
-    //             if (err) return message.channel.send("\`\`\`🔴 An error has occurred.\`\`\`");
-    //         });
+        if (emoji === "✅") {
+            msg.delete();
+            banUser.ban(reason).catch(err => {
+                if (err) return message.channel.send("\`\`\`🔴 An error has occurred.\`\`\`");
+            });
 
-    //         message.channel.send(embedBanned);
-    //     } else if (emoji === "❌") {
-    //         msg.delete();
-    //         return message.channel.send("\`\`\`🟥 Ban has been cancelled.\`\`\`").then(m => m.delete(5000)).catch(err => {
-    //             message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
-    //         });
-    //     } else msg.delete(); message.channel.send("\`\`\`🟠 You need to click on one of the reactions to either confirm or cancel the ban.\`\`\`");
+            message.channel.send(embedBanned);
+        } else if (emoji === "❌") {
+            msg.delete();
+            return message.channel.send("\`\`\`🟥 Ban has been cancelled.\`\`\`").then(m => m.delete(5000)).catch(err => {
+                message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
+            });
+        } else msg.delete(); message.channel.send("\`\`\`🟠 You need to click on one of the reactions to either confirm or cancel the ban.\`\`\`");
 
-    //     message.channel.awaitMessages(m => m.author.id === message.author.id, { max: 1, time: 30000 }).then(collected => {
+        // message.channel.awaitMessages(m => m.author.id === message.author.id, { max: 1, time: 30000 }).then(collected => {
 
-    //         if (collected.first().content.toLocaleLowerCase() == "yes") {
+        //     if (collected.first().content.toLocaleLowerCase() == "yes") {
 
-    //             banUser.ban(reason).catch(err => {
-    //                 if (err) return message.channel.send("\`\`\`🔴 An error has occurred.\`\`\`")
-    //             });
+        //         banUser.ban(reason).catch(err => {
+        //             if (err) return message.channel.send("\`\`\`🔴 An error has occurred.\`\`\`")
+        //         });
 
-    //             message.channel.send(embedBanned);
+        //         message.channel.send(embedBanned);
 
-    //         } else if (collected.first().content.toLocaleLowerCase() == "no") {
+        //     } else if (collected.first().content.toLocaleLowerCase() == "no") {
 
-    //             message.channel.send("\`\`\`🟥 Ban has been cancelled\`\`\`").then(m => m.delete(5000)).catch(err => {
-    //                 message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
-    //             });
+        //         message.channel.send("\`\`\`🟥 Ban has been cancelled\`\`\`").then(m => m.delete(5000)).catch(err => {
+        //             message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
+        //         });
 
-    //         } else msg.delete(); message.channel.send("\`\`\`🟠 You need to react with 'yes' or 'no' to either confirm or cancel the ban.\`\`\`");
-    //     }).catch(err => {
-    //         message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
-    //     });
-    // }).catch(err => {
-    //     message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
-    // });
+        //     } else msg.delete(); message.channel.send("\`\`\`🟠 You need to react with 'yes' or 'no' to either confirm or cancel the ban.\`\`\`");
+        // }).catch(err => {
+        //     message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
+        // });
+    }).catch(err => {
+        message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
+    });
     async function promptMessage(message, author, time, reactions) {
         time *= 1000;
         for (const reaction of reactions) {
@@ -79,5 +79,10 @@ module.exports.run = async (client, message, args, prefix) => {
 }
 
 module.exports.help = {
-    name: "ban"
+    name: "ban",
+    aliases: [],
+    description: "Ban a member!",
+    category: "Admin commands",
+    usage: `${prefix}ban`,
+    usage: `${prefix}ban <usertag> <reason>`
 }

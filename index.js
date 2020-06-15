@@ -38,7 +38,7 @@ client.on('guildMemberAdd', member => {
             thumbnail: {
                 url: member.user.displayAvatarURL
             },
-            discription: `Welcome ${member.user.username}\n\nHave fun!\n\n\nMembercount: **${guild.memberCount} members.**`,
+            description: `Welcome ${member.user.username}\n\nHave fun!\n\n\nMembercount: **${guild.memberCount} members.**`,
             color: "GREEN",
             footer: {
                 text: "Member Joined"
@@ -64,7 +64,7 @@ client.on('guildMemberRemove', member => {
             thumbnail: {
                 url: member.user.displayAvatarURL
             },
-            discription: `Goodbye ${member.user.username}\n\nWe will miss you!`,
+            description: `Goodbye ${member.user.username}\n\nWe will miss you!`,
             color: "RED",
             footer: {
                 text: "Member Leaved"

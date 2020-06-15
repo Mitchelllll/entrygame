@@ -54,5 +54,5 @@ module.exports.help = {
     aliases: [],
     description: "Get a list with all the commands!",
     category: "normal commands",
-    usage: `${prefix}help`
+    usage: "help"
 }

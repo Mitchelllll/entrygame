@@ -5,7 +5,7 @@ module.exports.run = async (client, message, args, prefix) => {
     var ticketNumber = 0000;
 
     var ticketExcists = false;
-    message.guild.cache.forEach(channel => {
+    message.guild.channels.cache.forEach(channel => {
         if (channel.name == userName.toLowerCase() + "-" + ticketNumber) {
             ticketExcists = true;
             message.channel.send("You already have an open ticket.");

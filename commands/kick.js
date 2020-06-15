@@ -25,16 +25,18 @@ module.exports.run = async (client, message, args, prefix) => {
 
         // var emoji = await promptMessage(msg, message.author, 30, ["✅", "❌"])
 
-        // if(emoji === "✅") {
+        // if (emoji === "✅") {
         //     msg.delete();
         //     kickUser.kick(reason).catch(err => {
-        //         if(err) return message.channel.send("\`\`\`🔴 An error has occurred.\`\`\`");
+        //         if (err) return message.channel.send("\`\`\`🔴 An error has occurred.\`\`\`");
         //     });
 
         //     message.channel.send(embedKicked);
-        // } else if(emoji === "❌") {
+        // } else if (emoji === "❌") {
         //     msg.delete();
-        //     return message.channel.send("\`\`\`🟥 Kick has been cancelled.\`\`\`").then(m => m.delete(5000));
+        //     return message.channel.send("\`\`\`🟥 Kick has been cancelled.\`\`\`").then(m => m.delete(5000)).catch(err => {
+        //         message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
+        //     });
         // } else msg.delete(); message.channel.send("\`\`\`🟠 You need to click on one of the reactions to either confirm or cancel the kick.\`\`\`");
 
         message.channel.awaitMessages(m => m.author.id === message.author.id, { max: 1, time: 30000 }).then(collected => {
@@ -53,8 +55,12 @@ module.exports.run = async (client, message, args, prefix) => {
 
             } else msg.delete(); message.channel.send("\`\`\`🟠 You need to react with 'yes' or 'no' to either confirm or cancel the kick.\`\`\`");
 
+        }).catch(err => {
+            message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
         });
-    })
+    }).catch(err => {
+        message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
+    });
     async function promptMessage(message, author, time, reactions) {
         time *= 1000;
         for (const reaction of reactions) {
@@ -63,7 +69,9 @@ module.exports.run = async (client, message, args, prefix) => {
 
         var filter = (reaction, user) => reactions.includes(reaction.emoji.name) && user.id === author.id;
 
-        return message.awaitReactions(filter, { max: 1, time: time }).then(collected => collected.first() && collected.first().emoji.name);
+        return message.awaitReactions(filter, { max: 1, time: time }).then(collected => collected.first() && collected.first().emoji.name).catch(err => {
+            message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
+        });
 
     }
 }

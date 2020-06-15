@@ -73,7 +73,9 @@ client.on('message', async message => {
     for (let i = 0; i < swearWords["swearwords"].length; i++) {
         if (msg.includes(swearWords["swearwords"][i])) {
             message.delete();
-            message.reply("Your message has been deleted because it included one or multiple swearwords.").then(msg => msg.delete({timeout: 3000}));
+            message.reply("Your message has been deleted because it included one or multiple swearwords.").then(msg => msg.delete({ timeout: 3000 })).catch(err => {
+                message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
+            });
         }
 
     }

@@ -13,7 +13,9 @@ module.exports.run = async (client, message, args, prefix) => {
             await message.channel.bulkDelete(amount).then(() => {
 
                 if (args[0] <= 0) {
-                    message.channel.send("\`\`\`🟠 Enter a number bigger then 0.\`\`\`").then(m => m.delete({ timeout: 2500 }));
+                    message.channel.send("\`\`\`🟠 Enter a number bigger then 0.\`\`\`").then(m => m.delete({ timeout: 2500 })).catch(err => {
+                        message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
+                    });
                 } else if (args[0] == 1) {
                     var clearEmbedOne = new Discord.MessageEmbed()
                         .setTitle(`Cleared ${amount} message.`)
@@ -31,8 +33,10 @@ module.exports.run = async (client, message, args, prefix) => {
                         .setFooter(message.member.displayName);
                     message.channel.send(clearEmbed);
                 }
+            }).catch(err => {
+                message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
             });
-        } else if(pUser && args[1]) {
+        } else if (pUser && args[1]) {
 
             let dMsg = 0;
             let oUser = 0;
@@ -51,7 +55,9 @@ module.exports.run = async (client, message, args, prefix) => {
             }).then(() => {
 
                 if (args[0] <= 0) {
-                    message.channel.send("\`\`\`🟠 Enter a number bigger then 0.\`\`\`").then(m => m.delete({ timeout: 2500 }));
+                    message.channel.send("\`\`\`🟠 Enter a number bigger then 0.\`\`\`").then(m => m.delete({ timeout: 2500 })).catch(err => {
+                        message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
+                    });
                 } else if (args[0] == 1) {
                     var clearEmbedOne = new Discord.MessageEmbed()
                         .setTitle(`Cleared ${dMsg - 1} message.`)
@@ -69,6 +75,8 @@ module.exports.run = async (client, message, args, prefix) => {
                         .setFooter(message.member.displayName);
                     message.channel.send(clearEmbed);
                 }
+            }).catch(err => {
+                message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
             });
         }
 

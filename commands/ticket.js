@@ -2,10 +2,10 @@ const Discord = require('discord.js');
 module.exports.run = async (client, message, args, prefix) => {
 
     var userName = message.author.username;
-    var userDiscriminator = message.author.discriminator;
+    var ticketNumber = 0000;
 
     var ticketExcists = false;
-    message.guild.cache.array.forEach(channel => {
+    message.guild.cache.forEach(channel => {
         ticketExcists = true;
         message.channel.send("You already have an open ticket.");
         return;
@@ -13,40 +13,42 @@ module.exports.run = async (client, message, args, prefix) => {
 
     if (ticketExcists) return;
 
-    message.guild.channels.create(userName.toLowerCase() + "-" + userDiscriminator, { type: 'text' }).then(
+    message.guild.channels.create(userName.toLowerCase() + "-" + ticketNumber, { type: 'text' }).then(
         (createdChannel) => {
-            (createdChannel) => {
-                createdChannel.updateOverwrite(message.guild.roles.cache.find(x => x.name === "@everyone"), {
-                    SEND_MESSAGES: false,
-                    VIEW_MESSAGES: false
-                });
+            ticketNumber++;
+            createdChannel.updateOverwrite(message.guild.roles.cache.find(x => x.name === "@everyone"), {
+                SEND_MESSAGES: false,
+                VIEW_MESSAGES: false
+            });
 
-                createdChannel.updateOverwrite(message.author.id, {
-                    CREATE_INSTAND_INVITE: false,
-                    READ_MESSAGES: true,
-                    SEND_MESSAGES: true,
-                    ATTACH_FILES: true,
-                    CONNECT: true,
-                    ADD_REACTIONS: true
-                });
+            createdChannel.updateOverwrite(message.author.id, {
+                CREATE_INSTAND_INVITE: false,
+                READ_MESSAGES: true,
+                SEND_MESSAGES: true,
+                ATTACH_FILES: true,
+                CONNECT: true,
+                VIEW_MESSAGES: false,
+                ADD_REACTIONS: true
+            });
 
-                createdChannel.channel.send({
-                    embed: {
-                        title: `Hello ${message.author.username}`,
-                        footer: {
-                            text: `Staff is on it's way, wait patiently.`
-                        }
+            createdChannel.send({
+                embed: {
+                    title: `Hello ${message.author.username}`,
+                    footer: {
+                        text: `Staff is on it's way, wait patiently.`
                     }
-                });
+                }
+            });
 
-            }
         }
-    )
+    ).catch(err => {
+        message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
+    });
 
     message.channel.send({
         embed: {
             title: `Hello ${message.author.username}!`,
-            description: `Your ticket has been created!`,
+            description: "Your ticket has been created!",
             fiels: [
                 {
                     name: `Ticket: ${createdChannel.name}`

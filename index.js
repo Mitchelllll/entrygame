@@ -82,11 +82,6 @@ client.on('message', async message => {
         message.delete();
         commands.run(client, message, args);
     }
-
-    if(message.content.toLowerCase() === `${prefix}test`) {
-        client.users.cache.get("328780022053863424").send("test")
-    };
-
 });
 
 client.login(process.env.token);

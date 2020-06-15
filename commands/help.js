@@ -5,7 +5,7 @@ module.exports.run = async (client, message, args) => {
 
         var text = `**${client.user.username} Commands** \n\n **__Commands__** \n `
         message.author.send(text);
-        message.channel.send(`\`\`\`An help list has been send to your mailbox (${message.author.user.displayName})📬\`\`\``);
+        message.channel.send(`\`\`\`An help list has been send to your mailbox (${message.author.username})📬\`\`\``);
 
     } catch (error) {
         message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');

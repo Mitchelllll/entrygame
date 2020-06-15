@@ -31,12 +31,47 @@ client.on('guildMemberAdd', member => {
 
     const channel = member.guild.channels.cache.find(ch => ch.name === '👋welcome');
     if (!channel) return;
-    channel.send(`Welcome to the server, ${member}`);
+
+    channel.send({
+        embed: {
+            title: `${member.user.tag} joined`,
+            thumbnail: {
+                url: member.user.displayAvatarURL
+            },
+            discription: `Welcome ${member.user.username}\n\nHave fun!\n\n\nMembercount: **${guild.memberCount} members.**`,
+            color: "GREEN",
+            footer: {
+                text: "Member Joined"
+            },
+            timestamp: new Date()
+        }
+    });
 
     // const role = member.guild.roles.channel.cache.find(rl => rl.name === "member");
     // if (!role) return;
     // member.roles.add(role.name);
 
+});
+
+client.on('guildMemberRemove', member => {
+
+    const channel = member.guild.channels.cache.find(ch => ch.name === '👋welcome');
+    if (!channel) return;
+
+    channel.send({
+        embed: {
+            title: `${member.user.tag} leaved`,
+            thumbnail: {
+                url: member.user.displayAvatarURL
+            },
+            discription: `Goodbye ${member.user.username}\n\nWe will miss you!`,
+            color: "RED",
+            footer: {
+                text: "Member Leaved"
+            },
+            timestamp: new Date()
+        }
+    });
 });
 
 // client.on('guildMemberAdd', member => {

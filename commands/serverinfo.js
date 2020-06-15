@@ -25,5 +25,5 @@ module.exports.help = {
     aliases: ["sinfo"],
     description: "Get information about this server!",
     category: "Normal commands",
-    usage: `${prefix}serverinfo`
+    usage: "serverinfo"
 }

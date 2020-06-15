@@ -78,6 +78,8 @@ module.exports.run = async (client, message, args, prefix) => {
 
 module.exports.help = {
     name: "kick",
+    aliases: [],
     description: "Kick a member!",
-    category: "Admin commands"
+    category: "Admin commands",
+    usage: `kick <user>`
 }

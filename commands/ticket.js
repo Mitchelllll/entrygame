@@ -55,5 +55,9 @@ module.exports.run = async (client, message, args, prefix) => {
 }
 
 module.exports.help = {
-    name: "ticket"
+    name: "ticket",
+    aliases: ["open", "new"],
+    description: "Create a ticket!",
+    category: "Normal commands",
+    usage: "ticket"
 }

@@ -60,5 +60,5 @@ module.exports.help = {
     aliases: ["removewarns"],
     description: "Remove all warns from a member!",
     category: "Admin commands",
-    usage: `${prefix}rwarns [usertag]`
+    usage: "rwarns [usertag]"
 }

@@ -66,5 +66,9 @@ module.exports.run = async (client, message, args, prefix) => {
 }
 
 module.exports.help = {
-    name: "warn"
+    name: "warn",
+    aliases: [],
+    description: "Warn a member!",
+    category: "Admin commands",
+    usage: `warn <usertag>`
 }

@@ -29,5 +29,5 @@ module.exports.help = {
     aliases: ["tmute"],
     description: "Mute a member for a specified time!",
     category: "Admin commands",
-    usage: `${prefix}tempmute <usertag> <time (s, m, h, d)>`
+    usage: `tempmute <usertag> <time (s, m, h, d)>`
 }

@@ -83,6 +83,5 @@ module.exports.help = {
     aliases: [],
     description: "Ban a member!",
     category: "Admin commands",
-    usage: `${prefix}ban`,
-    usage: `${prefix}ban <usertag> <reason>`
+    usage: `ban <usertag> <reason>`
 }

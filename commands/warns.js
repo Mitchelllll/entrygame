@@ -42,6 +42,6 @@ module.exports.help = {
     aliases: ["warnings"],
     description: "Warn a member!",
     category: "Admin commands",
-    usage: `${prefix}warns`,
-    usage: `${prefix}warns [usertag]`
+    usage: `warns`,
+    usage: `warns [usertag]`
 }

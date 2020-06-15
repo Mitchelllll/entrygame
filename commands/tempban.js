@@ -29,5 +29,5 @@ module.exports.help = {
     aliases: ["tban"],
     description: "Ban a member for a specief time!",
     category: "Admin commands",
-    usage: `${prefix}tempban <usertag> <time (s, m, h, d)>`
+    usage: `tempban <usertag> <time (s, m, h, d)>`
 }

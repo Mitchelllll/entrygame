@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, prefix) => {
 
     if (!message.member.hasPermission("MANAGE_MESSAGES")) return message.reply("you do not have permissions to delete messages.");
     if (!args[0]) return message.channel.send("🟠 Give a number.");

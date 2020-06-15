@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const ms = require('ms');
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, prefix) => {
 
     if (!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send("\`\`\`🔴 You do not have permission to tempmute members.\`\`\`");
     if (!message.guild.me.hasPermission("KICK_MEMBERS")) return message.channel.send("\`\`\`🔴 I do not have permission to tempmute members. Fix this problem before you try again.\`\`\`");

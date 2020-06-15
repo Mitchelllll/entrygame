@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const ms = require('ms');
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, prefix) => {
 
     if (!message.member.hasPermission("BAN_MEMBERS")) return message.channel.send("\`\`\`🔴 You do not have permission to tempban members.\`\`\`");
     if (!message.guild.me.hasPermission("BAN_MEMBERS")) return message.channel.send("\`\`\`🔴 I do not have permission to tempban members. Fix this problem before you try again.\`\`\`");

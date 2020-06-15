@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, prefix) => {
 
     if (!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send("\`\`\`🔴 You do not have permission to kick members.\`\`\`");
     if (!message.guild.me.hasPermission("KICK_MEMBERS")) return message.channel.send("\`\`\`🔴 I do not have permission to kick members. Fix this problem before you try again.\`\`\`");

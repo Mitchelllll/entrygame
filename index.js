@@ -80,7 +80,7 @@ client.on('message', async message => {
     var commands = client.commands.get(command.slice(prefix.length));
     if (commands) {
         message.delete();
-        commands.run(client, message, args);
+        commands.run(client, message, args, prefix);
     }
 });
 

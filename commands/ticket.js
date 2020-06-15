@@ -43,7 +43,7 @@ module.exports.run = async (client, message, args, prefix) => {
             message.channel.send({
                 embed: {
                     title: `Hello ${message.author.username}!`,
-                    description: `Your ticket has been created! \n Ticket: ${createdChannel.name}`,
+                    description: `Your ticket has been created! \n\n Ticket: ${createdChannel}`,
                 }
             });
 

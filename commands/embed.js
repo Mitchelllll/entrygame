@@ -25,7 +25,7 @@ module.exports.run = async (client, message, args, prefix) => {
 
     var options = {
         title: argsList[0],
-        message: argsList[1] || "No message found",
+        message: argsList[1] || "",
         color: argsList[2].trim(),
         channel: argsList[3].trim()
     }
@@ -38,6 +38,9 @@ module.exports.run = async (client, message, args, prefix) => {
             title: options.title,
             color: options.color,
             description: options.message,
+            footer: {
+                text: message.member.displayName
+            },
             timestamp: new Date()
         }
     })

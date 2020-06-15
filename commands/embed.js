@@ -1,26 +1,20 @@
 const Discord = require('discord.js');
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, prefix) => {
 
     if (!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send("\`\`\`🔴 You do not have permission to send embeds.\`\`\`");
     var seperator = "|";
 
     if (args[0] == null) {
-        // message.channel.send({
-        //     embed: {
-        //         name: "Usage:",
-        //         value: `Create an embed by doing the following: \n${prefix}embed <title> ${seperator} <message> ${seperator} <color> ${seperator} <channel>`,
-        //         color: "ff0000",
-        //         // footer: message.member.displayName,
-        //         timestamp: new Date()
-        //     }
-        // });
-        var usageEmbed = new Discord.MessageEmbed()
-            .setTitle("Usage:")
-            .setDescription(`Create an embed by doing the following: \n${prefix}embed <title> ${seperator} <message> ${seperator} <color> ${seperator} <channel>`)
-            .setColor("#ff0000")
-            .setTimestamp();
+        message.channel.send({
+            embed: {
+                name: "Usage:",
+                value: `Create an embed by doing the following: \n${prefix}embed <title> ${seperator} <message> ${seperator} <color> ${seperator} <channel>`,
+                color: "ff0000",
+                // footer: message.member.displayName,
+                timestamp: new Date()
+            }
+        });
     }
-    message.channel.send(usageEmbed);
 
     var argsList = args.join(" ").split(seperator);
 
@@ -37,20 +31,14 @@ module.exports.run = async (client, message, args) => {
     var channel = message.member.guild.channels.cache.find(ch => ch.name === options.channel);
     if (!channel) return message.channel.send("\`\`\`🔴 This channel does not excist.\`\`\`");
 
-    // channel.send({
-    //     embed: {
-    //         name: options.title,
-    //         color: options.color,
-    //         value: options.message,
-    //         timestamp: new Date()
-    //     }
-    // })
-    var embed = new Discord.MessageEmbed()
-    .setTitle(options.title)
-    .setColor(options.color)
-    .setDescription(options.message)
-    .setTimestamp();
-    message.channel.send(embed);
+    channel.send({
+        embed: {
+            name: options.title,
+            color: options.color,
+            value: options.message,
+            timestamp: new Date()
+        }
+    })
 
 }
 

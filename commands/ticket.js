@@ -46,7 +46,7 @@ module.exports.run = async (client, message, args, prefix) => {
                 embed: {
                     title: `Hello ${message.author.username}!`,
                     description: "Your ticket has been created!",
-                    fiels: [
+                    fields: [
                         {
                             name: `Ticket: ${createdChannel.name}`
                         }

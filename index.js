@@ -36,7 +36,7 @@ client.on('guildMemberAdd', member => {
     // const role = member.guild.roles.channel.cache.find(rl => rl.name === "member");
     // if (!role) return;
     // member.roles.add(role.name);
-    
+
 });
 
 // client.on('guildMemberAdd', member => {
@@ -66,6 +66,18 @@ client.on('message', async message => {
     if (message.author.bot) return;
     if (message.channel.type === 'dm') return;
 
+
+    var swearWords = JSON.parse(fs.readFileSync("./data/swearWords.json"));
+
+    var msg = message.content.toLocaleLowerCase();
+    for (let i = 0; i < swearWords["swearwords"].length; i++) {
+        if (msg.includes(swearWords["swearwords"][i])) {
+            msg.delete();
+            message.reply("Your message has been deleted because it included one or multiple swearwords.").then(msg => msg.delete({timeout: 3000}));
+        }
+
+    }
+
     // if (message.content.startsWith(`<@${client.id}>`)) {
     //     console.log("HI.")
     //     // message.channel.send(`You woke me up! Do you need me?`);
@@ -74,7 +86,7 @@ client.on('message', async message => {
     var messageArray = message.content.split(" ");
     var command = messageArray[0];
 
-    if(!message.content.startsWith(prefix)) return;
+    if (!message.content.startsWith(prefix)) return;
 
     var args = messageArray.slice(1);
     var commands = client.commands.get(command.slice(prefix.length));

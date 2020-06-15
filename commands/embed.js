@@ -5,12 +5,14 @@ module.exports.run = async (client, message, args, prefix) => {
     var seperator = "|";
 
     if (args[0] == null) {
-        message.channel.send({
+        return message.channel.send({
             embed: {
                 name: "Usage:",
                 value: `Create an embed by doing the following: \n${prefix}embed <title> ${seperator} <message> ${seperator} <color> ${seperator} <channel>`,
                 color: "ff0000",
-                // footer: message.member.displayName,
+                footer: {
+                    text: message.member.displayName
+                },
                 timestamp: new Date()
             }
         });
@@ -31,7 +33,7 @@ module.exports.run = async (client, message, args, prefix) => {
     var channel = message.member.guild.channels.cache.find(ch => ch.name === options.channel);
     if (!channel) return message.channel.send("\`\`\`🔴 This channel does not excist.\`\`\`");
 
-    channel.send({
+    return channel.send({
         embed: {
             name: options.title,
             color: options.color,

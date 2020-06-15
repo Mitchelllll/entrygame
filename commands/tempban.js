@@ -18,8 +18,7 @@ module.exports.run = async (client, message, args) => {
     setTimeout(() => {
 
         message.guild.members.unban(tempbanUser);
-        message.guild.member(tempbanUser).createDM().then(dm => dm.send('Zie je dit?'));
-        // message.guild.member(tempbanUser).send('Zie je dit?');
+        message.guild.member(tempbanUser).createDM().then(dm => dm.send(`Your tempban has ended, you can rejoin ${message.guild.name}.`));
         message.channel.send(`${tempbanUser}'s tempban has ended.`);
     }, ms(tempbanTime));
 

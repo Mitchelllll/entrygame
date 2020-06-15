@@ -42,21 +42,21 @@ module.exports.run = async (client, message, args, prefix) => {
                 }
             });
 
+            message.channel.send({
+                embed: {
+                    title: `Hello ${message.author.username}!`,
+                    description: "Your ticket has been created!",
+                    fiels: [
+                        {
+                            name: `Ticket: ${createdChannel.name}`
+                        }
+                    ]
+                }
+            });
+
         }
     ).catch(err => {
         message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
-    });
-
-    message.channel.send({
-        embed: {
-            title: `Hello ${message.author.username}!`,
-            description: "Your ticket has been created!",
-            fiels: [
-                {
-                    name: `Ticket: ${createdChannel.name}`
-                }
-            ]
-        }
     });
 
 }

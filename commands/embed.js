@@ -7,8 +7,8 @@ module.exports.run = async (client, message, args, prefix) => {
     if (args[0] == null) {
         return message.channel.send({
             embed: {
-                name: "Usage:",
-                value: `Create an embed by doing the following: \n${prefix}embed <title> ${seperator} <message> ${seperator} <color> ${seperator} <channel>`,
+                title: "Usage:",
+                description: `Create an embed by doing the following: \n${prefix}embed <title> ${seperator} <message> ${seperator} <color> ${seperator} <channel>`,
                 color: "ff0000",
                 footer: {
                     text: message.member.displayName

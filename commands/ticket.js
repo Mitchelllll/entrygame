@@ -2,22 +2,21 @@ const Discord = require('discord.js');
 module.exports.run = async (client, message, args, prefix) => {
 
     var userName = message.author.username;
-    var ticketNumber = 0;
+    var userDiscriminator = message.author.discriminator;
 
-    // var ticketExcists = false;
-    // message.guild.channels.cache.forEach(channel => {
-    //     if (channel.name == userName.toLowerCase() + "-" + ticketNumber) {
-    //         ticketExcists = true;
-    //         message.channel.send("You already have an open ticket.");
-    //         return;
-    //     }
-    // });
+    var ticketExcists = false;
+    message.guild.channels.cache.forEach(channel => {
+        if (channel.name == userName.toLowerCase() + "-" + userDiscriminator) {
+            ticketExcists = true;
+            message.channel.send("You already have an open ticket.");
+            return;
+        }
+    });
 
-    // if (ticketExcists) return;
+    if (ticketExcists) return;
 
-    message.guild.channels.create(userName.toLowerCase() + "-" + ticketNumber, { type: 'text' }).then(
-        (createdChannel, ticketNumber) => {
-            ticketNumber++;
+    message.guild.channels.create(userName.toLowerCase() + "-" + userDiscriminator, { type: 'text' }).then(
+        (createdChannel) => {
             createdChannel.updateOverwrite(message.guild.roles.cache.find(x => x.name === "@everyone"), {
                 SEND_MESSAGES: false,
                 VIEW_CHANNEL: false

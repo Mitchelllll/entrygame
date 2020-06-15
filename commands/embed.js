@@ -10,7 +10,7 @@ module.exports.run = async (client, message, args) => {
                 name: "Usage:",
                 value: `Create an embed by doing the following: \n${prefix}embed <title> ${seperator} <message> ${seperator} <color> ${seperator} <channel>`,
                 color: "ff0000",
-                footer: message.member.displayName,
+                // footer: message.member.displayName,
                 timestamp: new Date()
             }
         });

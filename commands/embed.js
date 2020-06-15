@@ -35,9 +35,9 @@ module.exports.run = async (client, message, args, prefix) => {
 
     return channel.send({
         embed: {
-            name: options.title,
+            title: options.title,
             color: options.color,
-            value: options.message,
+            description: options.message,
             timestamp: new Date()
         }
     })

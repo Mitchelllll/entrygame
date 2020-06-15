@@ -13,7 +13,7 @@ module.exports.run = async (client, message, args, prefix) => {
     //     }
     // });
 
-    if (ticketExcists) return;
+    // if (ticketExcists) return;
 
     message.guild.channels.create(userName.toLowerCase() + "-" + ticketNumber, { type: 'text' }).then(
         (createdChannel) => {

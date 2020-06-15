@@ -35,6 +35,7 @@ module.exports.run = async (client, message, args, prefix) => {
                 embed: {
                     title: `Hello ${message.author.username}`,
                     description: "Staff is on it's way, wait patiently.",
+                    color: "BLUE"
                 }
             });
 
@@ -42,6 +43,7 @@ module.exports.run = async (client, message, args, prefix) => {
                 embed: {
                     title: `Hello ${message.author.username}!`,
                     description: `Your ticket has been created! \n\n Ticket: ${createdChannel}`,
+                    color: "GREEN"
                 }
             });
 

@@ -8,7 +8,8 @@ module.exports.run = async (client, message, args, prefix) => {
         message.channel.send({
             embed: {
                 title: "This is not a ticket",
-                description: `The channel ${message.channel} is not a ticket.\n\n You can only use this command in tickets.`
+                description: `The channel ${message.channel} is not a ticket.\n\n You can only use this command in tickets.`,
+                color: "RED"
             }
         });
     }

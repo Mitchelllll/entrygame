@@ -26,7 +26,8 @@ module.exports.run = async (client, message, args, prefix) => {
             normal += `\n**${prefix}${command["name"]}** - ${prefix}${command["aliases"]} - ${command["description"]}\n__${prefix}${command["usage"]}__\n\n`;
         } else if (command["category"] == "Admin commands") {
             admin += `\n**${prefix}${command["name"]}** - ${prefix}${command["aliases"]} - ${command["description"]}\n__${prefix}${command["usage"]}__\n\n`;
-        }
+        } else if (command["category"] == "Fun commands") {
+            admin += `\n**${prefix}${command["name"]}** - ${prefix}${command["aliases"]} - ${command["description"]}\n__${prefix}${command["usage"]}__\n\n`;
     }
 
     response += normal;

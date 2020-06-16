@@ -16,7 +16,7 @@ module.exports.run = async (client, message, args, prefix) => {
 
     var result = options[Math.floor(Math.random() * options.length)];
 
-    if (args[0].toUpperCase() == "STEEN") {
+    if (args[0].toUpperCase() == "ROCK") {
         if (result == "paper") {
             message.channel.send(`I choose ${result} :notepad_spiral:, so I won.`);
         } else if (result == "scissor") {

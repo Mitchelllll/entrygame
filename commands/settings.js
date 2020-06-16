@@ -23,14 +23,14 @@ module.exports.run = async (client, message, args, prefix) => {
     });
 
     if (key == "prefix") {
-        var prefixes = JSON.parse(fs.readFileSync(".../data/botSettings.json"));
-        prefixes[message.guild.id] = {
-            prefixes: value
-        };
+        // var prefixes = JSON.parse(fs.readFileSync("./data/botSettings.json"));
+        // prefixes[message.guild.id] = {
+        //     prefixes: value
+        // };
 
-        fs.writeFileSync(".../data/botSettings.json", JSON.stringify(prefixes), (err) => {
-            if (err) message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
-        });
+        // fs.writeFileSync("./data/botSettings.json", JSON.stringify(prefixes), (err) => {
+        //     if (err) message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
+        // });
 
         message.channel.send({
             embed: {

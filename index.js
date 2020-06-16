@@ -120,6 +120,15 @@ client.on('message', async message => {
     //     // message.channel.send(`You woke me up! Do you need me?`);
     // }
 
+    var prefixes = JSON.parse(fs.readFileSync(".botSettings.json"));
+    if (!prefixes[message.guild.id]) {
+        prefixes[message.guild.id] = {
+            prefixes: prefix
+        };
+    }
+
+    var prefix = prefixes[message.guild.id].prefix;
+
     var messageArray = message.content.split(" ");
     var command = messageArray[0];
 

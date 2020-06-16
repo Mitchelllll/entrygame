@@ -40,6 +40,14 @@ module.exports.run = async (client, message, args, prefix) => {
             }
         });
 
+    } else {
+        message.channel.send({
+            embed: {
+                title: "Bot Settings",
+                description: "You must give a valid key.\n\nYou can choose between:\n- prefix",
+                color: "RED"
+            }
+        });
     }
 }
 

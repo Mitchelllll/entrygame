@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const { prefix } = require('./botconfig.json');
+const botConfig = require('./botconfig.json');
 
 const fs = require("fs");
 
@@ -123,11 +123,11 @@ client.on('message', async message => {
     var prefixes = JSON.parse(fs.readFileSync("./data/botSettings.json"));
     if (!prefixes[message.guild.id]) {
         prefixes[message.guild.id] = {
-            prefixes: prefix
+            prefixes: botConfig.prefix
         };
     }
 
-    var prefix = prefixes[message.guild.id].prefix;
+    var prefix = prefixes[message.guild.id].prefixes;
 
     var messageArray = message.content.split(" ");
     var command = messageArray[0];

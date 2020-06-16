@@ -38,7 +38,7 @@ client.on('guildMemberAdd', member => {
             thumbnail: {
                 url: member.user.displayAvatarURL
             },
-            description: `Welcome ${member.user.username}\n\nHave fun!\n\n\nMembercount: **${guild.memberCount} members.**`,
+            description: `Welcome ${member.user.username}\n\nHave fun!`, /* \n\n\nMembercount: **${guild.memberCount} members.** */
             color: "GREEN",
             footer: {
                 text: "Member Joined"

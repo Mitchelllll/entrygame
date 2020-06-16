@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const { prefix } = require('./botConfig.json');
+const botConfig = require('./botConfig.json');
 
 const fs = require("fs");
 
@@ -119,6 +119,15 @@ client.on('message', async message => {
     //     console.log("HI.")
     //     // message.channel.send(`You woke me up! Do you need me?`);
     // }
+
+    var prefixes = JSON.parse(fs.readFileSync("./data/botSettings.json"));
+    if (!prefixes[message.guild.id]) {
+        prefixes[message.guild.id] = {
+            prefixes: botConfig.prefix
+        };
+    }
+
+    var prefix = prefixes[message.guild.id].prefixes;
 
     var messageArray = message.content.split(" ");
     var command = messageArray[0];

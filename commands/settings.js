@@ -10,7 +10,7 @@ module.exports.run = async (client, message, args, prefix) => {
     if (!key) return message.channel.send({
         embed: {
             title: "Bot Settings",
-            description: "You must give a key.\n\nYou can choose between:\n- prefix",
+            description: "You must give a key.\n\nYou can choose from:\n- prefix",
             color: "RED"
         }
     });
@@ -20,7 +20,7 @@ module.exports.run = async (client, message, args, prefix) => {
         if (!value) return message.channel.send({
             embed: {
                 title: "Bot Settings",
-                description: `In case you wonder what the prefix is, it is ${prefix}\n\nIf you want to change this, you must give the new value for ${key}\n${prefix}settings <key> <value>`,
+                description: `In case you wonder what the prefix is, it is ${prefix}\n\nIf you want to change this, you must give the new value for ${key}.\n${prefix}settings <key> <value>`,
                 color: "ORANGE"
             }
         });

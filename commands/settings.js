@@ -23,7 +23,7 @@ module.exports.run = async (client, message, args, prefix) => {
     });
 
     if (key == "prefix") {
-        var prefixes = JSON.parse(fs.readFileSync(".botSettings.json"));
+        var prefixes = JSON.parse(fs.readFileSync("../botSettings.json"));
         prefixes[message.guild.id] = {
             prefixes: value
         };

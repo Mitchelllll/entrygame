@@ -18,27 +18,27 @@ module.exports.run = async (client, message, args, prefix) => {
 
     if (args[0].toUpperCase() == "ROCK") {
         if (result == "paper") {
-            message.channel.send(`I choose ${result} :notepad_spiral:, so I won.`);
+            message.channel.send(`You choose rock, I choose ${result} :notepad_spiral:, so I won.`);
         } else if (result == "scissor") {
-            message.channel.send(`I choose ${result} :scissors:, so you won.`);
+            message.channel.send(`You choose rock, I choose ${result} :scissors:, so you won.`);
         } else if (result == "rock") {
-            message.channel.send(`I choose ${result} :moyai:, nobody won.`);
+            message.channel.send(`You choose rock, I choose ${result} :moyai:, nobody won.`);
         }
     } else if (args[0].toUpperCase() == "PAPER") {
         if (result == "paper") {
-            message.channel.send(`I choose ${result} :notepad_spiral:, nobody won.`);
+            message.channel.send(`You choose paper, I choose ${result} :notepad_spiral:, nobody won.`);
         } else if (result == "scissor") {
-            message.channel.send(`I choose ${result} :scissors:, so I won.`);
+            message.channel.send(`You choose paper, I choose ${result} :scissors:, so I won.`);
         } else if (result == "rock") {
-            message.channel.send(`I choose ${result} :moyai:, so you won.`);
+            message.channel.send(`You choose paper, I choose ${result} :moyai:, so you won.`);
         }
     } else if (args[0].toUpperCase() == "SCISSOR") {
         if (result == "paper") {
-            message.channel.send(`I choose ${result} :notepad_spiral:, so you won.`);
+            message.channel.send(`You choose scossor, I choose ${result} :notepad_spiral:, so you won.`);
         } else if (result == "scissor") {
-            message.channel.send(`I choose ${result} :scissors:, nobody won.`);
+            message.channel.send(`You choose scissor, I choose ${result} :scissors:, nobody won.`);
         } else if (result == "rock") {
-            message.channel.send(`I choose ${result} :moyai:, so I won.`);
+            message.channel.send(`You choose scissor, I choose ${result} :moyai:, so I won.`);
         }
     }
 

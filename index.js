@@ -35,9 +35,6 @@ client.on('guildMemberAdd', member => {
     channel.send({
         embed: {
             title: `${member.user.tag} joined`,
-            author: {
-                icon_url: member.user.displayAvatarURL
-            },
             description: `Welcome ${member.user.username}\n\nHave fun!\n\n\nMembercount: **${member.guild.memberCount} members.**`,
             color: "GREEN",
             footer: {
@@ -66,9 +63,6 @@ client.on('guildMemberRemove', member => {
     channel.send({
         embed: {
             title: `${member.user.tag} leaved`,
-            thumbnail: {
-                url: member.user.displayAvatarURL
-            },
             description: `Goodbye ${member.user.username}\n\nWe will miss you!`,
             color: "RED",
             footer: {

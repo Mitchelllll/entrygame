@@ -28,7 +28,7 @@ module.exports.run = async (client, message, args, prefix) => {
             prefixes: value
         };
 
-        fs.writeFileSync("./botSettings.json", JSON.stringify(prefixes), (err) => {
+        fs.writeFileSync("../botSettings.json", JSON.stringify(prefixes), (err) => {
             if (err) message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
         });
 

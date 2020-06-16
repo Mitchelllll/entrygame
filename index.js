@@ -95,7 +95,7 @@ client.on("ready", () => {
         },
         status: 'online'
     })
-})
+});
 
 client.on('message', async message => {
     if (message.author.bot) return;

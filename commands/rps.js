@@ -4,11 +4,12 @@ module.exports.run = async (client, message, args, prefix) => {
     if (!args[0]) return message.channel.send({
         embed: {
             title: "Rock Paper Sciccor",
-            description: `You need to enter one of these after the command:\n\n- Stone\n-Paper\n- Scissor\n\n${prefix}rps <rock/paper/scissor>`,
+            description: `You need to enter one of these after the command:\n\n- Stone\n- Paper\n- Scissor\n\n${prefix}rps <rock/paper/scissor>`,
             timestamp: new Date(),
             footer: {
                 text: message.author.username
-            }
+            },
+            color: "RED"
         }
     });
     var options = ["rock", "paper", "scissor"];

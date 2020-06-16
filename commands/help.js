@@ -28,18 +28,18 @@ module.exports.run = async (client, message, args, prefix) => {
             admin += `\n**${prefix}${command["name"]}** - ${prefix}${command["aliases"]} - ${command["description"]}\n__${prefix}${command["usage"]}__\n\n`;
         } else if (command["category"] == "Fun commands") {
             admin += `\n**${prefix}${command["name"]}** - ${prefix}${command["aliases"]} - ${command["description"]}\n__${prefix}${command["usage"]}__\n\n`;
+        }
+
+        response += normal;
+        response += admin;
+        message.author.send(response).then(() => {
+            message.channel.send("A help message has been send to your private messages 📬");
+        }).catch(() => {
+            message.channel.send("I could not drop the message in your private messages, so I send it here.").then(msg => msg.delete({ timeout: 5000 }));
+            message.channel.send(response);
+        });
     }
-
-    response += normal;
-    response += admin;
-    message.author.send(response).then(() => {
-        message.channel.send("A help message has been send to your private messages 📬");
-    }).catch(() => {
-        message.channel.send("I could not drop the message in your private messages, so I send it here.").then(msg => msg.delete({ timeout: 5000 }));
-        message.channel.send(response);
-    });
 }
-
 module.exports.help = {
     name: "help",
     aliases: [],

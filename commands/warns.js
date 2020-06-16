@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const fs = require("fs");
-const warns = JSON.parse(fs.readFileSync(".data/warnings.json", "utf-8"));
+const warns = JSON.parse(fs.readFileSync("..data/warnings.json", "utf-8"));
 module.exports.run = async (client, message, args, prefix) => {
 
     var warnListUser = message.guild.member(message.mentions.users.first());

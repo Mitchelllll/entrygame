@@ -17,7 +17,7 @@ module.exports.run = async (client, message, args, prefix) => {
     if (!value) return message.channel.send({
         embed: {
             title: "Bot Settings",
-            description: `You must give the new value for ${key}`,
+            description: `In case you wonder what the prefix is, it is ${prefix}\n\nIf you want to change this, you must give the new value for ${key}\n${prefix}settings <key> <value>`,
             color: "ORANGE"
         }
     });

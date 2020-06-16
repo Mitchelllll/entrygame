@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const fs = require("fs");
-const warns = JSON.parse(fs.readFileSync("../data/warnings.json", "utf-8"));
+const warns = JSON.parse(fs.readFileSync("./warnings.json", "utf-8"));
 module.exports.run = async (client, message, args, prefix) => {
 
     if (!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send("\`\`\`🔴 You do not have permission to remove warns from members.\`\`\`");

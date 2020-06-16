@@ -35,8 +35,8 @@ client.on('guildMemberAdd', member => {
     channel.send({
         embed: {
             title: `${member.user.tag} joined`,
-            thumbnail: {
-                url: member.user.displayAvatarURL
+            author: {
+                icon_url: member.user.displayAvatarURL
             },
             description: `Welcome ${member.user.username}\n\nHave fun!\n\n\nMembercount: **${member.guild.memberCount} members.**`,
             color: "GREEN",

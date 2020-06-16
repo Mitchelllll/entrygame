@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const fs = require("fs");
 module.exports.run = async (client, message, args, prefix) => {
 
-    if (!message.member.hasPermission("MANAGE_SERVER")) return message.channel.send("\`\`\`🔴 You do not have permission to change the bot settings for this server.\`\`\`");
+    if (!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send("\`\`\`🔴 You do not have permission to change the bot settings for this server.\`\`\`");
 
     var key = args[0];
     var value = args[1];

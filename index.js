@@ -1,31 +1,29 @@
 const Discord = require('discord.js');
 const botConfig = require('./botConfig.json');
 
-const fs = require("fs");
+const fs = require("fs").promises;
+const path = require("path");
+client.commands = new Map();
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 
-fs.readdir("./commands/", (err, files) => {
+(async function registerCommands(dir = 'commands') {
+    let files = await fs.readdir(path.join(__dirname, dir));
+    for (let file of files) {
+        let stat = await fs.lstat(path.join(__dirname, dir, file));
+        if (stat.isDirectory()) {
+            registerCommands(path.join(dir, file));
+        } else {
+            if (file.endsWith(".js")) {
+                let cmdName = file.substring(0, file.indexOf(".js"));
+                let cmdModule = require(path.join(__dirname, dir, file));
+                client.commands.set(cmdName, cmdModule);
 
-    if (err) console.log(err);
-
-    var jsFiles = files.filter(f => f.split(".").pop() === "js");
-    if (jsFiles.length <= 0) {
-        console.log("No files found");
-        return;
+            }
+        }
     }
-
-    jsFiles.forEach((f, i) => {
-
-        var fileGet = require(`./commands/${f}`);
-        console.log(`The file ${f} is ready!`);
-
-        client.commands.set(fileGet.help.name, fileGet);
-
-    })
-
-});
+})()
 
 client.on('guildMemberAdd', member => {
 
@@ -128,16 +126,18 @@ client.on('message', async message => {
 
     var prefix = prefixes[message.guild.id].prefixes;
 
-    var messageArray = message.content.split(" ");
-    var command = messageArray[0];
+    // var messageArray = message.content.split(" ");
+    // var command = messageArray[0];
 
     if (!message.content.startsWith(prefix)) return;
 
-    var args = messageArray.slice(1);
-    var commands = client.commands.get(command.slice(prefix.length));
-    if (commands) {
+    var cmdArgs = message.content.substring(message.content.indexOf(prefix) + 1).split(new RegExp(/\s+/));
+    var cmdName = cmdArgs.shift();
+    if (client.commands.get(cmdName)) {
         message.delete();
-        commands.run(client, message, args, prefix);
+        client.commands.get(cmdName).run(client, message, cmdArgs, prefix);
+    } else {
+
     }
 });
 

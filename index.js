@@ -1,6 +1,6 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const { prefix, token } = require('./data/botConfig.json');
+const prefix = require('./data/botConfig.json');
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -71,7 +71,7 @@ client.on('message', message => {
     }
 });
 
-
+client.login(process.env.token);
 
 // const Discord = require('discord.js');
 // const botConfig = require('./data/botConfig.json');

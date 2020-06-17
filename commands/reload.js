@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const { botOwner_ID, prefix } = require("././data/boConfig.json");
+const { botOwner_ID, prefix } = require("../data/botConfig.json");
 module.exports = {
     name: 'reload',
     description: 'Reload a command!',

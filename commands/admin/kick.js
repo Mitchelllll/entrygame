@@ -9,11 +9,6 @@ module.exports.run = async (client, message, args, prefix) => {
     var reason = args.slice(1).join(" ") || "No reason given.";
     if (!kickUser) return message.channel.send("\`\`\`🔴 I couldn't find this member.\`\`\`");
 
-    var embedPrompt = new Discord.MessageEmbed()
-        .setColor("ORANGE")
-        .setTitle("React within 30 seconds")
-        .setDescription(`Do you want to kick ${kickUser}?`)
-
     var embedKicked = new Discord.MessageEmbed()
         .setColor("RED")
         .setFooter(message.member.displayName)
@@ -22,45 +17,19 @@ module.exports.run = async (client, message, args, prefix) => {
         **Kicked by:** ${message.author}
         **Reason:** ${reason}`);
 
-    message.channel.send(embedPrompt).then(async msg => {
-
-        message.channel.awaitMessages(m => m.author.id === message.author.id, { max: 1, time: 30000 }).then(collected => {
-
-            if (collected.first().content.toLocaleLowerCase() == "yes") {
-                msg.delete();
-                kickUser.kick(reason).catch(err => {
-                    if (err) return message.channel.send("\`\`\`🔴 An error has occurred.\`\`\`")
-                });
-
-                message.channel.send(embedKicked);
-
-            } else if (collected.first().content.toLocaleLowerCase() == "no") {
-                msg.delete();
-                message.channel.send("\`\`\`🟥 Kick has been cancelled\`\`\`").then(m => m.delete({ timeout: 5000 }));
-
-            } else if (!collected.first().content.toLocaleLowerCase() == "no" && !collected.first().content.toLocaleLowerCase() == "yes") {
-                msg.delete();
-                message.channel.send("\`\`\`🟠 You need to react with 'yes' or 'no' to either confirm or cancel the kick.\`\`\`");
-            }
-        }).catch(err => {
-            message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
-        });
-    }).catch(err => {
-        message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
+    kickUser.kick(reason).catch(err => {
+        if (err) return message.channel.send("\`\`\`🔴 An error has occurred.\`\`\`")
     });
-    async function promptMessage(message, author, time, reactions) {
-        time *= 1000;
-        for (const reaction of reactions) {
-            await message.react(reaction);
+
+    message.channel.send({
+        embed: {
+            color: "RED",
+            footer: {
+                text: message.member.displayName
+            },
+            description: `**Kicked:** ${kickUser} (${kickUser.id})\n**Kicked by:** ${message.author}\n**Reason:** ${reason}`
         }
-
-        var filter = (reaction, user) => reactions.includes(reaction.emoji.name) && user.id === author.id;
-
-        return message.awaitReactions(filter, { max: 1, time: time }).then(collected => collected.first() && collected.first().emoji.name).catch(err => {
-            message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
-        });
-
-    }
+    });
 }
 
 module.exports.help = {

@@ -8,55 +8,20 @@ module.exports.run = async (client, message, args, prefix) => {
     var banUser = message.guild.member(message.mentions.users.first()) || message.guild.members.cache.get(args[0]);
     var reason = args.slice(1).join(" ") || "No reason given.";
     if (!banUser) return message.channel.send("\`\`\`🔴 I couldn't find this member.\`\`\`");
-    var embedPrompt = new Discord.MessageEmbed()
-        .setColor("ORANGE")
-        .setTitle("React within 30 seconds")
-        .setDescription(`Do you want to ban ${banUser}?`)
 
-    var embedBanned = new Discord.MessageEmbed()
-        .setColor("RED")
-        .setFooter(message.member.displayName)
-        .setTimestamp()
-        .setDescription(`**Banned:** ${banUser} (${banUser.id})
-        **Banned by:** ${message.author}
-        **Reason:** ${reason}`);
-
-    message.channel.send(embedPrompt).then(async msg => {
-
-        var emoji = await promptMessage(msg, message.author, 30, ["✅", "❌"])
-
-        if (emoji === "✅") {
-            msg.delete();
-            banUser.ban(reason).catch(err => {
-                if (err) return message.channel.send("\`\`\`🔴 An error has occurred.\`\`\`");
-            });
-
-            message.channel.send(embedBanned);
-        } else if (emoji === "❌") {
-            msg.delete();
-            return message.channel.send("\`\`\`🟥 Ban has been cancelled.\`\`\`").then(m => m.delete({ timeout: 5000 })).catch(err => {
-                message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
-            });
-        } else if (!emoji === "❌" && !emoji === "✅") {
-            msg.delete();
-            message.channel.send("\`\`\`🟠 You need to click on one of the reactions to either confirm or cancel the ban.\`\`\`");
-        }
-    }).catch(err => {
-        message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
+    banUser.ban(reason).catch(err => {
+        if (err) return message.channel.send("\`\`\`🔴 An error has occurred.\`\`\`");
     });
-    async function promptMessage(message, author, time, reactions) {
-        time *= 1000;
-        for (const reaction of reactions) {
-            await message.react(reaction);
+
+    message.channel.send({
+        embed: {
+            color: "RED",
+            footer: {
+                text: message.member.displayName
+            },
+            description: `**Banned:** ${banUser} (${banUser.id})\n**Banned by:** ${message.author}\n**Reason:** ${reason}`
         }
-
-        var filter = (reaction, user) => reactions.includes(reaction.emoji.name) && user.id === author.id;
-
-        return message.awaitReactions(filter, { max: 1, time: time }).then(collected => collected.first() && collected.first().emoji.name).catch(err => {
-            message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
-        });
-
-    }
+    });
 
 }
 

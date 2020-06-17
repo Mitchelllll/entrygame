@@ -6,7 +6,7 @@ module.exports.run = async (client, message, args, prefix) => {
     if (!message.guild.me.hasPermission("KICK_MEMBERS")) return message.channel.send("\`\`\`🔴 I do not have permission to tempmute members. Fix this problem before you try again.\`\`\`");
     if (!args[0]) return message.channel.send("\`\`\`🔴 You must give a member that you want to tempmute.\`\`\`");
 
-    var tempmuteUser = message.guild.member(message.mentions.users.first() || message.quild.members.get(args[0]));
+    var tempmuteUser = message.guild.member(message.mentions.users.first()) || message.quild.members.get(args[0]);
     if (!tempmuteUser) return message.channel.send("\`\`\`🔴 I couldn't find this member.\`\`\`");
     if (tempmuteUser.hasPermission("MANAGE_MESSAGES")) return message.channel.send("\`\`\`🟥 You can not tempmute a staff member.\`\`\`");
 

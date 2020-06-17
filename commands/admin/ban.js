@@ -5,7 +5,7 @@ module.exports.run = async (client, message, args, prefix) => {
     if (!message.guild.me.hasPermission("BAN_MEMBERS")) return message.channel.send("\`\`\`🔴 I do not have permission to ban members. Fix this problem before you try again.\`\`\`");
     if (!args[0]) return message.channel.send("\`\`\`🔴 You must give a member that you want to ban.\`\`\`");
 
-    var banUser = message.guild.member(message.mentions.users.first() || message.quild.members.get(args[0]));
+    var banUser = message.guild.member(message.mentions.users.first()) || message.quild.members.get(args[0]);
     var reason = args.slice(1).join(" ") || "No reason given.";
     if (!banUser) return message.channel.send("\`\`\`🔴 I couldn't find this member.\`\`\`");
     var embedPrompt = new Discord.MessageEmbed()

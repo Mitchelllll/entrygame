@@ -17,7 +17,7 @@ module.exports = {
             var pUser = message.guild.member(message.mentions.users.first()) || message.guild.members.cache.get(args[0]);
 
             if (!pUser && !args[1]) {
-                await message.channel.bulkDelete(amount).then(() => {
+                message.channel.bulkDelete(amount).then(() => {
 
                     if (args[0] <= 0) {
                         message.channel.send("\`\`\`🟠 Enter a number bigger then 0.\`\`\`").then(m => m.delete({ timeout: 2500 })).catch(err => {

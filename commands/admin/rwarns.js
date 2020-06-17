@@ -30,11 +30,13 @@ module.exports.run = async (client, message, args, prefix) => {
         message.channel.send(embedWarnsRemovedMe);
 
     } else {
-        if (!warns[message.guild.id + warnUserMe.id]) warns[message.guild.id + warnUserMe.id] = {
+
+
+        if (!warns[message.guild.id + warnUser.id]) warns[message.guild.id + warnUser.id] = {
             warnings: 0
         };
 
-        warns[message.guild.id + warnUserMe.id].warnings == 0;
+        warns[message.guild.id + warnUser.id].warnings == 0;
 
         var embedWarnsRemoved = new Discord.MessageEmbed()
             .setColor("GREEN")

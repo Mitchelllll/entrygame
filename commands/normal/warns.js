@@ -8,7 +8,7 @@ module.exports.run = async (client, message, args, prefix) => {
 
     if (!warnListUser && !args[0]) {
 
-        if(!warns[message.guild.id + warnListUserMe.id]) warns[message.guild.id + warnListUserMe.id] = {
+        if (!warns[message.guild.id + warnListUserMe.id]) warns[message.guild.id + warnListUserMe.id] = {
             warnings: 0
         };
 

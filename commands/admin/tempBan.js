@@ -19,7 +19,7 @@ module.exports.run = async (client, message, args, prefix) => {
 
         message.guild.members.unban(tempbanUser);
         message.channel.send(`${tempbanUser}'s tempban has ended.`);
-        
+
     }, ms(tempbanTime));
 
 }

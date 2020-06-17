@@ -24,22 +24,6 @@ module.exports.run = async (client, message, args, prefix) => {
 
     message.channel.send(embedPrompt).then(async msg => {
 
-        // var emoji = await promptMessage(msg, message.author, 30, ["✅", "❌"])
-
-        // if (emoji === "✅") {
-        //     msg.delete();
-        //     kickUser.kick(reason).catch(err => {
-        //         if (err) return message.channel.send("\`\`\`🔴 An error has occurred.\`\`\`");
-        //     });
-
-        //     message.channel.send(embedKicked);
-        // } else if (emoji === "❌") {
-        //     msg.delete();
-        //     return message.channel.send("\`\`\`🟥 Kick has been cancelled.\`\`\`").then(m => m.delete(5000)).catch(err => {
-        //         message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
-        //     });
-        // } else msg.delete(); message.channel.send("\`\`\`🟠 You need to click on one of the reactions to either confirm or cancel the kick.\`\`\`");
-
         message.channel.awaitMessages(m => m.author.id === message.author.id, { max: 1, time: 30000 }).then(collected => {
 
             if (collected.first().content.toLocaleLowerCase() == "yes") {
@@ -52,7 +36,7 @@ module.exports.run = async (client, message, args, prefix) => {
 
             } else if (collected.first().content.toLocaleLowerCase() == "no") {
                 msg.delete();
-                message.channel.send("\`\`\`🟥 Kick has been cancelled\`\`\`").then(m => m.delete(5000));
+                message.channel.send("\`\`\`🟥 Kick has been cancelled\`\`\`").then(m => m.delete({ timeout: 5000 }));
 
             } else if (!collected.first().content.toLocaleLowerCase() == "no" && !collected.first().content.toLocaleLowerCase() == "yes") {
                 msg.delete();

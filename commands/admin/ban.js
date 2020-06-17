@@ -34,34 +34,13 @@ module.exports.run = async (client, message, args, prefix) => {
             message.channel.send(embedBanned);
         } else if (emoji === "❌") {
             msg.delete();
-            return message.channel.send("\`\`\`🟥 Ban has been cancelled.\`\`\`").then(m => m.delete(5000)).catch(err => {
+            return message.channel.send("\`\`\`🟥 Ban has been cancelled.\`\`\`").then(m => m.delete({ timeout: 5000 })).catch(err => {
                 message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
             });
         } else if (!emoji === "❌" && !emoji === "✅") {
-            msg.delete(); 
+            msg.delete();
             message.channel.send("\`\`\`🟠 You need to click on one of the reactions to either confirm or cancel the ban.\`\`\`");
         }
-
-        // message.channel.awaitMessages(m => m.author.id === message.author.id, { max: 1, time: 30000 }).then(collected => {
-
-        //     if (collected.first().content.toLocaleLowerCase() == "yes") {
-
-        //         banUser.ban(reason).catch(err => {
-        //             if (err) return message.channel.send("\`\`\`🔴 An error has occurred.\`\`\`")
-        //         });
-
-        //         message.channel.send(embedBanned);
-
-        //     } else if (collected.first().content.toLocaleLowerCase() == "no") {
-
-        //         message.channel.send("\`\`\`🟥 Ban has been cancelled\`\`\`").then(m => m.delete(5000)).catch(err => {
-        //             message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
-        //         });
-
-        //     } else msg.delete(); message.channel.send("\`\`\`🟠 You need to react with 'yes' or 'no' to either confirm or cancel the ban.\`\`\`");
-        // }).catch(err => {
-        //     message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
-        // });
     }).catch(err => {
         message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
     });

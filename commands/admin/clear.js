@@ -7,7 +7,7 @@ module.exports.run = async (client, message, args, prefix) => {
     if (Number.isInteger(parseInt(args[0]))) {
 
         var amount = parseInt(args[0]);
-        var pUser = message.guild.member(message.mentions.users.first());
+        var pUser = message.guild.member(message.mentions.users.first() || message.quild.members.get(args[0]));
 
         if (!pUser && !args[1]) {
             await message.channel.bulkDelete(amount).then(() => {

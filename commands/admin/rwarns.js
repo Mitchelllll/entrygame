@@ -8,7 +8,7 @@ module.exports.run = async (client, message, args, prefix) => {
 
     var reason = args.slice(1).join(" ") || "No reason given.";
 
-    var warnUser = message.guild.member(message.mentions.users.first());
+    var warnUser = message.guild.member(message.mentions.users.first() || message.quild.members.get(args[0]));
     var warnUserMe = message.member;
 
     if (!warnUser && !args[0]) {
@@ -30,7 +30,6 @@ module.exports.run = async (client, message, args, prefix) => {
         message.channel.send(embedWarnsRemovedMe);
 
     } else {
-
 
         if (!warns[message.guild.id + warnUser.id]) warns[message.guild.id + warnUser.id] = {
             warnings: 0

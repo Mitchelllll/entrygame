@@ -3,10 +3,9 @@ const botConfig = require('./botConfig.json');
 
 const fs = require("fs").promises;
 const path = require("path");
-client.commands = new Map();
 
 const client = new Discord.Client();
-client.commands = new Discord.Collection();
+client.commands = new Map();
 
 (async function registerCommands(dir = 'commands') {
     let files = await fs.readdir(path.join(__dirname, dir));

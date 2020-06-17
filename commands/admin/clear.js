@@ -44,7 +44,7 @@ module.exports.run = async (client, message, args, prefix) => {
                 msgs.forEach(msg => {
                     if (msg.author.id == pUser.id && msg.author.id != client.user.id) {
                         msg.delete().catch((err) => {
-                            message.channel.send("There was an error while deleting this messages.\nI can not delete messages older then two weeks..");
+                            message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
                         });
                         dMsg++
                     } else {
@@ -65,7 +65,7 @@ module.exports.run = async (client, message, args, prefix) => {
                         .setColor("GREEN")
                         .setTimestamp()
                         .setFooter(message.member.displayName);
-                    message.channel.send(clearEmbedOne);
+                    message.channel.send(clearEmbedOne).then(msg => msg.delete({timeout: 3000}));
                 } else {
                     var clearEmbed = new Discord.MessageEmbed()
                         .setTitle(`Cleared ${dMsg} messages.`)
@@ -73,7 +73,7 @@ module.exports.run = async (client, message, args, prefix) => {
                         .setColor("GREEN")
                         .setTimestamp()
                         .setFooter(message.member.displayName);
-                    message.channel.send(clearEmbed);
+                    message.channel.send(clearEmbed).then(msg => msg.delete({timeout: 3000}));
                 }
             }).catch(err => {
                 message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');

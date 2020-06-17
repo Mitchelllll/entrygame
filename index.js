@@ -1,16 +1,16 @@
 const Discord = require('discord.js');
 const botConfig = require('./botConfig.json');
 
-const fs = require("fs").promises;
+const fs = require("fs");
 const path = require("path");
 
 const client = new Discord.Client();
 client.commands = new Map();
 
 (async function registerCommands(dir = 'commands') {
-    let files = await fs.readdir(path.join(__dirname, dir));
+    let files = await fs.promises.readdir(path.join(__dirname, dir));
     for (let file of files) {
-        let stat = await fs.lstat(path.join(__dirname, dir, file));
+        let stat = await fs.promises.lstat(path.join(__dirname, dir, file));
         if (stat.isDirectory()) {
             registerCommands(path.join(dir, file));
         } else {

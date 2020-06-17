@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const { prefix } = require("././data/botConfig.json");
+const { prefix } = require("../data/botConfig.json");
 module.exports = {
     name: 'help',
     description: 'A list with all my commands, or specific info about a command!',

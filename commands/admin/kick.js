@@ -8,6 +8,7 @@ module.exports.run = async (client, message, args, prefix) => {
     var kickUser = message.guild.member(message.mentions.users.first()) || message.guild.members.cache.get(args[0]);
     var reason = args.slice(1).join(" ") || "No reason given.";
     if (!kickUser) return message.channel.send("\`\`\`🔴 I couldn't find this member.\`\`\`");
+
     var embedPrompt = new Discord.MessageEmbed()
         .setColor("ORANGE")
         .setTitle("React within 30 seconds")
@@ -42,7 +43,7 @@ module.exports.run = async (client, message, args, prefix) => {
         message.channel.awaitMessages(m => m.author.id === message.author.id, { max: 1, time: 30000 }).then(collected => {
 
             if (collected.first().content.toLocaleLowerCase() == "yes") {
-
+                msg.delete();
                 kickUser.kick(reason).catch(err => {
                     if (err) return message.channel.send("\`\`\`🔴 An error has occurred.\`\`\`")
                 });
@@ -50,11 +51,13 @@ module.exports.run = async (client, message, args, prefix) => {
                 message.channel.send(embedKicked);
 
             } else if (collected.first().content.toLocaleLowerCase() == "no") {
-
+                msg.delete();
                 message.channel.send("\`\`\`🟥 Kick has been cancelled\`\`\`").then(m => m.delete(5000));
 
-            } else msg.delete(); message.channel.send("\`\`\`🟠 You need to react with 'yes' or 'no' to either confirm or cancel the kick.\`\`\`");
-
+            } else if (!collected.first().content.toLocaleLowerCase() == "no" && !collected.first().content.toLocaleLowerCase() == "yes") {
+                msg.delete();
+                message.channel.send("\`\`\`🟠 You need to react with 'yes' or 'no' to either confirm or cancel the kick.\`\`\`");
+            }
         }).catch(err => {
             message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
         });

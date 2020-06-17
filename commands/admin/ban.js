@@ -37,7 +37,10 @@ module.exports.run = async (client, message, args, prefix) => {
             return message.channel.send("\`\`\`🟥 Ban has been cancelled.\`\`\`").then(m => m.delete(5000)).catch(err => {
                 message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
             });
-        } else msg.delete(); message.channel.send("\`\`\`🟠 You need to click on one of the reactions to either confirm or cancel the ban.\`\`\`");
+        } else if (!emoji === "❌" && !emoji === "✅") {
+            msg.delete(); 
+            message.channel.send("\`\`\`🟠 You need to click on one of the reactions to either confirm or cancel the ban.\`\`\`");
+        }
 
         // message.channel.awaitMessages(m => m.author.id === message.author.id, { max: 1, time: 30000 }).then(collected => {
 

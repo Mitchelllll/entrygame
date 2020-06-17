@@ -37,7 +37,10 @@ client.on('guildMemberAdd', member => {
             footer: {
                 text: "Member Joined"
             },
-            timestamp: new Date()
+            timestamp: new Date(),
+            thumbnail: {
+                url: member.avatarURL()
+            }
         }
     });
 
@@ -65,7 +68,10 @@ client.on('guildMemberRemove', member => {
             footer: {
                 text: "Member Leaved"
             },
-            timestamp: new Date()
+            timestamp: new Date(),
+            thumbnail: {
+                url: member.avatarURL()
+            }
         }
     });
 });

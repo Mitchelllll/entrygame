@@ -8,7 +8,7 @@ module.exports.run = async (client, message, args, prefix) => {
 
     var reason = args.slice(1).join(" ") || "No reason given.";
 
-    var warnUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
+    var warnUser = message.guild.member(message.mentions.users.first()) || message.guild.members.cache.get(args[0]);
     var warnUserMe = message.member;
 
     if (!warnUser && !args[0]) {

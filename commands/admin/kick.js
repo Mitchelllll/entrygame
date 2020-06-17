@@ -5,7 +5,7 @@ module.exports.run = async (client, message, args, prefix) => {
     if (!message.guild.me.hasPermission("KICK_MEMBERS")) return message.channel.send("\`\`\`🔴 I do not have permission to kick members. Fix this problem before you try again.\`\`\`");
     if (!args[0]) return message.channel.send("\`\`\`🔴 You must give a member that you want to kick.\`\`\`");
 
-    var kickUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
+    var kickUser = message.guild.member(message.mentions.users.first()) || message.guild.members.cache.get(args[0]);
     var reason = args.slice(1).join(" ") || "No reason given.";
     if (!kickUser) return message.channel.send("\`\`\`🔴 I couldn't find this member.\`\`\`");
     var embedPrompt = new Discord.MessageEmbed()

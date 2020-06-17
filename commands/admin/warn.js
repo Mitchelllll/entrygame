@@ -8,7 +8,7 @@ module.exports.run = async (client, message, args, prefix) => {
     if (!args[0]) return message.reply("you must give a member that you want to warn.");
     // if (!args[1]) return message.reply("you must give a reason.");
 
-    var warnUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
+    var warnUser = message.guild.member(message.mentions.users.first()) || message.guild.members.cache.get(args[0]);
     var reason = args.slice(1).join(" ") || "No reason given.";
     if (!warnUser) return message.channel.send("\`\`\`🔴 I couldn't find this member.\`\`\`");
     if (warnUser.hasPermission("MANAGE_MESSAGES")) return message.channel.send("\`\`\`🟥 You can not warn a staff member.\`\`\`");

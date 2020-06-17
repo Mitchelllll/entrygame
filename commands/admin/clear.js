@@ -43,9 +43,9 @@ module.exports.run = async (client, message, args, prefix) => {
             message.channel.messages.fetch({ limit: amount }).then(msgs => {
                 msgs.forEach(msg => {
                     if (msg.author.id == pUser.id && msg.author.id != client.user.id) {
-                        msg.delete().then(() => {
-                            // console.log("deleted: " + msg.content)
-                        })
+                        msg.delete().catch((err) => {
+                            message.channel.send("There was an error while deleting this messages.\nI can not delete messages older then two weeks..");
+                        });
                         dMsg++
                     } else {
                         console.log("Couldnt delete message of: " + msg.author.tag)

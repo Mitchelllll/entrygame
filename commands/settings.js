@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const fs = require("fs");
-const { prefix } = require("././data/botConfig.json");
+const { prefix } = require("../data/botConfig.json");
 module.exports = {
     name: 'settings',
     description: 'Change the bot settings for this server!',

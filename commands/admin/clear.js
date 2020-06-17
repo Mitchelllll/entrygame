@@ -65,7 +65,7 @@ module.exports.run = async (client, message, args, prefix) => {
                         .setColor("GREEN")
                         .setTimestamp()
                         .setFooter(message.member.displayName);
-                    message.channel.send(clearEmbedOne).then(msg => msg.delete({timeout: 3000}));
+                    message.channel.send(clearEmbedOne);
                 } else {
                     var clearEmbed = new Discord.MessageEmbed()
                         .setTitle(`Cleared ${dMsg} messages.`)
@@ -73,7 +73,7 @@ module.exports.run = async (client, message, args, prefix) => {
                         .setColor("GREEN")
                         .setTimestamp()
                         .setFooter(message.member.displayName);
-                    message.channel.send(clearEmbed).then(msg => msg.delete({timeout: 3000}));
+                    message.channel.send(clearEmbed);
                 }
             }).catch(err => {
                 message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');

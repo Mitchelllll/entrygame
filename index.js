@@ -1,28 +1,21 @@
 const Discord = require('discord.js');
 const botConfig = require('./data/botConfig.json');
+const client = new Discord.Client();
+
+client.commands = new Discord.Collection();
+const cooldowns = new Discord.Collection();
 
 const fs = require("fs");
-const path = require("path");
 
-const client = new Discord.Client();
-client.commands = new Map();
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
-(async function registerCommands(dir = 'commands') {
-    let files = await fs.promises.readdir(path.join(__dirname, dir));
-    for (let file of files) {
-        let stat = await fs.promises.lstat(path.join(__dirname, dir, file));
-        if (stat.isDirectory()) {
-            registerCommands(path.join(dir, file));
-        } else {
-            if (file.endsWith(".js")) {
-                let cmdName = file.substring(0, file.indexOf(".js"));
-                let cmdModule = require(path.join(__dirname, dir, file));
-                client.commands.set(cmdName, cmdModule);
+for (const file of commandFiles) {
+    const command = require(`./commands/${file}`);
 
-            }
-        }
-    }
-})()
+    // set a new item in the Collection
+    // with the key as the command name and the value as the exported module
+    client.commands.set(command.name, command);
+}
 
 client.on('guildMemberAdd', member => {
 
@@ -100,9 +93,10 @@ client.on("ready", () => {
 });
 
 client.on('message', async message => {
-    if (message.author.bot) return;
-    if (message.channel.type === 'dm') return;
+    if (!message.content.startsWith(prefix) || message.author.bot) return;
 
+    const args = message.content.slice(prefix.length).split(/ +/);
+    const commandName = args.shift().toLowerCase();
 
     var swearWords = JSON.parse(fs.readFileSync("./data/swearWords.json"));
 
@@ -131,18 +125,76 @@ client.on('message', async message => {
 
     var prefix = prefixes[message.guild.id].prefixes;
 
-    // var messageArray = message.content.split(" ");
-    // var command = messageArray[0];
+    const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+    if (!command) return;
 
-    if (!message.content.startsWith(prefix)) return;
+    if (command.guildOnly && message.channel.type !== 'text') {
+        return message.channel.send({
+            embed: {
+                title: "Command not working",
+                description: "This command can not be used in DMs.",
+                color: "RED",
+                timestamp: new Date()
+            }
+        });
+    }
 
-    var cmdArgs = message.content.substring(message.content.indexOf(prefix) + 1).split(new RegExp(/\s+/));
-    var cmdName = cmdArgs.shift();
-    if (client.commands.get(cmdName)) {
-        message.delete();
-        client.commands.get(cmdName).run(client, message, cmdArgs, prefix);
-    } else {
+    if (command.args && !args.length) {
+        let reply = `You didn't provide any arguments, ${message.author}!`;
 
+        if (command.usage) {
+            reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
+        }
+
+        return message.channel.send({
+            embed: {
+                title: "Proper usage",
+                description: reply,
+                color: "RED",
+                timestamp: new Date()
+            }
+        });
+    }
+
+    if (!cooldowns.has(command.name)) {
+        cooldowns.set(command.name, new Discord.Collection());
+    }
+
+    const now = Date.now();
+    const timestamps = cooldowns.get(command.name);
+    const cooldownAmount = (command.cooldown || 3) * 1000;
+
+    if (timestamps.has(message.author.id)) {
+        const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+
+        if (now < expirationTime) {
+            const timeLeft = (expirationTime - now) / 1000;
+            message.channel.send({
+                embed: {
+                    title: `Coodown on ${command.name}`,
+                    description: `I'm sorry, you can use this command again in ${timeLeft.toFixed(1)} seconds.`,
+                    color: "GREEN",
+                    timestamp: new Date()
+                }
+            });
+        }
+    };
+
+    timestamps.set(message.author.id, now);
+    setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+
+    try {
+        command.execute(message, args);
+    } catch (error) {
+        console.error(error);
+        message.channel.send({
+            embed: {
+                title: "Error",
+                description: 'There was an error trying to execute that command!',
+                color: "RED",
+                timestamp: new Date()
+            }
+        });
     }
 });
 

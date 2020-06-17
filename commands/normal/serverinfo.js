@@ -23,8 +23,8 @@ module.exports.run = async (client, message, args, prefix) => {
                 text: message.member.displayName
             },
             timestamp: new Date(),
-            thumbnail: {
-                url: guild.iconURL()
+            image: {
+                url: `<${guild.iconURL()}>`
             }
         }
     });

@@ -2,17 +2,14 @@ const Discord = require('discord.js');
 const botConfig = require('./data/botConfig.json');
 const client = new Discord.Client();
 
-const { commandHandler } = require("djs-commands");
-const CH = new CommandHandler({
-    folder: __dirname + "/commands/",
-    prefix: [prefix]
-});
-
 // const cooldowns = new Discord.Collection();
 
 const fs = require("fs");
 const CommandHandler = require('djs-commands/CommandHandler');
-
+const CH = new CommandHandler({
+    folder: __dirname + "/commands/",
+    prefix: [prefix]
+});
 
 
 client.on('guildMemberAdd', member => {

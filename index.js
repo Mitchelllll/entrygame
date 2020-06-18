@@ -95,7 +95,7 @@ client.on('message', async message => {
                 if (message.channel.type === "dm") {
                     return message.channel.send({
                         embed: {
-                            title: `${findEmoji("Cross")} An error has occured.\nI'm not allowed to execute commands in DM channels yet.`,
+                            title: '❌ An error has occured.\nI\'m not allowed to execute commands in DM channels yet.',
                             description: 'And I do not respond to DMs',
                             color: 0xff0000
                         }

@@ -1,14 +1,12 @@
 const Discord = require('discord.js');
-module.exports = class ban {
-    constructor(){
-    this.name = 'ban',
-    this.description = 'Ban a member!',
-    this.args = true,
-    this.usage = '<user> [reason]',
-    this.guildOnly = true,
-    this.cooldown = 0
-    }
-    run(message, args) {
+module.exports = {
+    name: 'ban',
+    description: 'Ban a member!',
+    args: true,
+    usage: '<user> [reason]',
+    guildOnly: true,
+    cooldown: 0,
+    execute(message, args) {
 
         if (!message.member.hasPermission("BAN_MEMBERS")) return message.channel.send("\`\`\`🔴 You do not have permission to ban members.\`\`\`");
         if (!message.guild.me.hasPermission("BAN_MEMBERS")) return message.channel.send("\`\`\`🔴 I do not have permission to ban members. Fix this problem before you try again.\`\`\`");
@@ -31,5 +29,5 @@ module.exports = class ban {
             }
         });
 
-    }
+    },
 };

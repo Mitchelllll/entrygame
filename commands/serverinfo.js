@@ -6,7 +6,7 @@ module.exports.run = async (message, args) => {
             title: message.guild.name,
             color: "#0000ff",
             thumbnail: {
-                url: message.guild.iconURL ? message.guild.iconURL : null
+                url: message.guild.iconURL() ? message.guild.iconURL() : null
             },
             fields: [
                 { name: "Server ID:", value: message.guild.id },

@@ -8,7 +8,7 @@ module.exports = class reload {
             this.usage = '<command>',
             this.guildOnly = true,
             this.cooldown = 10,
-            this.aliases = ['rl']
+            this.alias = ['rl']
     }
     run(message, args) {
 

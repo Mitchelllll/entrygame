@@ -29,6 +29,8 @@ module.exports.run = async (message, args) => {
         }
     });
 
+    console.log(message.guild);
+
 }
 
 module.exports.help = {

@@ -1,14 +1,16 @@
 const Discord = require('discord.js');
-const { botOwner_ID, prefix } = require("../data/botConfig.json");
-module.exports = {
-    name: 'reload',
-    description: 'Reload a command!',
-    args: true,
-    usage: '<command>',
-    guildOnly: true,
-    cooldown: 10,
-    aliases: ['rl'],
-    execute(message, args) {
+const { botOwner_ID } = require("../data/botConfig.json");
+module.exports = class reload {
+    constructor() {
+        this.name = 'reload',
+            this.description = 'Reload a command!',
+            this.args = true,
+            this.usage = '<command>',
+            this.guildOnly = true,
+            this.cooldown = 10,
+            this.aliases = ['rl']
+    }
+    run(message, args) {
 
         if (!message.author.id === botOwner_ID) return message.channel.send("You are not allowed to reload commands.");
         if (!args.length) return message.channel.send("You must give a command name.");
@@ -20,7 +22,7 @@ module.exports = {
         }
 
         delete require.cache[require.resolve(`./${command.name}.js`)];
-        
+
         try {
             const newCommand = require(`./${command.name}.js`);
             message.client.commands.set(newCommand.name, newCommand);
@@ -29,5 +31,5 @@ module.exports = {
             console.log(error);
             message.channel.send(`There was an error while reloading \`${command.name}\`:\n\`${error.message}\``);
         }
-    },
+    }
 };

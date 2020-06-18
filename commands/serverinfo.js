@@ -5,6 +5,9 @@ module.exports.run = async (message, args) => {
         embed: {
             title: message.guild.name,
             color: "#0000ff",
+            thumbnail: {
+                url: message.guild.iconURL ? message.guild.iconURL : null
+            },
             fields: [
                 { name: "Server ID:", value: message.guild.id },
                 { name: "Server Owner:", value: message.guild.owner },
@@ -22,14 +25,9 @@ module.exports.run = async (message, args) => {
             footer: {
                 text: message.member.displayName
             },
-            timestamp: new Date(),
-            thumbnail: {
-                url: message.guild.iconURL()
-            }
+            timestamp: new Date()
         }
     });
-
-    console.log(message.guild);
 
 }
 

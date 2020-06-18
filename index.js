@@ -97,6 +97,15 @@ client.on("ready", () => {
 
 client.on('message', async message => {
 
+    var prefixes = JSON.parse(fs.readFileSync("./data/botSettings.json"));
+    if (!prefixes[message.guild.id]) {
+        prefixes[message.guild.id] = {
+            prefixes: botConfig.prefix
+        };
+    }
+
+    var prefix = prefixes[message.guild.id].prefixes;
+
     let args = message.content.slice(prefix.length).trim().split(/ +/g);
     let command = args.shift().toLowerCase();
     let commandFile = await client.commands.get(command);
@@ -145,15 +154,6 @@ client.on('message', async message => {
     // //     console.log("HI.")
     // //     // message.channel.send(`You woke me up! Do you need me?`);
     // // }
-
-    var prefixes = JSON.parse(fs.readFileSync("./data/botSettings.json"));
-    if (!prefixes[message.guild.id]) {
-        prefixes[message.guild.id] = {
-            prefixes: botConfig.prefix
-        };
-    }
-
-    var prefix = prefixes[message.guild.id].prefixes;
 
     // // const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
     // // if (!command) return;

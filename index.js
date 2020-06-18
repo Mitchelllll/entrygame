@@ -6,13 +6,12 @@ client.commands = new Discord.Collection();
 const cooldowns = new Discord.Collection();
 
 const fs = require("fs");
-const join = require("path");
 
-const commandFiles = fs.readdirSync(join(__dirname, "commands")).filter(file => file.endsWith('.js'));
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
-    const command = require(join(__dirname, "commands", `${file}`));
-    client.commands.set(command.name, command);
+	const command = require(`./commands/${file}`);
+	client.commands.set(command.name, command);
 }
 
 client.on('guildMemberAdd', member => {
@@ -91,6 +90,28 @@ client.on("ready", () => {
 });
 
 client.on('message', async message => {
+    if (!message.content.startsWith(prefix) || message.author.bot) return;
+
+    const args = message.content.slice(prefix.length).split(/ +/);
+    const commandName = args.shift().toLowerCase();
+
+    var swearWords = JSON.parse(fs.readFileSync("./data/swearWords.json"));
+
+    var msg = message.content.toLocaleLowerCase().split(" ");
+    for (let i = 0; i < swearWords["swearwords"].length; i++) {
+        if (msg.includes(swearWords["swearwords"][i])) {
+            message.delete();
+            message.reply("Your message has been deleted because it included one or multiple swearwords.").then(msg => msg.delete({ timeout: 3000 })).catch(err => {
+                message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
+            });
+        }
+
+    }
+
+    // if (message.content.includes(client.user)) {
+    //     console.log("HI.")
+    //     // message.channel.send(`You woke me up! Do you need me?`);
+    // }
 
     var prefixes = JSON.parse(fs.readFileSync("./data/botSettings.json"));
     if (!prefixes[message.guild.id]) {
@@ -101,88 +122,66 @@ client.on('message', async message => {
 
     var prefix = prefixes[message.guild.id].prefixes;
 
-    if (!message.content.startsWith(prefix) || message.author.bot) return;
+    const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+    if (!command) return;
 
-    const args = message.content.slice(prefix.length).trim().split(/ +/);
-    const command = args.shift().toLowerCase();
+    if (command.guildOnly && message.channel.type !== 'text') {
+        return message.channel.send({
+            embed: {
+                title: "Command not working",
+                description: "This command can not be used in DMs.",
+                color: "RED",
+                timestamp: new Date()
+            }
+        });
+    }
 
-    // var swearWords = JSON.parse(fs.readFileSync("./data/swearWords.json"));
+    if (command.args && !args.length) {
+        let reply = `You didn't provide any arguments, ${message.author}!`;
 
-    // var msg = message.content.toLocaleLowerCase().split(" ");
-    // for (let i = 0; i < swearWords["swearwords"].length; i++) {
-    //     if (msg.includes(swearWords["swearwords"][i])) {
-    //         message.delete();
-    //         message.reply("Your message has been deleted because it included one or multiple swearwords.").then(msg => msg.delete({ timeout: 3000 })).catch(err => {
-    //             message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
-    //         });
-    //     }
+        if (command.usage) {
+            reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
+        }
 
-    // }
+        return message.channel.send({
+            embed: {
+                title: "Proper usage",
+                description: reply,
+                color: "RED",
+                timestamp: new Date()
+            }
+        });
+    }
 
-    // if (message.content.includes(client.user)) {
-    //     console.log("HI.")
-    //     // message.channel.send(`You woke me up! Do you need me?`);
-    // }
+    if (!cooldowns.has(command.name)) {
+        cooldowns.set(command.name, new Discord.Collection());
+    }
 
-    if (!client.commands.has(command)) return;
+    const now = Date.now();
+    const timestamps = cooldowns.get(command.name);
+    const cooldownAmount = (command.cooldown || 3) * 1000;
 
-    // if (command.guildOnly && message.channel.type !== 'text') {
-    //     return message.channel.send({
-    //         embed: {
-    //             title: "Command not working",
-    //             description: "This command can not be used in DMs.",
-    //             color: "RED",
-    //             timestamp: new Date()
-    //         }
-    //     });
-    // }
+    if (timestamps.has(message.author.id)) {
+        const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
 
-    // if (command.args && !args.length) {
-    //     let reply = `You didn't provide any arguments, ${message.author}!`;
+        if (now < expirationTime) {
+            const timeLeft = (expirationTime - now) / 1000;
+            message.channel.send({
+                embed: {
+                    title: `Cooldown on ${command.name}`,
+                    description: `I'm sorry, you can use this command again in ${timeLeft.toFixed(1)} seconds.`,
+                    color: "GREEN",
+                    timestamp: new Date()
+                }
+            });
+        }
+    };
 
-    //     if (command.usage) {
-    //         reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
-    //     }
-
-    //     return message.channel.send({
-    //         embed: {
-    //             title: "Proper usage",
-    //             description: reply,
-    //             color: "RED",
-    //             timestamp: new Date()
-    //         }
-    //     });
-    // }
-
-    // if (!cooldowns.has(command.name)) {
-    //     cooldowns.set(command.name, new Discord.Collection());
-    // }
-
-    // const now = Date.now();
-    // const timestamps = cooldowns.get(command.name);
-    // const cooldownAmount = (command.cooldown || 3) * 1000;
-
-    // if (timestamps.has(message.author.id)) {
-    //     const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
-
-    //     if (now < expirationTime) {
-    //         const timeLeft = (expirationTime - now) / 1000;
-    //         message.channel.send({
-    //             embed: {
-    //                 title: `Cooldown on ${command.name}`,
-    //                 description: `I'm sorry, you can use this command again in ${timeLeft.toFixed(1)} seconds.`,
-    //                 color: "GREEN",
-    //                 timestamp: new Date()
-    //             }
-    //         });
-    //     }
-    // };
-
-    // timestamps.set(message.author.id, now);
-    // setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+    timestamps.set(message.author.id, now);
+    setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
     try {
-        client.commands.get(command).run(message, args);
+        command.execute(message, args);
     } catch (error) {
         console.error(error);
         message.channel.send({

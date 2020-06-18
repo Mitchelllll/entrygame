@@ -3,12 +3,12 @@ const { botOwner_ID } = require("../data/botConfig.json");
 module.exports = {
     name: 'reload',
     description: 'Reload a command!',
-    // args: true,
-    // usage: '<command>',
-    // guildOnly: true,
-    // cooldown: 10,
-    // aliases: ['rl'],
-    async run(message, args) {
+    args: true,
+    usage: '<command>',
+    guildOnly: true,
+    cooldown: 10,
+    aliases: ['rl'],
+    execute(message, args) {
 
         if (!message.author.id === botOwner_ID) return message.channel.send("You are not allowed to reload commands.");
         if (!args.length) return message.channel.send("You must give a command name.");
@@ -29,5 +29,5 @@ module.exports = {
             console.log(error);
             message.channel.send(`There was an error while reloading \`${command.name}\`:\n\`${error.message}\``);
         }
-    }
-}
+    },
+};

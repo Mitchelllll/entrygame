@@ -113,7 +113,7 @@ client.on('message', async message => {
 
     if (commandFile) {
         try {
-            if(message.author.type === "bot") return;
+            if (message.author.type === "bot") return;
             if (message.channel.type === "dm") {
                 message.channel.send({
                     embed: {

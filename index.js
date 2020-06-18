@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const botConfig = require('./data/botConfig.json');
 const client = new Discord.Client();
 
-// client.commands = new Discord.Collection();
+client.commands = new Discord.Collection();
 // const cooldowns = new Discord.Collection();
 
 const fs = require("fs");

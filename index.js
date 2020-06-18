@@ -7,18 +7,18 @@ const cooldowns = new Discord.Collection();
 
 const fs = require("fs");
 
-fs.readdir("./commands/", (error, files) => {
-    if (error) return console.log(error);
-    let fileCut = files.filter(file => file.split(".").pop() === "js");
-    if (fileCut.length <= 0) return console.log("No files to show");
-    fileCut.forEach((file) => {
-        let cmd = require(`./commands/${file}`);
-        let cmdName = file.split(".")[0];
-        console.log(`Loaded command: "${cmdName}".`);
-        client.commands.set(cmd.help.name, cmd);
-    });
-    console.log(" ");
-});
+// fs.readdir("./commands/", (error, files) => {
+//     if (error) return console.log(error);
+//     let fileCut = files.filter(file => file.split(".").pop() === "js");
+//     if (fileCut.length <= 0) return console.log("No files to show");
+//     fileCut.forEach((file) => {
+//         let cmd = require(`./commands/${file}`);
+//         let cmdName = file.split(".")[0];
+//         console.log(`Loaded command: "${cmdName}".`);
+//         client.commands.set(cmd.help.name, cmd);
+//     });
+//     console.log(" ");
+// });
 
 client.on('guildMemberAdd', member => {
 
@@ -106,28 +106,40 @@ client.on('message', async message => {
 
     var prefix = prefixes[message.guild.id].prefixes;
 
-    let args = message.content.slice(prefix.length).trim().split(/ +/g);
-    let command = args.shift().toLowerCase();
-    let commandFile = await client.commands.get(command);
 
 
-    if (commandFile) {
-        try {
-            if(message.author.type === "bot") return;
-            if (message.channel.type === "dm") {
-                message.channel.send({
-                    embed: {
-                        title: `${findEmoji("Cross")} An error has occured.\nI'm not allowed to execute commands in DM channels yet.`,
-                        color: 0xff0000
-                    }
-                }).then(msg => msg.delete({ timeout: 5000 }));
-            }
+    let cmdName = message.content.substring(message.content.indexOf(prefix)+1).split(new RegExp(/\s+/)).shift();
+    let argsToParse = message.content.substring(message.content.indexOf(' ')+1);
+    if(client.commands.get(cmdName))
+        client.commands.get(cmdName)(client, message, argsToParse);
+    else
+        console.log("Command does not exist.");
 
-            commandFile.run(message, args);
-        } catch (err) {
-            console.log(err)
-        };
-    };
+
+
+
+    // let args = message.content.slice(prefix.length).trim().split(/ +/g);
+    // let command = args.shift().toLowerCase();
+    // let commandFile = await client.commands.get(command);
+
+
+    // if (commandFile) {
+    //     try {
+    //         if (message.author.type === "bot") return;
+    //         if (message.channel.type === "dm") {
+    //             message.channel.send({
+    //                 embed: {
+    //                     title: `${findEmoji("Cross")} An error has occured.\nI'm not allowed to execute commands in DM channels yet.`,
+    //                     color: 0xff0000
+    //                 }
+    //             }).then(msg => msg.delete({ timeout: 5000 }));
+    //         }
+
+    //         commandFile.run(message, args);
+    //     } catch (err) {
+    //         console.log(err)
+    //     };
+    // };
 
 
 
@@ -228,5 +240,46 @@ client.on('message', async message => {
     // //     });
     // // }
 });
+
+
+
+async function registerCommands(client, dir) {
+    let files = await fs.readdir(path.join(__dirname, dir));
+    // Loop through each file.
+    for (let file of files) {
+        let stat = await fs.lstat(path.join(__dirname, dir, file));
+        if (stat.isDirectory()) // If file is a directory, recursive call recurDir
+            registerCommands(client, path.join(dir, file));
+        else {
+            // Check if file is a .js file.
+            if (file.endsWith(".js")) {
+                let cmdName = file.substring(0, file.indexOf(".js"));
+                try {
+                    let cmdModule = require(path.join(__dirname, dir, file));
+                    if (checkCommandModule(cmdName, cmdModule)) {
+                        if (checkProperties(cmdName, cmdModule)) {
+                            let { aliases } = cmdModule;
+                            client.commands.set(cmdName, cmdModule.run);
+                            if (aliases.length !== 0)
+                                aliases.forEach(alias => client.commands.set(alias, cmdModule.run));
+                            commandStatus.push(
+                                [`${c.cyan(`${cmdName}`)}`, `${c.bgGreenBright('Success')}`, `${cmdModule.description}`]
+                            )
+                        }
+                    }
+                }
+                catch (err) {
+                    console.log(err);
+                    commandStatus.push(
+                        [`${c.white(`${cmdName}`)}`, `${c.bgRedBright('Failed')}`, '']
+                    );
+                }
+            }
+        }
+    }
+}
+
+
+
 
 client.login(process.env.token);

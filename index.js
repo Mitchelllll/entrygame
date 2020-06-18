@@ -200,7 +200,7 @@ client.on('message', async message => {
     // }
 });
 
-const CommandHandler = require('djs-commands/CommandHandler');
+const { CommandHandler } = require('djs-commands/CommandHandler');
 const CH = new CommandHandler({
     folder: __dirname + "/commands/",
     prefix: ["$"]

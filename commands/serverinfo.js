@@ -24,7 +24,7 @@ module.exports.run = async (message, args) => {
             },
             timestamp: new Date(),
             thumbnail: {
-                url: message.guild.displayIconURL()
+                url: message.guild.iconURL()
             }
         }
     });

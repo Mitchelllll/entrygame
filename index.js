@@ -82,47 +82,66 @@ client.on("ready", () => {
 client.on('message', async message => {
 
     if (message.channel.type === "dm") {
-        return message.channel.send({
-            embed: {
-                title: `${findEmoji("Cross")} An error has occured.\nI'm not allowed to execute commands in DM channels yet.`,
-                description: 'And I do not respond to DMs', 
-                color: 0xff0000
-            }
-        }).then(msg => msg.delete({ timeout: 5000 }));
-    }
+        let prefix = botConfig.prefix;
 
-    var prefixes = JSON.parse(fs.readFileSync("./data/botSettings.json"));
-    if (!prefixes[message.guild.id]) {
-        prefixes[message.guild.id] = {
-            prefixes: botConfig.prefix
+        let args = message.content.slice(prefix.length).trim().split(/ +/g);
+        let command = args.shift().toLowerCase();
+        let commandFile = await client.commands.get(command) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(command));
+        if (!commandFile) return;
+
+        if (commandFile) {
+            try {
+                if (message.author.type === "bot") return;
+                if (message.channel.type === "dm") {
+                    return message.channel.send({
+                        embed: {
+                            title: `${findEmoji("Cross")} An error has occured.\nI'm not allowed to execute commands in DM channels yet.`,
+                            description: 'And I do not respond to DMs',
+                            color: 0xff0000
+                        }
+                    }).then(msg => msg.delete({ timeout: 5000 }));
+                }
+                commandFile.run(message, args);
+            } catch (err) {
+                console.log(err)
+            };
         };
-    }
 
-    var prefix = prefixes[message.guild.id].prefixes;
+        return;
+    } else {
+        var prefixes = JSON.parse(fs.readFileSync("./data/botSettings.json"));
+        if (!prefixes[message.guild.id]) {
+            prefixes[message.guild.id] = {
+                prefixes: botConfig.prefix
+            };
+        }
 
-    let args = message.content.slice(prefix.length).trim().split(/ +/g);
-    let command = args.shift().toLowerCase();
-    let commandFile = await client.commands.get(command) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(command));
-    if (!commandFile) return;
+        var prefix = prefixes[message.guild.id].prefixes;
 
-    if (commandFile) {
-        try {
-            if (message.author.type === "bot") return;
+        let args = message.content.slice(prefix.length).trim().split(/ +/g);
+        let command = args.shift().toLowerCase();
+        let commandFile = await client.commands.get(command) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(command));
+        if (!commandFile) return;
 
-            commandFile.run(message, args);
-        } catch (err) {
-            console.log(err)
+        if (commandFile) {
+            try {
+                if (message.author.type === "bot") return;
+                if (message.channel.type === "dm") {
+                    return message.channel.send({
+                        embed: {
+                            title: `${findEmoji("Cross")} An error has occured.\nI'm not allowed to execute commands in DM channels yet.`,
+                            description: 'And I do not respond to DMs',
+                            color: 0xff0000
+                        }
+                    }).then(msg => msg.delete({ timeout: 5000 }));
+                }
+                commandFile.run(message, args);
+            } catch (err) {
+                console.log(err)
+            };
         };
-    };
 
-
-
-
-
-    // if (!message.content.startsWith(prefix) || message.author.bot) return;
-
-    // const args = message.content.slice(prefix.length).split(/ +/);
-    // const commandName = args.shift().toLowerCase();
+    }
 
     var swearWords = JSON.parse(fs.readFileSync("./data/swearWords.json"));
 
@@ -137,79 +156,65 @@ client.on('message', async message => {
 
     }
 
-    // // if (message.content.includes(client.user)) {
-    // //     console.log("HI.")
-    // //     // message.channel.send(`You woke me up! Do you need me?`);
-    // // }
+    // if (message.content.includes(client.user)) {
+    //     console.log("HI.")
+    //     // message.channel.send(`You woke me up! Do you need me?`);
+    // }
 
-    // // if (command.guildOnly && message.channel.type !== 'text') {
-    // //     return message.channel.send({
-    // //         embed: {
-    // //             title: "Command not working",
-    // //             description: "This command can not be used in DMs.",
-    // //             color: "RED",
-    // //             timestamp: new Date()
-    // //         }
-    // //     });
-    // // }
+    if (cmd.help.guildOnly && message.channel.type !== 'text') {
+        return message.channel.send({
+            embed: {
+                title: "Command not working",
+                description: "This command can not be used in DMs.",
+                color: "RED",
+                timestamp: new Date()
+            }
+        });
+    }
 
-    // // if (command.args && !args.length) {
-    // //     let reply = `You didn't provide any arguments, ${message.author}!`;
+    if (cmd.help.args && !args.length) {
+        let reply = `You didn't provide any arguments, ${message.author}!`;
 
-    // //     if (command.usage) {
-    // //         reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
-    // //     }
+        if (command.usage) {
+            reply += `\nThe proper usage would be: \`${prefix}${cmd.help.name} ${cmd.help.usage}\``;
+        }
 
-    // //     return message.channel.send({
-    // //         embed: {
-    // //             title: "Proper usage",
-    // //             description: reply,
-    // //             color: "RED",
-    // //             timestamp: new Date()
-    // //         }
-    // //     });
-    // // }
+        return message.channel.send({
+            embed: {
+                title: "Proper usage",
+                description: reply,
+                color: "RED",
+                timestamp: new Date()
+            }
+        });
+    }
 
-    // // if (!cooldowns.has(command.name)) {
-    // //     cooldowns.set(command.name, new Discord.Collection());
-    // // }
+    if (!cooldowns.has(cmd.help.name)) {
+        cooldowns.set(cmd.help.name, new Discord.Collection());
+    }
 
-    // // const now = Date.now();
-    // // const timestamps = cooldowns.get(command.name);
-    // // const cooldownAmount = (command.cooldown || 3) * 1000;
+    const now = Date.now();
+    const timestamps = cooldowns.get(cmd.help.name);
+    const cooldownAmount = (cmd.help.cooldown || 3) * 1000;
 
-    // // if (timestamps.has(message.author.id)) {
-    // //     const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+    if (timestamps.has(message.author.id)) {
+        const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
 
-    // //     if (now < expirationTime) {
-    // //         const timeLeft = (expirationTime - now) / 1000;
-    // //         message.channel.send({
-    // //             embed: {
-    // //                 title: `Cooldown on ${command.name}`,
-    // //                 description: `I'm sorry, you can use this command again in ${timeLeft.toFixed(1)} seconds.`,
-    // //                 color: "GREEN",
-    // //                 timestamp: new Date()
-    // //             }
-    // //         });
-    // //     }
-    // // };
-
-    // // timestamps.set(message.author.id, now);
-    // // setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
-
-    // // try {
-    // //     command.execute(message, args);
-    // // } catch (error) {
-    // //     console.error(error);
-    // //     message.channel.send({
-    // //         embed: {
-    // //             title: "Error",
-    // //             description: 'There was an error trying to execute that command!',
-    // //             color: "RED",
-    // //             timestamp: new Date()
-    // //         }
-    // //     });
-    // // }
+        if (now < expirationTime) {
+            const timeLeft = (expirationTime - now) / 1000;
+            message.channel.send({
+                embed: {
+                    title: `Cooldown on ${cmd.help.name}`,
+                    description: `I'm sorry, you can use this command again in ${timeLeft.toFixed(1)} seconds.`,
+                    color: "GREEN",
+                    timestamp: new Date()
+                }
+            });
+        }
+    };
+    timestamps.set(message.author.id, now);
+    setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+    
 });
 
 client.login(process.env.token);

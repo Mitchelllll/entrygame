@@ -81,15 +81,12 @@ client.on("ready", () => {
 
 client.on('message', async message => {
 
-    let cmd = files.file.cmd;
-
-
     if (message.channel.type === "dm") {
         let prefix = botConfig.prefix;
 
         let args = message.content.slice(prefix.length).trim().split(/ +/g);
         let command = args.shift().toLowerCase();
-        let commandFile = await client.commands.get(command) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(command));
+        let commandFile = await client.commands.get(command) || client.commands.find(cmds => cmds.aliases && cmds.aliases.includes(command));
         if (!commandFile) return;
 
         if (commandFile) {
@@ -123,7 +120,7 @@ client.on('message', async message => {
 
         let args = message.content.slice(prefix.length).trim().split(/ +/g);
         let command = args.shift().toLowerCase();
-        let commandFile = await client.commands.get(command) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(command));
+        let commandFile = await client.commands.get(command) || client.commands.find(cmds => cmds.aliases && cmds.aliases.includes(command));
         if (!commandFile) return;
 
         if (commandFile) {
@@ -164,59 +161,59 @@ client.on('message', async message => {
     //     // message.channel.send(`You woke me up! Do you need me?`);
     // }
 
-    if (cmd.help.guildOnly && message.channel.type !== 'text') {
-        return message.channel.send({
-            embed: {
-                title: "Command not working",
-                description: "This command can not be used in DMs.",
-                color: "RED",
-                timestamp: new Date()
-            }
-        });
-    }
+    // if (cmd.help.guildOnly && message.channel.type !== 'text') {
+    //     return message.channel.send({
+    //         embed: {
+    //             title: "Command not working",
+    //             description: "This command can not be used in DMs.",
+    //             color: "RED",
+    //             timestamp: new Date()
+    //         }
+    //     });
+    // }
 
-    if (cmd.help.args && !args.length) {
-        let reply = `You didn't provide any arguments, ${message.author}!`;
+    // if (cmd.help.args && !args.length) {
+    //     let reply = `You didn't provide any arguments, ${message.author}!`;
 
-        if (command.usage) {
-            reply += `\nThe proper usage would be: \`${prefix}${cmd.help.name} ${cmd.help.usage}\``;
-        }
+    //     if (command.usage) {
+    //         reply += `\nThe proper usage would be: \`${prefix}${cmd.help.name} ${cmd.help.usage}\``;
+    //     }
 
-        return message.channel.send({
-            embed: {
-                title: "Proper usage",
-                description: reply,
-                color: "RED",
-                timestamp: new Date()
-            }
-        });
-    }
+    //     return message.channel.send({
+    //         embed: {
+    //             title: "Proper usage",
+    //             description: reply,
+    //             color: "RED",
+    //             timestamp: new Date()
+    //         }
+    //     });
+    // }
 
-    if (!cooldowns.has(cmd.help.name)) {
-        cooldowns.set(cmd.help.name, new Discord.Collection());
-    }
+    // if (!cooldowns.has(cmd.help.name)) {
+    //     cooldowns.set(cmd.help.name, new Discord.Collection());
+    // }
 
-    const now = Date.now();
-    const timestamps = cooldowns.get(cmd.help.name);
-    const cooldownAmount = (cmd.help.cooldown || 3) * 1000;
+    // const now = Date.now();
+    // const timestamps = cooldowns.get(cmd.help.name);
+    // const cooldownAmount = (cmd.help.cooldown || 3) * 1000;
 
-    if (timestamps.has(message.author.id)) {
-        const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+    // if (timestamps.has(message.author.id)) {
+    //     const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
 
-        if (now < expirationTime) {
-            const timeLeft = (expirationTime - now) / 1000;
-            message.channel.send({
-                embed: {
-                    title: `Cooldown on ${cmd.help.name}`,
-                    description: `I'm sorry, you can use this command again in ${timeLeft.toFixed(1)} seconds.`,
-                    color: "GREEN",
-                    timestamp: new Date()
-                }
-            });
-        }
-    };
-    timestamps.set(message.author.id, now);
-    setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+    //     if (now < expirationTime) {
+    //         const timeLeft = (expirationTime - now) / 1000;
+    //         message.channel.send({
+    //             embed: {
+    //                 title: `Cooldown on ${cmd.help.name}`,
+    //                 description: `I'm sorry, you can use this command again in ${timeLeft.toFixed(1)} seconds.`,
+    //                 color: "GREEN",
+    //                 timestamp: new Date()
+    //             }
+    //         });
+    //     }
+    // };
+    // timestamps.set(message.author.id, now);
+    // setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
     
 });
 

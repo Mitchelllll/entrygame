@@ -81,16 +81,7 @@ client.on("ready", () => {
 
 client.on('message', async message => {
 
-
-    fs.readdir("./commands/", (error, files) => {
-        if (error) return console.log(error);
-        let fileCut = files.filter(file => file.split(".").pop() === "js");
-        if (fileCut.length <= 0) return;
-        fileCut.forEach((file) => {
-            let cmd = require(`./commands/${file}`);
-            let cmdName = file.split(".")[0];
-        });
-    });
+    let cmd = file.cmd;
 
 
     if (message.channel.type === "dm") {
@@ -226,7 +217,7 @@ client.on('message', async message => {
     };
     timestamps.set(message.author.id, now);
     setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
-
+    
 });
 
 client.login(process.env.token);

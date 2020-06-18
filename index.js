@@ -7,15 +7,13 @@ client.commands = new Discord.Collection();
 
 const fs = require("fs");
 
-const fileCut = files.filter(file => file.split(".").pop() === "js");
-const cmd = require(`./commands/${file}`);
-const cmdName = file.split(".")[0];
-
-
 fs.readdir("./commands/", (error, files) => {
     if (error) return console.log(error);
+    const fileCut = files.filter(file => file.split(".").pop() === "js");
     if (fileCut.length <= 0) return console.log("No files to show");
     fileCut.forEach((file) => {
+        const cmd = require(`./commands/${file}`);
+        const cmdName = file.split(".")[0];
         console.log(`Loaded command: "${cmdName}".`);
         client.commands.set(cmd.help.name, cmd);
     });

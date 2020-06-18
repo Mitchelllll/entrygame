@@ -81,7 +81,7 @@ client.on("ready", () => {
 
 client.on('message', async message => {
 
-    let cmd = file.cmd;
+    let cmd = files.file.cmd;
 
 
     if (message.channel.type === "dm") {

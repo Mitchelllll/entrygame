@@ -5,12 +5,6 @@ const client = new Discord.Client();
 // const cooldowns = new Discord.Collection();
 
 const fs = require("fs");
-const CommandHandler = require('djs-commands/CommandHandler');
-const CH = new CommandHandler({
-    folder: __dirname + "/commands/",
-    prefix: [prefix]
-});
-
 
 client.on('guildMemberAdd', member => {
 
@@ -204,6 +198,12 @@ client.on('message', async message => {
     //         }
     //     });
     // }
+});
+
+const CommandHandler = require('djs-commands/CommandHandler');
+const CH = new CommandHandler({
+    folder: __dirname + "/commands/",
+    prefix: ["$"]
 });
 
 client.login(process.env.token);

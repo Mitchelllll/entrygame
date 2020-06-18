@@ -45,10 +45,6 @@ client.on('guildMemberAdd', member => {
 
     member.roles.add(role);
 
-    // const role = member.guild.roles.channel.cache.find(rl => rl.name === "member");
-    // if (!role) return;
-    // member.roles.add(role.name);
-
 });
 
 client.on('guildMemberRemove', member => {
@@ -72,18 +68,6 @@ client.on('guildMemberRemove', member => {
     });
 });
 
-// client.on('guildMemberAdd', member => {
-
-//     var role = member.guild.roles.cache.get('718584861518200866');
-//     if (!role) return;
-//     member.roles.add('role');
-
-//     var channel = member.guild.channels.cache.get('718757526224502824');
-//     if (!channel) return;
-//     channel.send(`Welcome ${member}! \n Before you start make sure to read the rules. \n\n You are our **${message.guild.memberCount}** member!`);
-
-// })
-
 client.on("ready", () => {
     console.log(`${client.user.tag} is online!`)
     client.user.setPresence({
@@ -97,6 +81,16 @@ client.on("ready", () => {
 
 client.on('message', async message => {
 
+    if (message.channel.type === "dm") {
+        return message.channel.send({
+            embed: {
+                title: `${findEmoji("Cross")} An error has occured.\nI'm not allowed to execute commands in DM channels yet.`,
+                description: 'And I do not respond to DMs', 
+                color: 0xff0000
+            }
+        }).then(msg => msg.delete({ timeout: 5000 }));
+    }
+
     var prefixes = JSON.parse(fs.readFileSync("./data/botSettings.json"));
     if (!prefixes[message.guild.id]) {
         prefixes[message.guild.id] = {
@@ -108,20 +102,12 @@ client.on('message', async message => {
 
     let args = message.content.slice(prefix.length).trim().split(/ +/g);
     let command = args.shift().toLowerCase();
-    let commandFile = await client.commands.get(command);
-
+    let commandFile = await client.commands.get(command) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(command));
+    if (!commandFile) return;
 
     if (commandFile) {
         try {
             if (message.author.type === "bot") return;
-            if (message.channel.type === "dm") {
-                message.channel.send({
-                    embed: {
-                        title: `${findEmoji("Cross")} An error has occured.\nI'm not allowed to execute commands in DM channels yet.`,
-                        color: 0xff0000
-                    }
-                }).then(msg => msg.delete({ timeout: 5000 }));
-            }
 
             commandFile.run(message, args);
         } catch (err) {
@@ -155,9 +141,6 @@ client.on('message', async message => {
     // //     console.log("HI.")
     // //     // message.channel.send(`You woke me up! Do you need me?`);
     // // }
-
-    // // const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
-    // // if (!command) return;
 
     // // if (command.guildOnly && message.channel.type !== 'text') {
     // //     return message.channel.send({

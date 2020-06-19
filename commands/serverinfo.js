@@ -1,7 +1,6 @@
 const Discord = require('discord.js');
-module.exports.run = async (message, args, cooldown) => {
+module.exports.run = async (message, args) => {
 
-    if(cooldown) return;
 
     message.channel.send({
         embed: {

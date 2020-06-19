@@ -135,7 +135,7 @@ client.on('message', async message => {
                         }
                     }).then(msg => msg.delete({ timeout: 5000 }));
                 }
-                commandFile.run(message, args, cooldown);
+                commandFile.run(message, args);
             } catch (err) {
                 console.log(err)
             };

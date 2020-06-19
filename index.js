@@ -3,7 +3,7 @@ const botConfig = require('./data/botConfig.json');
 const client = new Discord.Client();
 
 client.commands = new Discord.Collection();
-const cooldowns = new Discord.Collection();
+// const cooldowns = new Discord.Collection();
 
 const fs = require("fs");
 
@@ -193,31 +193,31 @@ client.on('message', async message => {
         });
     }
 
-    if (!cooldowns.has(commandFile.help.name)) {
-        cooldowns.set(commandFile.help.name, new Discord.Collection());
-    }
+    // if (!cooldowns.has(commandFile.help.name)) {
+    //     cooldowns.set(commandFile.help.name, new Discord.Collection());
+    // }
 
-    const now = Date.now();
-    const timestamps = cooldowns.get(commandFile.help.name);
-    const cooldownAmount = (commandFile.help.cooldown || 3) * 1000;
+    // const now = Date.now();
+    // const timestamps = cooldowns.get(commandFile.help.name);
+    // const cooldownAmount = (commandFile.help.cooldown || 3) * 1000;
 
-    if (timestamps.has(message.author.id)) {
-        const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+    // if (timestamps.has(message.author.id)) {
+    //     const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
 
-        if (now < expirationTime) {
-            const timeLeft = (expirationTime - now) / 1000;
-            message.channel.send({
-                embed: {
-                    title: `Cooldown on ${commandFile.help.name}`,
-                    description: `I'm sorry, you can use this command again in ${timeLeft.toFixed(1)} seconds.`,
-                    color: "GREEN",
-                    timestamp: new Date()
-                }
-            });
-        }
-    };
-    timestamps.set(message.author.id, now);
-    setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+    //     if (now < expirationTime) {
+    //         const timeLeft = (expirationTime - now) / 1000;
+    //         message.channel.send({
+    //             embed: {
+    //                 title: `Cooldown on ${commandFile.help.name}`,
+    //                 description: `I'm sorry, you can use this command again in ${timeLeft.toFixed(1)} seconds.`,
+    //                 color: "GREEN",
+    //                 timestamp: new Date()
+    //             }
+    //         });
+    //     }
+    // };
+    // timestamps.set(message.author.id, now);
+    // setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
 });
 

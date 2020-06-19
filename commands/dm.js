@@ -7,7 +7,7 @@ module.exports.run = async (message, args) => {
     if (!msg) return message.channel.send({
         embed: {
             title: "Direct Message",
-            description: `You need to enter a message that you want to send to ${user}`,
+            description: `You need to enter a message that you want to send to ${user.name}`,
             color: "RED",
             timestamp: new Date(),
             footer: {
@@ -18,12 +18,20 @@ module.exports.run = async (message, args) => {
     user.send(msg);
     message.channel.send({
         embed: {
-            title: `Succesfully send a message to ${user} (${user.id})`,
-            description: `Message content:\n${msg}\n\nThis message will be deleted in 10 seconds, so ${user} will never find out.`,
+            title: `Succesfully send a message to ${user.name} (${user.id})`,
             color: "GREEN",
             timestamp: new Date()
         }
-    }).then(msg => msg.delete({ timeout: 10000 }));
+    }).then(msg => msg.delete({ timeout: 5000 }));
+
+    message.author.send({
+        embed: {
+            title: "SUCCEEDED",
+            description: `Message content: \n\n${msg}`,
+            color: "GREEN",
+            timestamp: new Date()
+        }
+    });
 
 }
 

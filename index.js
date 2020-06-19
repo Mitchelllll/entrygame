@@ -15,7 +15,7 @@ fs.readdir("./commands/", (error, files) => {
         let cmd = require(`./commands/${file}`);
         let cmdName = file.split(".")[0];
         console.log(`Loaded command: "${cmdName}".`);
-        client.commands.set(cmd.help.name, cmd);
+        client.commands.set(cmd.help.name, cmd && cmd.help.aliases, cmd);
     });
     console.log(" ");
 });
@@ -86,7 +86,7 @@ client.on('message', async message => {
 
         let args = message.content.slice(prefix.length).trim().split(/ +/g);
         let command = args.shift().toLowerCase();
-        let commandFile = await client.commands.get(command) || client.commands.find(cmds => cmds.aliases && cmds.aliases.includes(command));
+        let commandFile = await client.commands.get(command) || client.commands.get(cmds => cmds.aliases && cmds.aliases.includes(command));
         if (!commandFile) return;
 
         if (commandFile) {
@@ -120,7 +120,7 @@ client.on('message', async message => {
 
         let args = message.content.slice(prefix.length).trim().split(/ +/g);
         let command = args.shift().toLowerCase();
-        let commandFile = await client.commands.get(command) || client.commands.find(cmds => cmds.aliases && cmds.aliases.includes(command));
+        let commandFile = await client.commands.get(command) || client.commands.get(cmds => cmds.aliases && cmds.aliases.includes(command));
         if (!commandFile) return;
 
         if (commandFile) {
@@ -163,7 +163,7 @@ client.on('message', async message => {
 
     let args = message.content.slice(prefix.length).trim().split(/ +/g);
     let command = args.shift().toLowerCase();
-    let commandFile = await client.commands.get(command) || client.commands.find(cmds => cmds.aliases && cmds.aliases.includes(command));
+    let commandFile = await client.commands.get(command) || client.commands.get(cmds => cmds.aliases && cmds.aliases.includes(command));
 
     if (commandFile.help.guildOnly && message.channel.type == 'dm') {
         return message.channel.send({

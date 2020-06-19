@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 module.exports.run = async (message, args) => {
 
-    var user = message.guild.member(message.mentions.users.first()); 
+    var user = message.guild.member(message.mentions.users.first());
     var userID = message.guild.members.cache.get(args[0]);
     var msg = args.slice(1).join(" ");
 
@@ -17,7 +17,12 @@ module.exports.run = async (message, args) => {
         }
     }).then(msg => msg.delete({ timeout: 5000 }));
 
-    user.send(msg) || userID.send(msg);
+    if (user == null) {
+        userID.send(msg)
+    } else {
+        user.send(msg);
+    }
+
     message.channel.send({
         embed: {
             title: `Succesfully send a message to ${user || userID}`,

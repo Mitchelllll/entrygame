@@ -6,10 +6,7 @@ module.exports.run = async (message, args) => {
 }
 
 module.exports.help = {
-    name: 'kick',
-    description: 'Kick a member!',
-    args: true,
-    usage: '<user>',
-    guildOnly: true,
+    name: 'ping',
+    description: 'Check my respondtime!',
     cooldown: 0
 }

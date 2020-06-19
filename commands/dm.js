@@ -25,15 +25,16 @@ module.exports.run = async (message, args) => {
             timestamp: new Date()
         }
     }).then(msg => msg.delete({ timeout: 5000 }));
-
-    message.author.send({
-        embed: {
-            title: "SUCCEEDED",
-            description: `Message content: \n\n${msg}`,
-            color: "GREEN",
-            timestamp: new Date()
-        }
-    });
+    if (!message.author == user) {
+        message.author.send({
+            embed: {
+                title: "SUCCEEDED",
+                description: `Message content: \n\n${msg}`,
+                color: "GREEN",
+                timestamp: new Date()
+            }
+        });
+    }
 
 }
 

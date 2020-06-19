@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 module.exports.run = async (message, args) => {
 
     var user = message.guild.member(message.mentions.users.first()) || message.guild.members.cache.get(args[0]);
-    var msg = args.slice(1).join(/ +/g);
+    var msg = args.slice(1).join(" ");
 
     if (!msg) return message.channel.send({
         embed: {

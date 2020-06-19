@@ -1,4 +1,13 @@
 const Discord = require('discord.js');
+
+module.exports.help = {
+    name: 'serverinfo',
+    description: 'Get information about this server!',
+    guildOnly: true,
+    cooldown: 10,
+    aliases: ['sinfo', 'si']
+}
+
 module.exports.run = async (message, args) => {
 
     message.channel.send({
@@ -29,12 +38,4 @@ module.exports.run = async (message, args) => {
         }
     });
 
-}
-
-module.exports.help = {
-    name: 'serverinfo',
-    description: 'Get information about this server!',
-    guildOnly: true,
-    cooldown: 10,
-    aliases: ['sinfo', 'si']
 }

@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const botConfig = require('./data/botConfig.json');
 const client = new Discord.Client();
+const emojis = require('./data/emojis.json');
 
 client.commands = new Discord.Collection();
 // const cooldowns = new Discord.Collection();
@@ -41,7 +42,7 @@ client.on('guildMemberAdd', member => {
     });
 
     const role = member.guild.roles.cache.find(rl => rl.name == "member");
-    if (!role) return message.channel.send(`The role with the name ${role} does not excist.`);
+    if (!role) return message.channel.send(`${emojis.cross} The role with the name ${role} does not excist.`);
 
     member.roles.add(role);
 
@@ -95,7 +96,7 @@ client.on('message', async message => {
             if (commandFile.help.guildOnly) {
                 return message.channel.send({
                     embed: {
-                        title: "Command not working",
+                        title: `${emojis.cross} Command not working`,
                         description: "This command can not be used in DMs.",
                         color: "RED",
                         timestamp: new Date()
@@ -104,10 +105,10 @@ client.on('message', async message => {
             } else {
                 try {
                     if (commandFile.help.args && !args.length) {
-                        let reply = `You didn't provide any arguments, ${message.author}!`;
+                        let reply = `${emojis.cross} You didn't provide any arguments, ${message.author}!`;
 
                         if (commandFile.help.usage) {
-                            reply += `\nThe proper usage would be: \`${prefix}${commandFile.help.name} ${commandFile.help.usage}\``;
+                            reply += `\n${emojis.check} The proper usage would be: \`${prefix}${commandFile.help.name} ${commandFile.help.usage}\``;
                         }
                         return message.author.send({
                             embed: {
@@ -144,10 +145,10 @@ client.on('message', async message => {
             try {
                 if (message.author.type === "bot") return;
                 if (commandFile.help.args && !args.length) {
-                    let reply = `You didn't provide any arguments, ${message.author}!`;
+                    let reply = `${emojis.cross} You didn't provide any arguments, ${message.author}!`;
 
                     if (commandFile.help.usage) {
-                        reply += `\nThe proper usage would be: \`${prefix}${commandFile.help.name} ${commandFile.help.usage}\``;
+                        reply += `\n${emojis.check} The proper usage would be: \`${prefix}${commandFile.help.name} ${commandFile.help.usage}\``;
                     }
                     return message.channel.send({
                         embed: {
@@ -171,7 +172,7 @@ client.on('message', async message => {
     for (let i = 0; i < swearWords["swearwords"].length; i++) {
         if (msg.includes(swearWords["swearwords"][i])) {
             message.delete();
-            message.reply("Your message has been deleted because it included one or multiple swearwords.").then(msg => msg.delete({ timeout: 3000 })).catch(err => {
+            message.reply(`${emojis.trash} Your message has been deleted because it included one or multiple swearwords.`).then(msg => msg.delete({ timeout: 3000 })).catch(err => {
                 message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
             });
         }

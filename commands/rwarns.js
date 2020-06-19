@@ -1,4 +1,6 @@
 const Discord = require('discord.js');
+const emojis = require('./data/emojis.json');
+
 const fs = require("fs");
 const warns = JSON.parse(fs.readFileSync("./././data/warnings.json", "utf-8"));
 module.exports.run = async (message, args) => {

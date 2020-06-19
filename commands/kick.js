@@ -1,4 +1,6 @@
 const Discord = require('discord.js');
+const emojis = require('./data/emojis.json');
+
 module.exports.run = async (message, args) => {
 
     if (!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send("\`\`\`🔴 You do not have permission to kick members.\`\`\`");

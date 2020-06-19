@@ -1,4 +1,6 @@
 const Discord = require('discord.js');
+const emojis = require('./data/emojis.json');
+
 module.exports.run = async (message, args) => {
 
     var user = message.guild.member(message.mentions.users.first()) || message.guild.members.cache.get(args[0]);

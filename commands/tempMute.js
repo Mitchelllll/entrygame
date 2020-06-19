@@ -1,4 +1,6 @@
 const Discord = require('discord.js');
+const emojis = require('./data/emojis.json');
+
 const ms = require('ms');
 module.exports.run = async (message, args) => {
 

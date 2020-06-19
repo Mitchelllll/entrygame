@@ -1,0 +1,13 @@
+{
+    "status_online": "<:Status_Online:723566506595713074>",
+    "status_offline": "<:Status_Offline:723566813740531752>",
+    "status_idle": "<:Status_Idle:723567108281204746>",
+    "status_dnd": "<:Status_DND:723566259215532112>",
+    "status_streaming": "<:Status_Streaming:723567246152040498>",
+    "ringing_bell": "<a:Ringing_Bell:723567493586747523>",
+    "spinning_gear": "<a:Spinning_Gear:723565744524230747>",
+    "loading": "<a:Loading:723560274581258342>",
+    "check": "<a:check:723559330909257738>",
+    "cross": "<a:Cross:723559539231948869>",
+    "trash": "<:trash:723571850898309130>"
+}

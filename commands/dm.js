@@ -16,6 +16,14 @@ module.exports.run = async (message, args) => {
         }
     });
     user.send(msg);
+    message.channel.send({
+        embed: {
+            title: `Succesfully send a message to ${user} (${user.id})`,
+            description: `Message content:\n${msg}\n\nThis message will be deleted in 6 seconds, so ${user} will never find out.`,
+            color: "GREEN",
+            timestamp: new Date()
+        }
+    }).then(msg => msg.delete({ timeout: 6000 }));
 
 }
 

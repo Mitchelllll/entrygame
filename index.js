@@ -81,13 +81,12 @@ client.on("ready", () => {
 
 client.on('message', async message => {
 
-    let args = message.content.slice(prefix.length).trim().split(/ +/g);
-    let command = args.shift().toLowerCase();
-    let commandFile = await client.commands.get(command) || client.commands.find(cmds => cmds.aliases && cmds.aliases.includes(command));
-
     if (message.channel.type === "dm") {
         let prefix = botConfig.prefix;
 
+        let args = message.content.slice(prefix.length).trim().split(/ +/g);
+        let command = args.shift().toLowerCase();
+        let commandFile = await client.commands.get(command) || client.commands.find(cmds => cmds.aliases && cmds.aliases.includes(command));
         if (!commandFile) return;
 
         if (commandFile) {
@@ -119,6 +118,9 @@ client.on('message', async message => {
 
         var prefix = prefixes[message.guild.id].prefixes;
 
+        let args = message.content.slice(prefix.length).trim().split(/ +/g);
+        let command = args.shift().toLowerCase();
+        let commandFile = await client.commands.get(command) || client.commands.find(cmds => cmds.aliases && cmds.aliases.includes(command));
         if (!commandFile) return;
 
         if (commandFile) {
@@ -158,6 +160,10 @@ client.on('message', async message => {
     //     console.log("HI.")
     //     // message.channel.send(`You woke me up! Do you need me?`);
     // }
+
+    let args = message.content.slice(prefix.length).trim().split(/ +/g);
+    let command = args.shift().toLowerCase();
+    let commandFile = await client.commands.get(command) || client.commands.find(cmds => cmds.aliases && cmds.aliases.includes(command));
 
     if (commandFile.help.guildOnly && message.channel.type !== 'text') {
         return message.channel.send({
@@ -212,7 +218,7 @@ client.on('message', async message => {
     };
     timestamps.set(message.author.id, now);
     setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
-    
+
 });
 
 client.login(process.env.token);

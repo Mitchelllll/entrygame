@@ -1,14 +1,7 @@
 const Discord = require('discord.js');
+module.exports.run = async (message, args, cooldown) => {
 
-module.exports.help = {
-    name: 'serverinfo',
-    description: 'Get information about this server!',
-    guildOnly: true,
-    cooldown: 10,
-    aliases: ['sinfo', 'si']
-}
-
-module.exports.run = async (message, args) => {
+    if(cooldown) return;
 
     message.channel.send({
         embed: {
@@ -38,4 +31,12 @@ module.exports.run = async (message, args) => {
         }
     });
 
+}
+
+module.exports.help = {
+    name: 'serverinfo',
+    description: 'Get information about this server!',
+    guildOnly: true,
+    cooldown: 10,
+    aliases: ['sinfo', 'si']
 }

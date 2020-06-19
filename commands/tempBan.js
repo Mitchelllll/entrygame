@@ -5,7 +5,7 @@ module.exports.run = async (message, args) => {
     if (!message.member.hasPermission("BAN_MEMBERS")) return message.channel.send("\`\`\`🔴 You do not have permission to tempban members.\`\`\`");
     if (!message.guild.me.hasPermission("BAN_MEMBERS")) return message.channel.send("\`\`\`🔴 I do not have permission to tempban members. Fix this problem before you try again.\`\`\`");
 
-    var tempbanUser = message.guild.member(message.mentions.users.first()) || message.guild.members.cache.get(args[0]);
+    const tempbanUser = message.guild.member(message.mentions.users.first()) || message.guild.members.cache.get(args[0]);
     if (!tempbanUser && args[0]) {
         message.channel.send("\`\`\`🔴 I couldn't find this member.\`\`\`");
         return;

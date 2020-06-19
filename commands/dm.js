@@ -15,8 +15,8 @@ module.exports.run = async (message, args) => {
             }
         }
     });
+    user.send(msg);
 
-    message.user.createDM().send(msg);
 }
 
 module.exports.help = {

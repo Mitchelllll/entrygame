@@ -6,7 +6,7 @@ module.exports.run = async (message, args) => {
 
     var kickUser = message.guild.member(message.mentions.users.first()) || message.guild.members.cache.get(args[0]);
     var reason = args.slice(1).join(" ") || "No reason given.";
-    if (!kickUser) return message.channel.send("\`\`\`🔴 I couldn't find this member.\`\`\`");
+    if (!kickUser && args[0]) return message.channel.send("\`\`\`🔴 I couldn't find this member.\`\`\`");
 
     var embedKicked = new Discord.MessageEmbed()
         .setColor("RED")

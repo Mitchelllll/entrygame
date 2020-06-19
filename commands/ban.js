@@ -8,6 +8,7 @@ module.exports.run = async (message, args) => {
     var reason = args.slice(1).join(" ") || "No reason given.";
     if (!banUser && args[0]) {
         message.channel.send("\`\`\`🔴 I couldn't find this member.\`\`\`");
+        return;
     } else {
         banUser.ban(reason).catch(err => {
             if (err) return message.channel.send("\`\`\`🔴 An error has occurred.\`\`\`");

@@ -8,6 +8,7 @@ module.exports.run = async (message, args) => {
     var tempmuteUser = message.guild.member(message.mentions.users.first()) || message.guild.members.cache.get(args[0]);
     if (!tempmuteUser && args[0]) {
         message.channel.send("\`\`\`🔴 I couldn't find this member.\`\`\`");
+        return;
     } else {
         if (tempmuteUser.hasPermission("MANAGE_MESSAGES")) return message.channel.send("\`\`\`🟥 You can not tempmute a staff member.\`\`\`");
 

@@ -10,6 +10,7 @@ module.exports.run = async (message, args) => {
     var reason = args.slice(1).join(" ") || "No reason given.";
     if (!warnUser) {
         message.channel.send("\`\`\`🔴 I couldn't find this member.\`\`\`");
+        return;
     } else {
         if (warnUser.hasPermission("MANAGE_MESSAGES")) return message.channel.send("\`\`\`🟥 You can not warn a staff member.\`\`\`");
 

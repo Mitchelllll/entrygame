@@ -1,5 +1,7 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
+client.commands = new Discord.Collection();
+
 const { botOwner_ID } = require("../data/botConfig.json");
 module.exports.run = async (message, args) => {
 

@@ -81,12 +81,13 @@ client.on("ready", () => {
 
 client.on('message', async message => {
 
+    let args = message.content.slice(prefix.length).trim().split(/ +/g);
+    let command = args.shift().toLowerCase();
+    let commandFile = await client.commands.get(command) || client.commands.find(cmds => cmds.aliases && cmds.aliases.includes(command));
+
     if (message.channel.type === "dm") {
         let prefix = botConfig.prefix;
 
-        let args = message.content.slice(prefix.length).trim().split(/ +/g);
-        let command = args.shift().toLowerCase();
-        let commandFile = await client.commands.get(command) || client.commands.find(cmds => cmds.aliases && cmds.aliases.includes(command));
         if (!commandFile) return;
 
         if (commandFile) {
@@ -118,9 +119,6 @@ client.on('message', async message => {
 
         var prefix = prefixes[message.guild.id].prefixes;
 
-        let args = message.content.slice(prefix.length).trim().split(/ +/g);
-        let command = args.shift().toLowerCase();
-        let commandFile = await client.commands.get(command) || client.commands.find(cmds => cmds.aliases && cmds.aliases.includes(command));
         if (!commandFile) return;
 
         if (commandFile) {

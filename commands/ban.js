@@ -6,7 +6,7 @@ module.exports.run = async (message, args) => {
 
     var banUser = message.guild.member(message.mentions.users.first()) || message.guild.members.cache.get(args[0]);
     var reason = args.slice(1).join(" ") || "No reason given.";
-    if (!banUser) return message.channel.send("\`\`\`🔴 I couldn't find this member.\`\`\`");
+    if (!banUser && args[0]) return message.channel.send("\`\`\`🔴 I couldn't find this member.\`\`\`");
 
     banUser.ban(reason).catch(err => {
         if (err) return message.channel.send("\`\`\`🔴 An error has occurred.\`\`\`");

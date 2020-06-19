@@ -17,7 +17,7 @@ module.exports.run = async (message, args) => {
         }
     }).then(msg => msg.delete({ timeout: 5000 }));
 
-    user.send(msg);
+    user.send(msg) || userID.send(msg);
     message.channel.send({
         embed: {
             title: `Succesfully send a message to ${user || userID}`,
@@ -26,7 +26,7 @@ module.exports.run = async (message, args) => {
             timestamp: new Date()
         }
     }).then(msg => msg.delete({ timeout: 5000 }));
-    if (!message.author == user) {
+    if (!message.author == user || userID) {
         message.author.send({
             embed: {
                 title: "SUCCEEDED",

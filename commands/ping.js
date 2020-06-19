@@ -3,7 +3,7 @@ const client = new Discord.Client();
 
 module.exports.run = async (message, args) => {
 
-    message.channel.send(`🏓 Pong!\nI reacted in ${parseInt(client.ws.ping)}ms!`);
+    message.channel.send(`🏓 Pong!\nI reacted in ${Date.now() - message.createdTimestamp}ms!`);
 
 }
 

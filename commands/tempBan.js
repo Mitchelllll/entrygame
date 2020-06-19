@@ -9,7 +9,7 @@ module.exports.run = async (message, args) => {
     if (!tempbanUser && args[0]) {
         message.channel.send("\`\`\`🔴 I couldn't find this member.\`\`\`");
         return;
-    } else {
+    } else if (tempbanUser) {
         if (tempbanUser.hasPermission("MANAGE_MESSAGES")) return message.channel.send("\`\`\`🟥 You can not tempban a staff member.\`\`\`");
 
         var tempbanTime = args[1];

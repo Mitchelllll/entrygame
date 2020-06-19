@@ -9,7 +9,7 @@ module.exports.run = async (message, args) => {
     if (!tempmuteUser && args[0]) {
         message.channel.send("\`\`\`🔴 I couldn't find this member.\`\`\`");
         return;
-    } else {
+    } else if (tempmuteUser) {
         if (tempmuteUser.hasPermission("MANAGE_MESSAGES")) return message.channel.send("\`\`\`🟥 You can not tempmute a staff member.\`\`\`");
 
         var muteRole = message.guild.roles.cache.get('719919298201518152')

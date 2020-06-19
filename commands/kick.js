@@ -9,7 +9,7 @@ module.exports.run = async (message, args) => {
     if (!kickUser && args[0]) {
         message.channel.send("\`\`\`🔴 I couldn't find this member.\`\`\`");
         return;
-    } else {
+    } else if(kickUser) {
         kickUser.kick(reason).catch(err => {
             if (err) return message.channel.send("\`\`\`🔴 An error has occurred.\`\`\`")
         });

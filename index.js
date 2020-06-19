@@ -165,7 +165,7 @@ client.on('message', async message => {
     let command = args.shift().toLowerCase();
     let commandFile = await client.commands.get(command) || client.commands.find(cmds => cmds.aliases && cmds.aliases.includes(command));
 
-    if (commandFile.help.guildOnly && message.channel.type !== 'text') {
+    if (commandFile.help.guildOnly && message.channel.type == 'dm') {
         return message.channel.send({
             embed: {
                 title: "Command not working",
@@ -179,7 +179,7 @@ client.on('message', async message => {
     if (commandFile.help.args && !args.length) {
         let reply = `You didn't provide any arguments, ${message.author}!`;
 
-        if (command.usage) {
+        if (commandFile.help.usage) {
             reply += `\nThe proper usage would be: \`${prefix}${commandFile.help.name} ${commandFile.help.usage}\``;
         }
 

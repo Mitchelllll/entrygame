@@ -1,13 +1,14 @@
 const Discord = require('discord.js');
 module.exports.run = async (message, args) => {
 
-    var user = message.guild.member(message.mentions.users.first()) || message.guild.members.cache.get(args[0]);
+    var user = message.guild.member(message.mentions.users.first()); 
+    var userID = message.guild.members.cache.get(args[0]);
     var msg = args.slice(1).join(" ");
 
     if (!msg) return message.channel.send({
         embed: {
             title: "Direct Message",
-            description: `You need to enter a message that you want to send to ${user || user.name}`,
+            description: `You need to enter a message that you want to send to ${user || userID}`,
             color: "RED",
             timestamp: new Date(),
             footer: {
@@ -19,7 +20,7 @@ module.exports.run = async (message, args) => {
     user.send(msg);
     message.channel.send({
         embed: {
-            title: `Succesfully send a message to ${user || user.name} (${user.id})`,
+            title: `Succesfully send a message to ${user || userID}`,
             description: "This message will be deleted in 5 seconds.",
             color: "GREEN",
             timestamp: new Date()

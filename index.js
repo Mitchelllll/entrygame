@@ -149,16 +149,14 @@ client.on('message', async message => {
                     if (commandFile.help.usage) {
                         reply += `\nThe proper usage would be: \`${prefix}${commandFile.help.name} ${commandFile.help.usage}\``;
                     }
-                    else {
-                        return message.channel.send({
-                            embed: {
-                                title: "Proper usage",
-                                description: reply,
-                                color: "RED",
-                                timestamp: new Date()
-                            }
-                        });
-                    }
+                    return message.channel.send({
+                        embed: {
+                            title: "Proper usage",
+                            description: reply,
+                            color: "RED",
+                            timestamp: new Date()
+                        }
+                    });
                 }
                 commandFile.run(message, args);
             } catch (err) {

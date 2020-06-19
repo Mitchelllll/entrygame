@@ -15,7 +15,7 @@ module.exports.run = async (message, args) => {
             }
         }
     });
-    console.log(author);
+    console.log(message.author);
     message.user.send(msg);
 
 }

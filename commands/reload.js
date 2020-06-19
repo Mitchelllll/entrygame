@@ -14,15 +14,15 @@ module.exports.run = async (message, args) => {
         message.channel.send(`There is no command with name or alias \`${command}\`.`);
     }
 
-    delete require.cache[require.resolve(`./${commandFile.help.name}.js`)];
+    delete require.cache[require.resolve(`./${command}.js`)];
 
     try {
-        const newCommand = require(`./${commandFile.help.name}.js`);
+        const newCommand = require(`./${command}.js`);
         message.client.commands.set(newCommand.name, newCommand);
-        message.channel.send(`Command \`${commandFile.help.name}\` was reloaded!`);
+        message.channel.send(`Command \`${command}\` was reloaded!`);
     } catch (error) {
         console.log(error);
-        message.channel.send(`There was an error while reloading \`${commandFile.help.name}\`:\n\`${error.message}\``);
+        message.channel.send(`There was an error while reloading \`${command}\`:\n\`${error.message}\``);
     }
 
 

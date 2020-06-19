@@ -7,7 +7,7 @@ module.exports.run = async (message, args) => {
     if (!msg) return message.channel.send({
         embed: {
             title: "Direct Message",
-            description: `You need to enter a message that you want to send to ${author}`,
+            description: `You need to enter a message that you want to send to ${user}`,
             color: "RED",
             timestamp: new Date(),
             footer: {
@@ -15,7 +15,7 @@ module.exports.run = async (message, args) => {
             }
         }
     });
-
+    console.log(author);
     message.user.send(msg);
 
 }

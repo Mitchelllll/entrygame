@@ -152,6 +152,14 @@ client.on('message', async message => {
     //     // message.channel.send(`You woke me up! Do you need me?`);
     // }
 
+    if (!prefixes[message.guild.id]) {
+        prefixes[message.guild.id] = {
+            prefixes: botConfig.prefix
+        };
+    }
+
+    var prefix = prefixes[message.guild.id].prefixes;
+
     let args = message.content.slice(prefix.length).trim().split(/ +/g);
     let command = args.shift().toLowerCase();
     let commandFile = await client.commands.get(command) || client.commands.get(cmds => cmds.aliases && cmds.aliases.includes(command));
@@ -162,15 +170,25 @@ client.on('message', async message => {
         if (commandFile.help.usage) {
             reply += `\nThe proper usage would be: \`${prefix}${commandFile.help.name} ${commandFile.help.usage}\``;
         }
-
-        return message.channel.send({
-            embed: {
-                title: "Proper usage",
-                description: reply,
-                color: "RED",
-                timestamp: new Date()
-            }
-        });
+        if (message.channel.type == "dm") {
+            return message.author.send({
+                embed: {
+                    title: "Proper usage",
+                    description: reply,
+                    color: "RED",
+                    timestamp: new Date()
+                }
+            });
+        } else {
+            return message.channel.send({
+                embed: {
+                    title: "Proper usage",
+                    description: reply,
+                    color: "RED",
+                    timestamp: new Date()
+                }
+            });
+        }
     }
 
     // if (!cooldowns.has(commandFile.help.name)) {

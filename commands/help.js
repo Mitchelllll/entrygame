@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const emojis = require('./data/emojis.json');
+const emojis = require('././data/emojis.json');
 
 const { prefix } = require("../data/botConfig.json");
 module.exports.run = async (message, args) => {

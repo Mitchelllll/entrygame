@@ -4,6 +4,17 @@ module.exports.run = async (message, args) => {
     var user = message.guild.member(message.mentions.users.first()) || message.guild.members.cache.get(args[0]);
     var msg = args.slice(1).join(/ +/g);
 
+    if (!msg) return message.channel.send({
+        embed: {
+            title: "Direct Message",
+            description: `You need to enter a message that you want to send to ${user.name}`,
+            color: "RED",
+            timestamp: new Date(),
+            footer: {
+                text: message.author.name
+            }
+        }
+    });
     message.user.send(msg);
 
 }

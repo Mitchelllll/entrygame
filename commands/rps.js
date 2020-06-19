@@ -33,7 +33,7 @@ module.exports.run = async (message, args) => {
         message.channel.send({
             embed: {
                 title: `Rock paper scissor`,
-                description: `You can't choose \`${args[0].join(" ")}\`.\nObviously you can only choose from:\n- Rock\n- Paper\n- Scissor`,
+                description: `You can't choose \`${args.slice(0).join(" ")}\`.\nObviously you can only choose from:\n- Rock\n- Paper\n- Scissor`,
                 color: "RED",
                 timestamp: new Date()
             }

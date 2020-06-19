@@ -4,22 +4,22 @@ module.exports.run = async (message, args) => {
 
     if (!message.author.id === botOwner_ID) return message.channel.send("You are not allowed to reload commands.");
     if (!args.length) return message.channel.send("You must give a command name.");
-    const commandName = args[0].toLowerCase();
-    const command = message.client.commands.get(commandName) || message.client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+    let command = args.shift().toLowerCase();
+    let commandFile = await client.commands.get(command) || client.commands.find(cmds => cmds.aliases && cmds.aliases.includes(command));
 
-    if (!command) {
-        message.channel.send(`There is no command with name or alias \`${commandName}\`.`);
+    if (!commandFile) {
+        message.channel.send(`There is no command with name or alias \`${command}\`.`);
     }
 
-    delete require.cache[require.resolve(`./${command.name}.js`)];
+    delete require.cache[require.resolve(`./${commandFile.help.name}.js`)];
 
     try {
-        const newCommand = require(`./${command.name}.js`);
+        const newCommand = require(`./${commandFile.help.name}.js`);
         message.client.commands.set(newCommand.name, newCommand);
-        message.channel.send(`Command \`${command.name}\` was reloaded!`);
+        message.channel.send(`Command \`${commandFile.help.name}\` was reloaded!`);
     } catch (error) {
         console.log(error);
-        message.channel.send(`There was an error while reloading \`${command.name}\`:\n\`${error.message}\``);
+        message.channel.send(`There was an error while reloading \`${commandFile.help.name}\`:\n\`${error.message}\``);
     }
 
 

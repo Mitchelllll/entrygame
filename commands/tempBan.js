@@ -6,21 +6,24 @@ module.exports.run = async (message, args) => {
     if (!message.guild.me.hasPermission("BAN_MEMBERS")) return message.channel.send("\`\`\`🔴 I do not have permission to tempban members. Fix this problem before you try again.\`\`\`");
 
     var tempbanUser = message.guild.member(message.mentions.users.first()) || message.guild.members.cache.get(args[0]);
-    if (!tempbanUser && args[0]) return message.channel.send("\`\`\`🔴 I couldn't find this member.\`\`\`");
-    if (tempbanUser.hasPermission("MANAGE_MESSAGES")) return message.channel.send("\`\`\`🟥 You can not tempban a staff member.\`\`\`");
+    if (!tempbanUser && args[0]) {
+        message.channel.send("\`\`\`🔴 I couldn't find this member.\`\`\`");
+    } else {
+        if (tempbanUser.hasPermission("MANAGE_MESSAGES")) return message.channel.send("\`\`\`🟥 You can not tempban a staff member.\`\`\`");
 
-    var tempbanTime = args[1];
-    if (!tempbanTime) return message.channel.send('\`\`\`🟥 Give a time in days (d), hours (h), minutes (m) or seconds (s).\`\`\`');
-    tempbanUser.ban();
-    message.channel.send(`Succesfully tempbanned ${tempbanUser} for ${tempbanTime}.`);
+        var tempbanTime = args[1];
+        if (!tempbanTime) return message.channel.send('\`\`\`🟥 Give a time in days (d), hours (h), minutes (m) or seconds (s).\`\`\`');
+        tempbanUser.ban();
+        message.channel.send(`Succesfully tempbanned ${tempbanUser} for ${tempbanTime}.`);
 
-    setTimeout(() => {
+        setTimeout(() => {
 
-        message.guild.members.unban(tempbanUser);
-        message.channel.send(`${tempbanUser}'s tempban has ended.`);
+            message.guild.members.unban(tempbanUser);
+            message.channel.send(`${tempbanUser}'s tempban has ended.`);
 
-    }, ms(tempbanTime));
+        }, ms(tempbanTime));
 
+    }
 }
 
 module.exports.help = {

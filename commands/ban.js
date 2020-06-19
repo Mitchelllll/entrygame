@@ -6,22 +6,24 @@ module.exports.run = async (message, args) => {
 
     var banUser = message.guild.member(message.mentions.users.first()) || message.guild.members.cache.get(args[0]);
     var reason = args.slice(1).join(" ") || "No reason given.";
-    if (!banUser && args[0]) return message.channel.send("\`\`\`🔴 I couldn't find this member.\`\`\`");
+    if (!banUser && args[0]) {
+        message.channel.send("\`\`\`🔴 I couldn't find this member.\`\`\`");
+    } else {
+        banUser.ban(reason).catch(err => {
+            if (err) return message.channel.send("\`\`\`🔴 An error has occurred.\`\`\`");
+        });
 
-    banUser.ban(reason).catch(err => {
-        if (err) return message.channel.send("\`\`\`🔴 An error has occurred.\`\`\`");
-    });
+        message.channel.send({
+            embed: {
+                color: "RED",
+                footer: {
+                    text: message.member.displayName
+                },
+                description: `**Banned:** ${banUser} (${banUser.id})\n**Banned by:** ${message.author}\n**Reason:** ${reason}`
+            }
+        });
 
-    message.channel.send({
-        embed: {
-            color: "RED",
-            footer: {
-                text: message.member.displayName
-            },
-            description: `**Banned:** ${banUser} (${banUser.id})\n**Banned by:** ${message.author}\n**Reason:** ${reason}`
-        }
-    });
-
+    }
 }
 
 module.exports.help = {

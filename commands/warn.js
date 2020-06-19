@@ -6,8 +6,8 @@ module.exports.run = async (message, args) => {
     if (!message.member.hasPermission("KICK_MEMBERS")) return message.reply("you do not have permission to warn members.");
     if (!message.guild.me.hasPermission("KICK_MEMBERS")) return message.reply("I do not have permission to warn members. Fix this problem before you try again.");
 
-    const warnUser = message.guild.member(message.mentions.users.first()) || message.guild.members.cache.get(args[0]);
-    const reason = args.slice(1).join(" ") || "No reason given.";
+    var warnUser = message.guild.member(message.mentions.users.first()) || message.guild.members.cache.get(args[0]);
+    var reason = args.slice(1).join(" ") || "No reason given.";
     if (!warnUser) {
         message.channel.send("\`\`\`🔴 I couldn't find this member.\`\`\`");
         return;

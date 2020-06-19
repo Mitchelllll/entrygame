@@ -5,7 +5,7 @@ module.exports.run = async (message, args) => {
     if (!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send("\`\`\`🔴 You do not have permission to tempmute members.\`\`\`");
     if (!message.guild.me.hasPermission("KICK_MEMBERS")) return message.channel.send("\`\`\`🔴 I do not have permission to tempmute members. Fix this problem before you try again.\`\`\`");
 
-    const tempmuteUser = message.guild.member(message.mentions.users.first()) || message.guild.members.cache.get(args[0]);
+    var tempmuteUser = message.guild.member(message.mentions.users.first()) || message.guild.members.cache.get(args[0]);
     if (!tempmuteUser && args[0]) {
         message.channel.send("\`\`\`🔴 I couldn't find this member.\`\`\`");
         return;

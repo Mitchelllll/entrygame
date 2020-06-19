@@ -35,7 +35,7 @@ client.on('guildMemberAdd', member => {
             },
             timestamp: new Date(),
             thumbnail: {
-                url: member.avatarURL()
+                url: member.user.avatarURL() ? member.user.avatarURL() : null
             }
         }
     });
@@ -62,7 +62,7 @@ client.on('guildMemberRemove', member => {
             },
             timestamp: new Date(),
             thumbnail: {
-                url: member.avatarURL() ? member.avatarURL() : null
+                url: member.user.avatarURL() ? member.user.avatarURL() : null
             }
         }
     });

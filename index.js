@@ -15,7 +15,7 @@ fs.readdir("./commands/", (error, files) => {
         let cmd = require(`./commands/${file}`);
         let cmdName = file.split(".")[0];
         console.log(`Loaded command: "${cmdName}".`);
-        client.commands.set(cmd.help.name, cmd && cmd.help.aliases, cmd);
+        client.commands.set(cmd.help.name, cmd);
     });
     console.log(" ");
 });
@@ -86,28 +86,29 @@ client.on('message', async message => {
 
         let args = message.content.slice(prefix.length).trim().split(/ +/g);
         let command = args.shift().toLowerCase();
-        let commandFile = await client.commands.get(command) || client.commands.get(cmds => cmds.aliases && cmds.aliases.includes(command));
+        let commandFile = await client.commands.get(command) || client.commands.find(cmds => cmds.aliases && cmds.aliases.includes(command));
         if (!commandFile) return;
 
         if (commandFile) {
-            try {
-                if (message.author.type === "bot") return;
-                if (message.channel.type === "dm") {
-                    return message.channel.send({
-                        embed: {
-                            title: '❌ An error has occured.\nI\'m not allowed to execute commands in DM channels yet.',
-                            description: 'And I do not respond to DMs',
-                            color: 0xff0000
-                        }
-                    }).then(msg => msg.delete({ timeout: 5000 }));
+            if (message.author.type === "bot") return;
+            if (commandFile.help.guildOnly) {
+                return message.channel.send({
+                    embed: {
+                        title: "Command not working",
+                        description: "This command can not be used in DMs.",
+                        color: "RED",
+                        timestamp: new Date()
+                    }
+                }).then(msg => msg.delete({ timeout: 5000 }));
+            } else {
+                try {
+                    commandFile.run(message, args);
+                } catch (err) {
+                    console.log(err);
                 }
-                commandFile.run(message, args);
-            } catch (err) {
-                console.log(err)
-            };
+            }
         };
 
-        return;
     } else {
         var prefixes = JSON.parse(fs.readFileSync("./data/botSettings.json"));
         if (!prefixes[message.guild.id]) {
@@ -120,27 +121,18 @@ client.on('message', async message => {
 
         let args = message.content.slice(prefix.length).trim().split(/ +/g);
         let command = args.shift().toLowerCase();
-        let commandFile = await client.commands.get(command) || client.commands.get(cmds => cmds.aliases && cmds.aliases.includes(command));
+        let commandFile = await client.commands.get(command) || client.commands.find(cmds => cmds.aliases && cmds.aliases.includes(command));
         if (!commandFile) return;
 
         if (commandFile) {
             try {
                 if (message.author.type === "bot") return;
-                if (message.channel.type === "dm") {
-                    return message.channel.send({
-                        embed: {
-                            title: `${findEmoji("Cross")} An error has occured.\nI'm not allowed to execute commands in DM channels yet.`,
-                            description: 'And I do not respond to DMs',
-                            color: 0xff0000
-                        }
-                    }).then(msg => msg.delete({ timeout: 5000 }));
-                }
+
                 commandFile.run(message, args);
             } catch (err) {
                 console.log(err)
             };
         };
-
     }
 
     var swearWords = JSON.parse(fs.readFileSync("./data/swearWords.json"));
@@ -153,7 +145,6 @@ client.on('message', async message => {
                 message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
             });
         }
-
     }
 
     // if (message.content.includes(client.user)) {
@@ -164,17 +155,6 @@ client.on('message', async message => {
     let args = message.content.slice(prefix.length).trim().split(/ +/g);
     let command = args.shift().toLowerCase();
     let commandFile = await client.commands.get(command) || client.commands.get(cmds => cmds.aliases && cmds.aliases.includes(command));
-
-    if (commandFile.help.guildOnly && message.channel.type == 'dm') {
-        return message.channel.send({
-            embed: {
-                title: "Command not working",
-                description: "This command can not be used in DMs.",
-                color: "RED",
-                timestamp: new Date()
-            }
-        });
-    }
 
     if (commandFile.help.args && !args.length) {
         let reply = `You didn't provide any arguments, ${message.author}!`;

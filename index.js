@@ -161,59 +161,59 @@ client.on('message', async message => {
     //     // message.channel.send(`You woke me up! Do you need me?`);
     // }
 
-    // if (cmd.help.guildOnly && message.channel.type !== 'text') {
-    //     return message.channel.send({
-    //         embed: {
-    //             title: "Command not working",
-    //             description: "This command can not be used in DMs.",
-    //             color: "RED",
-    //             timestamp: new Date()
-    //         }
-    //     });
-    // }
+    if (commandFile.help.guildOnly && message.channel.type !== 'text') {
+        return message.channel.send({
+            embed: {
+                title: "Command not working",
+                description: "This command can not be used in DMs.",
+                color: "RED",
+                timestamp: new Date()
+            }
+        });
+    }
 
-    // if (cmd.help.args && !args.length) {
-    //     let reply = `You didn't provide any arguments, ${message.author}!`;
+    if (commandFile.help.args && !args.length) {
+        let reply = `You didn't provide any arguments, ${message.author}!`;
 
-    //     if (command.usage) {
-    //         reply += `\nThe proper usage would be: \`${prefix}${cmd.help.name} ${cmd.help.usage}\``;
-    //     }
+        if (command.usage) {
+            reply += `\nThe proper usage would be: \`${prefix}${commandFile.help.name} ${commandFile.help.usage}\``;
+        }
 
-    //     return message.channel.send({
-    //         embed: {
-    //             title: "Proper usage",
-    //             description: reply,
-    //             color: "RED",
-    //             timestamp: new Date()
-    //         }
-    //     });
-    // }
+        return message.channel.send({
+            embed: {
+                title: "Proper usage",
+                description: reply,
+                color: "RED",
+                timestamp: new Date()
+            }
+        });
+    }
 
-    // if (!cooldowns.has(cmd.help.name)) {
-    //     cooldowns.set(cmd.help.name, new Discord.Collection());
-    // }
+    if (!cooldowns.has(commandFile.help.name)) {
+        cooldowns.set(commandFile.help.name, new Discord.Collection());
+    }
 
-    // const now = Date.now();
-    // const timestamps = cooldowns.get(cmd.help.name);
-    // const cooldownAmount = (cmd.help.cooldown || 3) * 1000;
+    const now = Date.now();
+    const timestamps = cooldowns.get(commandFile.help.name);
+    const cooldownAmount = (commandFile.help.cooldown || 3) * 1000;
 
-    // if (timestamps.has(message.author.id)) {
-    //     const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+    if (timestamps.has(message.author.id)) {
+        const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
 
-    //     if (now < expirationTime) {
-    //         const timeLeft = (expirationTime - now) / 1000;
-    //         message.channel.send({
-    //             embed: {
-    //                 title: `Cooldown on ${cmd.help.name}`,
-    //                 description: `I'm sorry, you can use this command again in ${timeLeft.toFixed(1)} seconds.`,
-    //                 color: "GREEN",
-    //                 timestamp: new Date()
-    //             }
-    //         });
-    //     }
-    // };
-    // timestamps.set(message.author.id, now);
-    // setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+        if (now < expirationTime) {
+            const timeLeft = (expirationTime - now) / 1000;
+            message.channel.send({
+                embed: {
+                    title: `Cooldown on ${commandFile.help.name}`,
+                    description: `I'm sorry, you can use this command again in ${timeLeft.toFixed(1)} seconds.`,
+                    color: "GREEN",
+                    timestamp: new Date()
+                }
+            });
+        }
+    };
+    timestamps.set(message.author.id, now);
+    setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
     
 });
 

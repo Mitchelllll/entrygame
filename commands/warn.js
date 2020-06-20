@@ -1,9 +1,8 @@
 const Discord = require('discord.js');
-const emojis = require('././data/emojis.json');
 
 const fs = require("fs");
 const warns = JSON.parse(fs.readFileSync("./././data/warnings.json", "utf-8"));
-module.exports.run = async (message, args) => {
+module.exports.run = async (message, args, emojis) => {
 
     if (!message.member.hasPermission("KICK_MEMBERS")) return message.reply("you do not have permission to warn members.");
     if (!message.guild.me.hasPermission("KICK_MEMBERS")) return message.reply("I do not have permission to warn members. Fix this problem before you try again.");

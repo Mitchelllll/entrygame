@@ -1,8 +1,7 @@
 const Discord = require('discord.js');
-const emojis = require('././data/emojis.json');
 
 const ms = require('ms');
-module.exports.run = async (message, args) => {
+module.exports.run = async (message, args, emojis) => {
 
     if (!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send("\`\`\`🔴 You do not have permission to tempmute members.\`\`\`");
     if (!message.guild.me.hasPermission("KICK_MEMBERS")) return message.channel.send("\`\`\`🔴 I do not have permission to tempmute members. Fix this problem before you try again.\`\`\`");

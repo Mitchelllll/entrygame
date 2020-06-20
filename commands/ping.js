@@ -1,9 +1,8 @@
 const Discord = require('discord.js');
-const emojis = require('././data/emojis.json');
 
 const client = new Discord.Client();
 
-module.exports.run = async (message, args) => {
+module.exports.run = async (message, args, emojis) => {
 
     message.channel.send(`🏓 Pong!\nI reacted in ${Date.now() - message.createdTimestamp}ms!`);
 

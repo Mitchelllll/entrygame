@@ -1,9 +1,8 @@
 const Discord = require('discord.js');
-const emojis = require('././data/emojis.json');
 
 const fs = require("fs");
 const { prefix } = require("../data/botConfig.json");
-module.exports.run = async (message, args) => {
+module.exports.run = async (message, args, emojis) => {
 
     if (!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send("\`\`\`🔴 You do not have permission to change the bot settings for this server.\`\`\`");
 

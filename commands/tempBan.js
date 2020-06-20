@@ -1,8 +1,7 @@
 const Discord = require('discord.js');
-const emojis = require('././data/emojis.json');
 
 const ms = require('ms');
-module.exports.run = async (message, args) => {
+module.exports.run = async (message, args, emojis) => {
 
     if (!message.member.hasPermission("BAN_MEMBERS")) return message.channel.send("\`\`\`🔴 You do not have permission to tempban members.\`\`\`");
     if (!message.guild.me.hasPermission("BAN_MEMBERS")) return message.channel.send("\`\`\`🔴 I do not have permission to tempban members. Fix this problem before you try again.\`\`\`");

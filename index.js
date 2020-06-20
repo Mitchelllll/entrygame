@@ -119,7 +119,7 @@ client.on('message', async message => {
                             }
                         });
                     }
-                    commandFile.run(message, args);
+                    commandFile.run(message, args, emojis);
                 } catch (err) {
                     console.log(err);
                 }

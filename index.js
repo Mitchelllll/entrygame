@@ -82,8 +82,6 @@ client.on("ready", () => {
 
 client.on('message', async message => {
 
-
-
     if (message.channel.type === "dm") {
         let prefix = botConfig.prefix;
 

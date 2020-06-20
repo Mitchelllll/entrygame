@@ -82,6 +82,8 @@ client.on("ready", () => {
 
 client.on('message', async message => {
 
+
+
     if (message.channel.type === "dm") {
         let prefix = botConfig.prefix;
 
@@ -127,6 +129,19 @@ client.on('message', async message => {
         };
 
     } else {
+
+        var swearWords = JSON.parse(fs.readFileSync("./data/swearWords.json"));
+
+        var msg = message.content.toLocaleLowerCase().split(" ");
+        for (let i = 0; i < swearWords["swearwords"].length; i++) {
+            if (msg.includes(swearWords["swearwords"][i])) {
+                message.delete();
+                message.reply(`${emojis.trash} Your message has been deleted because it included one or multiple swearwords.`).then(msg => msg.delete({ timeout: 3000 })).catch(err => {
+                    message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
+                });
+            }
+        }
+
         var prefixes = JSON.parse(fs.readFileSync("./data/botSettings.json"));
         if (!prefixes[message.guild.id]) {
             prefixes[message.guild.id] = {
@@ -164,18 +179,6 @@ client.on('message', async message => {
                 console.log(err)
             };
         };
-    }
-
-    var swearWords = JSON.parse(fs.readFileSync("./data/swearWords.json"));
-
-    var msg = message.content.toLocaleLowerCase().split(" ");
-    for (let i = 0; i < swearWords["swearwords"].length; i++) {
-        if (msg.includes(swearWords["swearwords"][i])) {
-            message.delete();
-            message.reply(`${emojis.trash} Your message has been deleted because it included one or multiple swearwords.`).then(msg => msg.delete({ timeout: 3000 })).catch(err => {
-                message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
-            });
-        }
     }
 
     // if (message.content.includes(client.user)) {

@@ -1,7 +1,6 @@
 const Discord = require('discord.js');
 
 const fs = require("fs");
-const { prefix } = require("../data/botConfig.json");
 module.exports = {
     name: "settings",
     category: "Admin",
@@ -26,6 +25,9 @@ module.exports = {
 
         if (key == "prefix") {
 
+            var prefixes = JSON.parse(fs.readFileSync("./././data/botSettings.json"));
+            var prefix = prefixes[message.guild.id].prefixes;
+
             if (!value) return message.channel.send({
                 embed: {
                     title: "Bot Settings",
@@ -38,6 +40,7 @@ module.exports = {
             prefixes[message.guild.id] = {
                 prefixes: value
             };
+            var prefix = prefixes[message.guild.id].prefixes;
 
             fs.writeFileSync("././data/botSettings.json", JSON.stringify(prefixes), (err) => {
                 if (err) message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
@@ -45,8 +48,8 @@ module.exports = {
 
             message.channel.send({
                 embed: {
-                    title: `${key} changed`,
-                    description: `The ${key} has been changed to ${value}`,
+                    title: `Prefix changed`,
+                    description: `The prefix has been changed to ${prefix}`,
                     color: "GREEN"
                 }
             });

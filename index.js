@@ -41,7 +41,7 @@ client.on('guildMemberAdd', member => {
         }
     });
 
-    const role = member.guild.roles.cache.find(rl => rl.name == "member");
+    const role = member.guild.roles.cache.find(rl => rl.name == "-+= MEMBER =+-");
     if (!role) return message.channel.send(`${emojis.cross} The role with the name ${role} does not excist.`);
 
     member.roles.add(role);

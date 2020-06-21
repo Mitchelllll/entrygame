@@ -7,6 +7,7 @@ module.exports = {
     description: "Get information about this server!",
     guildOnly: true,
     run: async (message, args, emojis, prefix) => {
+        let time = new Date().toLocaleString("nl-NL", { timeZone: "Europe/Amsterdam" });
 
         message.channel.send({
             embed: {
@@ -19,7 +20,7 @@ module.exports = {
                     { name: "Server ID:", value: message.guild.id },
                     { name: "Server Owner:", value: message.guild.owner },
                     { name: "Server Region:", value: message.guild.region },
-                    { name: "Server Created at:", value: message.guild.createdAt },
+                    { name: "Server Created at:", value: message.guild.createdAt() },
                     // { name: "Amount humans:", value: message.guild.id },
                     // { name: "Amount bots:", value: message.guild.id },
                     // { name: "Amount online:", value: message.guild.id },
@@ -27,7 +28,7 @@ module.exports = {
                     // { name: "Voice channels:", value: message.guild.id },
 
                     { name: "Member count:", value: message.guild.memberCount },
-                    { name: "You joined at:", value: message.guild.joinedAt },
+                    { name: "You joined at:", value: message.member.joinedAt(time) },
                 ],
                 footer: {
                     text: message.member.displayName

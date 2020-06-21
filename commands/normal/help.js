@@ -44,7 +44,9 @@ module.exports = {
         if (command.category) data.push(`**Category:** ${command.category}`);
         if (command.usage) data.push(`**Usage:** ${prefix}${command.name} ${command.usage}`);
 
-        message.author.send(data, { split: true });
+        message.author.send(data, { split: true }).then(() => {
+            message.channel.send(`I have sent you a DM with all the information about ${command.name}`);
+        });
 
     }
 }

@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const botConfig = require('./././data/botConfig.json');
 const fs = require("fs");
 
 module.exports = {
@@ -13,6 +14,11 @@ module.exports = {
         const data = [];
         const { commands } = message.client;
         var prefixes = JSON.parse(fs.readFileSync("./././data/botSettings.json"));
+        if (!prefixes[message.guild.id]) {
+            prefixes[message.guild.id] = {
+                prefixes: botConfig.prefix
+            };
+        }
         var prefix = prefixes[message.guild.id].prefixes;
 
         if (!args.length) {

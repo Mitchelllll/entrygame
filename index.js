@@ -100,7 +100,7 @@ client.on('message', async message => {
         if (commandFile) {
             if (message.author.type === "bot") return;
 
-            if (commandFile.help.guildOnly) {
+            if (commandFile.guildOnly) {
                 return message.channel.send({
                     embed: {
                         title: `${emojis.cross} Command not working`,
@@ -114,8 +114,8 @@ client.on('message', async message => {
                     if (commandFile.help.args && !args.length) {
                         let reply = `${emojis.cross} You didn't provide any arguments, ${message.author}!`;
 
-                        if (commandFile.help.usage) {
-                            reply += `\n${emojis.check} The proper usage would be: \`${prefix}${commandFile.help.name} ${commandFile.help.usage}\``;
+                        if (commandFile.usage) {
+                            reply += `\n${emojis.check} The proper usage would be: \`${prefix}${commandFile.name} ${commandFile.usage}\``;
                         }
                         return message.author.send({
                             embed: {
@@ -158,17 +158,17 @@ client.on('message', async message => {
 
         let args = message.content.slice(prefix.length).trim().split(/ +/g);
         let command = args.shift().toLowerCase();
-        let commandFile = await client.commands.get(command) || client.commands.find(cmds => cmds.aliases && cmds.aliases.includes(command));
-        if (!commandFile) return;
+        let commandFile = await client.commands.get(command);
+        if (!commandFile) commandFile = client.commands.get(client.aliases.get(command));
 
         if (commandFile) {
             try {
                 if (message.author.type === "bot") return;
-                if (commandFile.help.args && !args.length) {
+                if (commandFile.args && !args.length) {
                     let reply = `${emojis.cross} You didn't provide any arguments, ${message.author}!`;
 
-                    if (commandFile.help.usage) {
-                        reply += `\n${emojis.check} The proper usage would be: \`${prefix}${commandFile.help.name} ${commandFile.help.usage}\``;
+                    if (commandFile.usage) {
+                        reply += `\n${emojis.check} The proper usage would be: \`${prefix}${commandFile.name} ${commandFile.usage}\``;
                     }
                     return message.channel.send({
                         embed: {

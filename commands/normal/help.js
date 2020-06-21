@@ -29,8 +29,9 @@ module.exports = {
                     message.reply('it seems like I can\'t DM you! Do you have DMs disabled?');
                 });
         }
-        const name = args[0].toLowerCase();
-        const command = commands.get(name) || commands.find(c => c.aliases && c.aliases.includes(name));
+        const name = args.shift().toLowerCase();
+        const command = await client.commands.get(name);
+        if (!command) commandFile = client.commands.get(client.aliases.get(name));
 
         if (!command) {
             return message.channel.send(`${name} is not an excisting commands.`);
@@ -42,7 +43,6 @@ module.exports = {
         if (command.description) data.push(`**Description:** ${command.description}`);
         if (command.category) data.push(`**Category:** ${command.category}`);
         if (command.usage) data.push(`**Usage:** ${prefix}${command.name} ${command.usage}`);
-        data.push(`**Cooldown:** ${command.cooldown || 3} second(s)`);
 
         message.channel.send(data, { split: true });
 

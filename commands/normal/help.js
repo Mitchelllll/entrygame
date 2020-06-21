@@ -31,8 +31,8 @@ module.exports = {
                 });
         }
         const name = args.shift().toLowerCase();
-        const command = await client.commands.get(name);
-        if (!command) commandFile = client.commands.get(client.aliases.get(name));
+        const command = await client.commands.find(name);
+        if (!command) commandFile = client.commands.find(client.aliases.find(name));
 
         if (!command) {
             return message.channel.send(`${name} is not an excisting commands.`);

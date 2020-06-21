@@ -6,6 +6,7 @@
   "author": "MrBradley__",
   "license": "ISC",
   "dependencies": {
+    "ascii": "^1.0.0",
     "discord.js": "^12.2.0",
     "fs": "^0.0.2",
     "ms": "^2.1.2",

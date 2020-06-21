@@ -4,22 +4,29 @@ const client = new Discord.Client();
 const emojis = require('./data/emojis.json');
 
 client.commands = new Discord.Collection();
+client.aliases = new Collection();
 // const cooldowns = new Discord.Collection();
 
 const fs = require("fs");
 
-fs.readdir("./commands/", (error, files) => {
-    if (error) return console.log(error);
-    let fileCut = files.filter(file => file.split(".").pop() === "js");
-    if (fileCut.length <= 0) return console.log("No files to show");
-    fileCut.forEach((file) => {
-        let cmd = require(`./commands/${file}`);
-        let cmdName = file.split(".")[0];
-        console.log(`Loaded command: "${cmdName}".`);
-        client.commands.set(cmd.help.name, cmd);
-    });
-    console.log(" ");
+
+["command"].forEach(handler => {
+    require(`./handlers/${handler}`)(client);
 });
+
+
+// fs.readdir("./commands/", (error, files) => {
+//     if (error) return console.log(error);
+//     let fileCut = files.filter(file => file.split(".").pop() === "js");
+//     if (fileCut.length <= 0) return console.log("No files to show");
+//     fileCut.forEach((file) => {
+//         let cmd = require(`./commands/${file}`);
+//         let cmdName = file.split(".")[0];
+//         console.log(`Loaded command: "${cmdName}".`);
+//         client.commands.set(cmd.help.name, cmd);
+//     });
+//     console.log(" ");
+// });
 
 client.on('guildMemberAdd', member => {
 
@@ -87,8 +94,8 @@ client.on('message', async message => {
 
         let args = message.content.slice(prefix.length).trim().split(/ +/g);
         let command = args.shift().toLowerCase();
-        let commandFile = await client.commands.get(command) || client.commands.find(cmds => cmds.aliases && cmds.aliases.includes(command));
-        if (!commandFile) return;
+        let commandFile = await client.commands.get(command);
+        if (!commandFile) commandFile = client.commands.get(client.aliases.get(command));
 
         if (commandFile) {
             if (message.author.type === "bot") return;

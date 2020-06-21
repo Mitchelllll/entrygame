@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-const client = new Discord.Client();
 const fs = require("fs");
 
 module.exports = {
@@ -31,8 +30,8 @@ module.exports = {
                 });
         }
         const name = args.shift().toLowerCase();
-        const command = await client.commands.find(name);
-        if (!command) commandFile = client.commands.find(client.aliases.find(name));
+        const command = await commands.get(name);
+        if (!command) commandFile = commands.get(client.aliases.get(name));
 
         if (!command) {
             return message.channel.send(`${name} is not an excisting commands.`);

@@ -9,7 +9,6 @@ client.aliases = new Discord.Collection();
 
 const fs = require("fs");
 
-
 ["command"].forEach(handler => {
     require(`./handlers/${handler}`)(client);
 });

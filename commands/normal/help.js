@@ -22,11 +22,11 @@ module.exports = {
             return message.author.send(data, { split: true })
                 .then(() => {
                     if (message.channel.type === 'dm') return;
-                    message.reply('I\'ve sent you a DM with all my commands!');
+                    message.channel.send('I have sent you a DM with all my commands!');
                 })
                 .catch(error => {
                     console.error(`Could not send help DM to ${message.author.tag}.\n`, error);
-                    message.reply('it seems like I can\'t DM you! Do you have DMs disabled?');
+                    message.channel.send('I can\'t reach your DMs, do you have DMs on?');
                 });
         }
         const name = args.shift().toLowerCase();
@@ -44,7 +44,7 @@ module.exports = {
         if (command.category) data.push(`**Category:** ${command.category}`);
         if (command.usage) data.push(`**Usage:** ${prefix}${command.name} ${command.usage}`);
 
-        message.channel.send(data, { split: true });
+        message.author.send(data, { split: true });
 
     }
 }

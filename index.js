@@ -113,7 +113,7 @@ client.on('message', async message => {
                 if (commandFile.usage) {
                     reply += `\n${emojis.check} The proper usage would be: \`${prefix}${commandFile.name} ${commandFile.usage}\``;
                 }
-                return message.author.send({
+                return message.channel.send({
                     embed: {
                         title: "Proper usage",
                         description: reply,

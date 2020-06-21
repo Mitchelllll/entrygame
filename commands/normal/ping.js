@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-
 const client = new Discord.Client();
 
 module.exports = {
@@ -7,7 +6,7 @@ module.exports = {
     category: "Normal",
     description: "Check my respondtime!",
     run: async (message, args, emojis) => {
-        message.channel.send(`🏓 Pong!\nI reacted in ${Date.now() - message.createdTimestamp}ms!`);
+        message.channel.send(`🏓 Pong!\nI reacted in ${client.ws.ping}ms!`);
 
     }
 }

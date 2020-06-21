@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
 
-const { prefix } = require("../data/botConfig.json");
 module.exports = {
     name: "help",
     category: "Normal",
@@ -12,6 +11,8 @@ module.exports = {
     run: async (message, args, emojis) => {
         const data = [];
         const { commands } = message.client;
+        var prefixes = JSON.parse(fs.readFileSync("./././data/botSettings.json"));
+        var prefix = prefixes[message.guild.id].prefixes;
 
         if (!args.length) {
             data.push('Here\'s a list of all my commands:');

@@ -6,7 +6,7 @@ module.exports = {
     aliases: ["open", "new"],
     description: "Create a channel with just you and the staff!",
     guildOnly: true,
-    run: async (message, args, emojis) => {
+    run: async (message, args, emojis, prefix) => {
         var userName = message.author.username;
 
         var ticketExcists = false;

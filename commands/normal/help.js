@@ -8,11 +8,11 @@ module.exports = {
     description: "A list with all my commands, or specific info about a command!",
     usage: "[command]",
     guildOnly: true,
-    run: async (message, args, emojis) => {
+    run: async (message, args, emojis, prefix) => {
         const data = [];
         const { commands } = message.client;
-        var prefixes = JSON.parse(fs.readFileSync("./././data/botSettings.json"));
-        var prefix = prefixes[message.guild.id].prefixes;
+        // var prefixes = JSON.parse(fs.readFileSync("./././data/botSettings.json"));
+        // var prefix = prefixes[message.guild.id].prefixes;
 
         if (!args.length) {
             data.push('Here\'s a list of all my commands:');

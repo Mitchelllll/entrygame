@@ -8,7 +8,7 @@ module.exports = {
     args: true,
     usage: `<title> ${seperator} <message> ${seperator} [color] ${seperator} [channel]`,
     guildOnly: true,
-    run: async (message, args, emojis) => {
+    run: async (message, args, emojis, prefix) => {
         if (!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send("\`\`\`🔴 You do not have permission to send embeds.\`\`\`");
 
         var argsList = args.join(" ").split(seperator);

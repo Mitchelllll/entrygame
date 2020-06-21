@@ -6,7 +6,7 @@ module.exports = {
     aliases: ["sinfo", "si"],
     description: "Get information about this server!",
     guildOnly: true,
-    run: async (message, args, emojis) => {
+    run: async (message, args, emojis, prefix) => {
 
         message.channel.send({
             embed: {

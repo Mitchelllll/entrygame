@@ -9,7 +9,7 @@ module.exports = {
     args: true,
     usage: "<user>",
     guildOnly: true,
-    run: async (message, args, emojis) => {
+    run: async (message, args, emojis, prefix) => {
         if (!message.member.hasPermission("KICK_MEMBERS")) return message.reply("you do not have permission to warn members.");
         if (!message.guild.me.hasPermission("KICK_MEMBERS")) return message.reply("I do not have permission to warn members. Fix this problem before you try again.");
 

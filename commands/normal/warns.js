@@ -9,7 +9,7 @@ module.exports = {
     args: true,
     usage: ["user"],
     guildOnly: true,
-    run: async (message, args, emojis) => {
+    run: async (message, args, emojis, prefix) => {
         var warnListUser = message.guild.member(message.mentions.users.first()) || message.guild.members.cache.get(args[0]);
         var warnListUserMe = message.member;
 

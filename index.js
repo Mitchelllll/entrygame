@@ -5,7 +5,7 @@ const emojis = require('./data/emojis.json');
 
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
-const Timeout = new Set();
+client.timeout = new Discord.Collection();
 
 const fs = require("fs");
 const ms = require("ms");
@@ -94,22 +94,53 @@ client.on('message', async message => {
             }).then(msg => msg.delete({ timeout: 5000 }));
         }
 
-        if (commandFile.timeout) {
-            if (Timeout.has(`${message.author.id}${commandFile.name}`)) {
-                return message.channel.send({
+
+        if (!cooldowns.has(commandFile.name)) {
+            cooldowns.set(commandFile.name, new Discord.Collection());
+        }
+
+        const now = Date.now();
+        const timestamps = cooldowns.get(commandFile.name);
+        const cooldownAmount = (commandFile.timeout || 3) * 1000;
+
+        if (timestamps.has(message.author.id)) {
+            const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+
+            if (now < expirationTime) {
+                const timeLeft = (expirationTime - now) / 1000;
+                message.channel.send({
                     embed: {
-                        title: "Command timeout",
-                        description: `You can only use \`${commandFile.name}\` every ${ms(commandFile.timeout)}`,
-                        color: "RED"
+                        title: `Cooldown on ${commandFile.name}`,
+                        description: `I'm sorry, you can use this command again in ${timeLeft.toFixed(1)} seconds.`,
+                        color: "GREEN",
+                        timestamp: new Date()
                     }
                 });
-            } else {
-                Timeout.add(`${message.author.id}${commandFile.name}`)
-                setTimeout(() => {
-                    Timeout.delete(`${message.author.id}${commandFile.name}`);
-                }, commandFile.timeout);
             }
-        }
+        };
+        timestamps.set(message.author.id, now);
+        setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+
+
+        // if (commandFile.timeout) {
+        //     const now = Date.now();
+        //     const cooldownAmount = (commandFile.timeout || 3) * 1000;
+        //     if (Timeout.has(`${message.author.id}${commandFile.name}`)) {
+        //         if(now < cooldownAmount)
+        //         return message.channel.send({
+        //             embed: {
+        //                 title: "Command timeout",
+        //                 description: `You can only use \`${commandFile.name}\` every ${ms(commandFile.timeout)}`,
+        //                 color: "RED"
+        //             }
+        //         });
+        //     } else {
+        //         Timeout.add(`${message.author.id}${commandFile.name}`)
+        //         setTimeout(() => {
+        //             Timeout.delete(`${message.author.id}${commandFile.name}`);
+        //         }, commandFile.timeout);
+        //     }
+        // }
         try {
             if (commandFile.args && !args.length) {
                 let reply = `${emojis.cross} You didn't provide any arguments, ${message.author}!`;

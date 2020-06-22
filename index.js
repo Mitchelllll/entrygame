@@ -80,7 +80,8 @@ client.on('message', async message => {
 
     if (commandFile) {
         if (message.author.type === "bot") return;
-
+        message.delete();
+        
         if (commandFile.guildOnly && message.channel.type === "dm") {
             return message.channel.send({
                 embed: {

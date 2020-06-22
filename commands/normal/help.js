@@ -79,7 +79,7 @@ module.exports = {
         message.author.send({
             embed: {
                 title: `HELP command about \`${command.name}\``,
-                description: `${data}\n\n`,
+                description: `${data}\n\nWith: <> is required, [] is optional`,
                 color: "BLUE",
                 footer: {
                     text: message.member.displayName

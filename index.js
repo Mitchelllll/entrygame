@@ -93,54 +93,34 @@ client.on('message', async message => {
             }).then(msg => msg.delete({ timeout: 5000 }));
         }
 
-
-        if (!timeout.has(commandFile.name)) {
-            timeout.set(commandFile.name, new Discord.Collection());
-        }
-
-        const now = Date.now();
-        const timestamps = timeout.get(commandFile.name);
-        const timeoutAmount = (commandFile.timeout || 3) * 1000;
-
-        if (timestamps.has(message.author.id)) {
-            const expirationTime = timestamps.get(message.author.id) + timeoutAmount;
-
-            if (now < expirationTime) {
-                const timeLeft = (expirationTime - now) / 1000;
-                message.channel.send({
-                    embed: {
-                        title: `Cooldown on ${commandFile.name}`,
-                        description: `I'm sorry, you can use this command again in ${timeLeft.toFixed(1)} seconds.`,
-                        color: "GREEN",
-                        timestamp: new Date()
-                    }
-                });
-            }
-        };
-        timestamps.set(message.author.id, now);
-        setTimeout(() => timestamps.delete(message.author.id), timeoutAmount);
-
-
-        // if (commandFile.timeout) {
-        //     const now = Date.now();
-        //     const cooldownAmount = (commandFile.timeout || 3) * 1000;
-        //     if (Timeout.has(`${message.author.id}${commandFile.name}`)) {
-        //         if(now < cooldownAmount)
-        //         return message.channel.send({
-        //             embed: {
-        //                 title: "Command timeout",
-        //                 description: `You can only use \`${commandFile.name}\` every ${ms(commandFile.timeout)}`,
-        //                 color: "RED"
-        //             }
-        //         });
-        //     } else {
-        //         Timeout.add(`${message.author.id}${commandFile.name}`)
-        //         setTimeout(() => {
-        //             Timeout.delete(`${message.author.id}${commandFile.name}`);
-        //         }, commandFile.timeout);
-        //     }
-        // }
         try {
+            if (!timeout.has(commandFile.name)) {
+                timeout.set(commandFile.name, new Discord.Collection());
+            }
+
+            const now = Date.now();
+            const timestamps = timeout.get(commandFile.name);
+            const timeoutAmount = (commandFile.timeout || 3) * 1000;
+
+            if (timestamps.has(message.author.id)) {
+                const expirationTime = timestamps.get(message.author.id) + timeoutAmount;
+
+                if (now < expirationTime) {
+                    const timeLeft = (expirationTime - now) / 1000;
+                    message.channel.send({
+                        embed: {
+                            title: `Cooldown on ${commandFile.name}`,
+                            description: `I'm sorry, you can use this command again in ${timeLeft.toFixed(1)} seconds.`,
+                            color: "GREEN",
+                            timestamp: new Date()
+                        }
+                    });
+                }
+            } else {
+                timestamps.set(message.author.id, now);
+                setTimeout(() => timestamps.delete(message.author.id), timeoutAmount);
+            }
+            
             if (commandFile.args && !args.length) {
                 let reply = `${emojis.cross} You didn't provide any arguments, ${message.author}!`;
 

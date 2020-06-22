@@ -7,8 +7,7 @@ module.exports = {
     category: "Admin",
     aliases: ["warnsr", "dwarns", "warnsd", "deletewarns", "removewarns"],
     description: "Remove all warns from a member or yourself!",
-    args: true,
-    usage: "<user>",
+    usage: "[user]",
     guildOnly: true,
     run: async (message, args, emojis, prefix) => {
         if (!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send("\`\`\`🔴 You do not have permission to remove warns from members.\`\`\`");
@@ -58,7 +57,7 @@ module.exports = {
         };
 
 
-        fs.writeFile("./warnings.json", JSON.stringify(warns), (err) => {
+        fs.writeFile("./././data/warnings.json", JSON.stringify(warns), (err) => {
             if (err) console.log(err);
         });
 

@@ -28,7 +28,7 @@ module.exports = {
 
             warns[message.guild.id + warnUser.id].warnings++;
 
-            fs.writeFile("./warnings.json", JSON.stringify(warns), (err) => {
+            fs.writeFile("./././data/warnings.json", JSON.stringify(warns), (err) => {
                 if (err) console.log(err);
             });
 

@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const { prefix } = require('./data/botConfig.json');
+const { token, prefix } = require('./data/botConfig.json');
 const client = new Discord.Client();
 const emojis = require('./data/emojis.json');
 
@@ -133,4 +133,4 @@ client.on('message', async message => {
     // }
 });
 
-client.login(process.env.token);
+client.login(/* process.env.token */token);

@@ -115,12 +115,12 @@ client.on('message', async message => {
                             timestamp: new Date()
                         }
                     });
+                } else {
+                    timestamps.set(message.author.id, now);
+                    setTimeout(() => timestamps.delete(message.author.id), timeoutAmount);
                 }
-            } else {
-                timestamps.set(message.author.id, now);
-                setTimeout(() => timestamps.delete(message.author.id), timeoutAmount);
             }
-            
+
             if (commandFile.args && !args.length) {
                 let reply = `${emojis.cross} You didn't provide any arguments, ${message.author}!`;
 

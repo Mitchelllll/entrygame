@@ -16,10 +16,10 @@ module.exports = {
 
         if (!args.length) {
             data.push('Here\'s a list of all my commands:');
-            data.push(commands.map(command => `\n${command.name} - ${command.description}`));
+            data.push(commands.map(command => `\n${command.name} - ${command.description}`)).replace(",", " ");
             data.push(`\nYou can send \`${prefix}help [command name]\` to get info on a specific command!`);
 
-            return message.author.send(data.replace(",", " "), { split: true })
+            return message.author.send(data, { split: true })
                 .then(() => {
                     if (message.channel.type === 'dm') return;
                     message.channel.send('I have sent you a DM with all my commands!');

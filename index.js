@@ -2,30 +2,17 @@ const Discord = require('discord.js');
 const { prefix } = require('./data/botConfig.json');
 const client = new Discord.Client();
 const emojis = require('./data/emojis.json');
-const fs = require("fs");
 
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
-client.categories = fs.readdirSync("./commands/")
-// const cooldowns = new Discord.Collection();
+const Timeout = new Set();
+
+const fs = require("fs");
+const ms = require("ms");
 
 ["command"].forEach(handler => {
     require(`./handlers/${handler}`)(client);
 });
-
-
-// fs.readdir("./commands/", (error, files) => {
-//     if (error) return console.log(error);
-//     let fileCut = files.filter(file => file.split(".").pop() === "js");
-//     if (fileCut.length <= 0) return console.log("No files to show");
-//     fileCut.forEach((file) => {
-//         let cmd = require(`./commands/${file}`);
-//         let cmdName = file.split(".")[0];
-//         console.log(`Loaded command: "${cmdName}".`);
-//         client.commands.set(cmd.help.name, cmd);
-//     });
-//     console.log(" ");
-// });
 
 client.on('guildMemberAdd', member => {
 
@@ -106,6 +93,23 @@ client.on('message', async message => {
                 }
             }).then(msg => msg.delete({ timeout: 5000 }));
         }
+
+        if (commandFile.timeout) {
+            if (Timeout.has(`${message.author.id}${commandFile.name}`)) {
+                return message.channel.send({
+                    embed: {
+                        title: "Command timeout",
+                        description: `You can only use \`${commandFile.name}\` every ${ms(commandFile.timeout)}`,
+                        color: "RED"
+                    }
+                });
+            } else {
+                Timeout.add(`${message.author.id}${commandFile.name}`)
+                setTimeout(() => {
+                    Timeout.delete(`${message.author.id}${commandFile.name}`);
+                }, commandFile.timeout);
+            }
+        }
         try {
             if (commandFile.args && !args.length) {
                 let reply = `${emojis.cross} You didn't provide any arguments, ${message.author}!`;
@@ -144,35 +148,6 @@ client.on('message', async message => {
     //     console.log("HI.")
     //     // message.channel.send(`You woke me up! Do you need me?`);
     // }
-
-
-
-    // if (!cooldowns.has(commandFile.help.name)) {
-    //     cooldowns.set(commandFile.help.name, new Discord.Collection());
-    // }
-
-    // const now = Date.now();
-    // const timestamps = cooldowns.get(commandFile.help.name);
-    // const cooldownAmount = (commandFile.help.cooldown || 3) * 1000;
-
-    // if (timestamps.has(message.author.id)) {
-    //     const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
-
-    //     if (now < expirationTime) {
-    //         const timeLeft = (expirationTime - now) / 1000;
-    //         message.channel.send({
-    //             embed: {
-    //                 title: `Cooldown on ${commandFile.help.name}`,
-    //                 description: `I'm sorry, you can use this command again in ${timeLeft.toFixed(1)} seconds.`,
-    //                 color: "GREEN",
-    //                 timestamp: new Date()
-    //             }
-    //         });
-    //     }
-    // };
-    // timestamps.set(message.author.id, now);
-    // setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
-
 });
 
 client.login(process.env.token);

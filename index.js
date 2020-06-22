@@ -5,6 +5,7 @@ const emojis = require('./data/emojis.json');
 
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
+client.categories = fs.readdirSync("./commands/")
 // const cooldowns = new Discord.Collection();
 
 const fs = require("fs");

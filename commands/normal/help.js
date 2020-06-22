@@ -18,7 +18,7 @@ module.exports = {
     }
 }
 
-function getAll(message, emojis, prefix) {
+async function getAll(message, emojis, prefix) {
     const embed = new Discord.MessageEmbed()
         .setColor("BLUE")
 
@@ -36,7 +36,7 @@ function getAll(message, emojis, prefix) {
     return message.channel.send(embed.setDescription(info));
 }
 
-function getCMD(message, input, emojis, prefix) {
+async function getCMD(message, input, emojis, prefix) {
     const embed = new Discord.MessageEmbed()
 
     // const cmd = client.commands.get(input.toLowerCase()) || client.commands.get(client.aliases.get(input.toLowerCase()));

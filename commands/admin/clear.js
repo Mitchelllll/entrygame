@@ -9,7 +9,6 @@ module.exports = {
     args: true,
     usage: "<amount> [user]",
     guildOnly: true,
-    timeout: 10,
     run: async (message, args, emojis, prefix) => {
         if (!message.member.hasPermission("MANAGE_MESSAGES")) return message.reply("you do not have permissions to delete messages.");
 

@@ -2,13 +2,12 @@ const Discord = require('discord.js');
 const { prefix } = require('./data/botConfig.json');
 const client = new Discord.Client();
 const emojis = require('./data/emojis.json');
+const fs = require("fs");
 
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
 client.categories = fs.readdirSync("./commands/")
 // const cooldowns = new Discord.Collection();
-
-const fs = require("fs");
 
 ["command"].forEach(handler => {
     require(`./handlers/${handler}`)(client);

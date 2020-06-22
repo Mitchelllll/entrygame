@@ -14,35 +14,82 @@ module.exports = {
 
         if (!args.length) {
             data.push('Here\'s a list of all my commands:');
-            data.push(commands.map(command => `\n${command.name} - ${command.description}`)).toString().slice(data.length - 1);
-            data.push(`\nYou can send \`${prefix}help [command name]\` to get info on a specific command!`);
+            data.push(commands.map(command => `\n\`${command.name}\` - *${command.description}*`));
+            data.push(`\nYou can send \`${prefix}help [command]\` to get info on a specific command!`);
 
-            return message.author.send(data, { split: true })
+            return message.author.send({
+                embed: {
+                    title: "HELP command",
+                    description: data,
+                    color: "BLUE",
+                    footer: {
+                        text: message.member.displayName
+                    }
+                }
+            })
                 .then(() => {
                     if (message.channel.type === 'dm') return;
-                    message.channel.send('I have sent you a DM with all my commands!');
+                    message.channel.send({
+                        embed: {
+                            title: "HELP command",
+                            description: `${emojis.check} I have sent you a DM with all my commands!`,
+                            color: "GREEN",
+                            footer: {
+                                text: message.member.displayName
+                            }
+                        }
+                    });
                 })
                 .catch(error => {
                     console.error(`Could not send help DM to ${message.author.tag}.\n`, error);
-                    message.channel.send('I can\'t reach your DMs, do you have DMs on?');
+                    message.channel.send({
+                        embed: {
+                            title: 'I can\'t reach your DMs, do you have DMs on?',
+                            color: "RED",
+                            footer: {
+                                text: message.member.displayName
+                            }
+                        }
+                    });
                 });
         }
         const name = args.shift().toLowerCase();
         const command = await commands.get(name) || commands.get(command.aliases.get(name));
 
         if (!command) {
-            return message.channel.send(`${name} is not an excisting commands.`);
+            return message.channel.send({
+                embed: {
+                    title: "ERROR",
+                    description: `\`${name}\` is not an excisting commands.`,
+                    color: "RED",
+                    footer: {
+                        text: message.member.displayName
+                    }
+                }
+            });
         }
 
-        data.push(`**Name:** ${command.name}`);
+        data.push(`**Name:** \`${command.name}\``);
 
-        if (command.aliases) data.push(`**Aliases:** ${command.aliases.join(', ')}`);
-        if (command.description) data.push(`**Description:** ${command.description}`);
-        if (command.category) data.push(`**Category:** ${command.category}`);
-        if (command.usage) data.push(`**Usage:** ${prefix}${command.name} ${command.usage}`);
+        if (command.aliases) data.push(`**Aliases:** \`${command.aliases.join(', ')}\``);
+        if (command.description) data.push(`**Description:** *${command.description}*`);
+        if (command.category) data.push(`**Category:** _${command.category}_`);
+        if (command.usage) data.push(`**Usage:** \`${prefix}${command.name} ${command.usage}\``);
 
-        message.author.send(data, { split: true }).then(() => {
-            message.channel.send(`I have sent you a DM with all the information about ${command.name}`);
+        message.author.send({
+            embed: {
+                title: `HELP command about \`${command.name}\``,
+                description: `${data}\n\n`,
+                color: "BLUE",
+                footer: {
+                    text: message.member.displayName
+                }
+            }
+        }).then(() => {
+            message.channel.send({embed: {
+                title: `HELP command about \`${command.name}\``,
+                description: `I have sent you a DM with all the information about \`${command.name}\``
+            }});
         });
 
     }

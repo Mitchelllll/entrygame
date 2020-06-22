@@ -5,10 +5,9 @@ const emojis = require('./data/emojis.json');
 
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
-client.timeout = new Discord.Collection();
+const timeout = new Discord.Collection();
 
 const fs = require("fs");
-const ms = require("ms");
 
 ["command"].forEach(handler => {
     require(`./handlers/${handler}`)(client);
@@ -95,16 +94,16 @@ client.on('message', async message => {
         }
 
 
-        if (!cooldowns.has(commandFile.name)) {
-            cooldowns.set(commandFile.name, new Discord.Collection());
+        if (!timeout.has(commandFile.name)) {
+            timeout.set(commandFile.name, new Discord.Collection());
         }
 
         const now = Date.now();
-        const timestamps = cooldowns.get(commandFile.name);
-        const cooldownAmount = (commandFile.timeout || 3) * 1000;
+        const timestamps = timeout.get(commandFile.name);
+        const timeoutAmount = (commandFile.timeout || 3) * 1000;
 
         if (timestamps.has(message.author.id)) {
-            const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+            const expirationTime = timestamps.get(message.author.id) + timeoutAmount;
 
             if (now < expirationTime) {
                 const timeLeft = (expirationTime - now) / 1000;
@@ -119,7 +118,7 @@ client.on('message', async message => {
             }
         };
         timestamps.set(message.author.id, now);
-        setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+        setTimeout(() => timestamps.delete(message.author.id), timeoutAmount);
 
 
         // if (commandFile.timeout) {

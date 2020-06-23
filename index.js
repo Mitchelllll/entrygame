@@ -13,14 +13,24 @@ const fs = require("fs");
 });
 
 client.on("ready", () => {
-    console.log(`${client.user.tag} is online!`)
-    client.user.setPresence({
-        activity: {
-            name: `${prefix}help for commands`,
-            type: "LISTENING"
-        },
-        status: 'online'
-    })
+    console.log(`${client.user.tag} is online!`);
+
+    let activities = [`${client.guilds.cache.size} servers!`, `${client.channels.cache.size} channels!`, `${client.users.cache.size} users!`]
+    setInterval(() => {
+        client.user.setPresence({
+            activity: {
+                name: `${prefix}help | ${activities[i++ % activities.length]}`,
+                type: "LISTENING"
+            }
+        })
+    }, 7500);
+    // client.user.setPresence({
+    //     activity: {
+    //         name: `${prefix}help for commands`,
+    //         type: "LISTENING"
+    //     },
+    //     status: 'online'
+    // })
 });
 
 client.on('guildMemberAdd', member => {
@@ -81,7 +91,7 @@ client.on('message', async message => {
     if (commandFile) {
         if (message.author.type === "bot") return;
         message.delete();
-        
+
         if (commandFile.guildOnly && message.channel.type === "dm") {
             return message.channel.send({
                 embed: {

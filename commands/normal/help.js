@@ -17,16 +17,7 @@ module.exports = {
             data.push(commands.map(command => `\n\`${command.name}\` - *${command.description}*`));
             data.push(`\nYou can send \`${prefix}help [command]\` to get info on a specific command!`);
 
-            return message.author.send({
-                embed: {
-                    title: "HELP command",
-                    description: data,
-                    color: "BLUE",
-                    footer: {
-                        text: message.member.displayName
-                    }
-                }
-            })
+            return message.author.send(`Here is a list of my commands:\n${data}\n\nYou can use ${prefix}help [command] to get info about a specified command.`)
                 .then(() => {
                     if (message.channel.type === 'dm') return;
                     message.channel.send({

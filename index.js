@@ -16,8 +16,8 @@ client.on("ready", () => {
     console.log(`${client.user.tag} is online!`)
     client.user.setPresence({
         activity: {
-            name: 'me being developed',
-            type: 'WATCHING'
+            name: `${prefix}help for commands`,
+            type: "LISTENING"
         },
         status: 'online'
     })

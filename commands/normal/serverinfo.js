@@ -19,7 +19,7 @@ module.exports = {
                     { name: "Server ID:", value: message.guild.id },
                     { name: "Server Owner:", value: message.guild.owner },
                     { name: "Server Region:", value: message.guild.region },
-                    { name: "Server Created at:", value: message.guild.createdAt.toLocaleDateString('nl_NL') + " " + message.guild.createdAt.toLocaleTimeString("nl_NL", { timeZone: "Europe/Amsterdam", hour12: false }) },
+                    { name: "Server Created at:", value: message.guild.createdAt.toLocaleDateString('nl-NL', { timeZone: "Europe/Amsterdam", hour12: false }) + " " + message.guild.createdAt.toLocaleTimeString("nl-NL", { timeZone: "Europe/Amsterdam", hour12: false }) },
                     // { name: "Amount humans:", value: message.guild.id },
                     // { name: "Amount bots:", value: message.guild.id },
                     // { name: "Amount online:", value: message.guild.id },
@@ -27,7 +27,7 @@ module.exports = {
                     // { name: "Voice channels:", value: message.guild.id },
 
                     { name: "Member count:", value: message.guild.memberCount },
-                    { name: "You joined at:", value: message.member.joinedAt.toLocaleDateString('nl_NL') + " " + message.member.joinedAt.toLocaleTimeString("nl_NL", { timeZone: "Europe/Amsterdam", hour12: false }) },
+                    { name: "You joined at:", value: message.member.joinedAt.toLocaleDateString('nl-NL', { timeZone: "Europe/Amsterdam", hour12: false }) + " " + message.member.joinedAt.toLocaleTimeString("nl-NL", { timeZone: "Europe/Amsterdam", hour12: false }) },
                 ],
                 footer: {
                     text: message.member.displayName

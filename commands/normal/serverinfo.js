@@ -19,7 +19,7 @@ module.exports = {
                     { name: "Server ID:", value: message.guild.id },
                     { name: "Server Owner:", value: message.guild.owner },
                     { name: "Server Region:", value: message.guild.region },
-                    { name: "Server Created at:", value: message.guild.createdAt },
+                    { name: "Server Created at:", value: message.guild.createdAt.toDateString('nl-NL') + " " + message.guild.createdAt.toTimeString('nl-NL', { timeZone: "Europe/Amsterdam" }) },
                     // { name: "Amount humans:", value: message.guild.id },
                     // { name: "Amount bots:", value: message.guild.id },
                     // { name: "Amount online:", value: message.guild.id },

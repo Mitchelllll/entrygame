@@ -17,7 +17,7 @@ module.exports = {
             data.push(commands.map(command => `\n\`${command.name}\` - *${command.description}*`));
             data.push(`\nYou can send \`${prefix}help [command]\` to get info on a specific command!`);
 
-            return message.author.send(`Here is a list of my commands:\n${data}\n\nYou can use ${prefix}help [command] to get info about a specified command.`)
+            return message.author.send(data, { split: true })
                 .then(() => {
                     if (message.channel.type === 'dm') return;
                     message.channel.send({
@@ -77,10 +77,12 @@ module.exports = {
                 }
             }
         }).then(() => {
-            message.channel.send({embed: {
-                title: `HELP command about \`${command.name}\``,
-                description: `I have sent you a DM with all the information about \`${command.name}\``
-            }});
+            message.channel.send({
+                embed: {
+                    title: `HELP command about \`${command.name}\``,
+                    description: `I have sent you a DM with all the information about \`${command.name}\``
+                }
+            });
         });
 
     }

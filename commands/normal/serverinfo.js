@@ -27,7 +27,7 @@ module.exports = {
                     // { name: "Voice channels:", value: message.guild.id },
 
                     { name: "Member count:", value: message.guild.memberCount },
-                    { name: "You joined at:", value: message.member.joinedAt.toLocaleDateString('nl-NL') + " " + message.member.joinedAt.toLocaleTimeString('nl-N:', { timeZone: "Europe/Amsterdam" }) },
+                    { name: "You joined at:", value: message.member.joinedAt.toLocaleDateString('nl-NL') + " " + message.member.joinedAt.toLocaleTimeString('nl-NL', { timeZone: "Europe/Amsterdam" }) },
                 ],
                 footer: {
                     text: message.member.displayName

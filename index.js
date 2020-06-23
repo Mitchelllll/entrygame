@@ -54,7 +54,7 @@ client.on('guildMemberRemove', member => {
             },
             timestamp: new Date(),
             thumbnail: {
-                url: member.user.avatarURL() ? member.user.avatarURL() : null
+                url: member.user.avatarURL({ dynamic: true }) ? member.user.avatarURL({ dynamic: true }) : null
             }
         }
     });

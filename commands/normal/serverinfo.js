@@ -13,7 +13,7 @@ module.exports = {
                 title: message.guild.name,
                 color: "#0000ff",
                 thumbnail: {
-                    url: message.guild.iconURL() ? message.guild.iconURL() : null
+                    url: message.guild.iconURL({ dynamic: true }) ? message.guild.iconURL({ dynamic: true }) : null
                 },
                 fields: [
                     { name: "Server ID:", value: message.guild.id },

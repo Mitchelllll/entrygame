@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const { token, prefix } = require('./data/botConfig.json');
+const { prefix } = require('./data/botConfig.json');
 const client = new Discord.Client();
 const emojis = require('./data/emojis.json');
 
@@ -10,6 +10,17 @@ const fs = require("fs");
 
 ["command"].forEach(handler => {
     require(`./handlers/${handler}`)(client);
+});
+
+client.on("ready", () => {
+    console.log(`${client.user.tag} is online!`)
+    client.user.setPresence({
+        activity: {
+            name: 'me being developed',
+            type: 'WATCHING'
+        },
+        status: 'online'
+    })
 });
 
 client.on('guildMemberAdd', member => {
@@ -58,17 +69,6 @@ client.on('guildMemberRemove', member => {
             }
         }
     });
-});
-
-client.on("ready", () => {
-    console.log(`${client.user.tag} is online!`)
-    client.user.setPresence({
-        game: {
-            name: 'me being developed',
-            type: 'WATCHING'
-        },
-        status: 'online'
-    })
 });
 
 client.on('message', async message => {

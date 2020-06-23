@@ -19,7 +19,7 @@ module.exports = {
                     { name: "Server ID:", value: message.guild.id },
                     { name: "Server Owner:", value: message.guild.owner },
                     { name: "Server Region:", value: message.guild.region },
-                    { name: "Server Created at:", value: message.guild.createdAt.toDateString('en-GB') + " " + message.guild.createdAt.toTimeString('en-GB', { timeZone: "Europe/Amsterdam" }) },
+                    { name: "Server Created at:", value: message.guild.createdAt.toLocaleDateString('en-GB') + " " + message.guild.createdAt.toLocaleTimeString('en-GB', { timeZone: "Europe/Amsterdam" }) },
                     // { name: "Amount humans:", value: message.guild.id },
                     // { name: "Amount bots:", value: message.guild.id },
                     // { name: "Amount online:", value: message.guild.id },
@@ -27,7 +27,7 @@ module.exports = {
                     // { name: "Voice channels:", value: message.guild.id },
 
                     { name: "Member count:", value: message.guild.memberCount },
-                    { name: "You joined at:", value: message.member.joinedAt.toDateString('en-GB') + " " + message.member.joinedAt.toTimeString('en-GB', { timeZone: "Europe/Amsterdam" }) },
+                    { name: "You joined at:", value: message.member.joinedAt.toLocaleDateString('en-GB') + " " + message.member.joinedAt.toLocaleTimeString('en-GB', { timeZone: "Europe/Amsterdam" }) },
                 ],
                 footer: {
                     text: message.member.displayName

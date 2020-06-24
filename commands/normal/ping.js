@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const client = new Discord.Client();
 
 module.exports = {
     name: "ping",
@@ -8,7 +9,7 @@ module.exports = {
         message.channel.send('🏓 Pinging...').then(msg => msg.edit({
             embed: {
                 title: `🏓 Pong!`,
-                description: `My ping is ${Date.now() - message.createdTimestamp}ms!`,
+                description: `My ping is ${client.ws.ping}ms!`,
                 timestamp: new Date(),
                 color: "GREEN",
                 footer: {

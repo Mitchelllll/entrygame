@@ -1,5 +1,5 @@
-const { MessageEmbed, version: djsversion } = require('discord.js');
-const client = new Discord.Client();
+const { MessageEmbed, version: djsversion, Client } = require('discord.js');
+const client = new Client();
 const { version } = require('./././package.json');
 const { utc } = require('moment');
 const os = require('os');

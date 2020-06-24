@@ -7,9 +7,9 @@ module.exports = {
     args: true,
     usage: "<user> [reason]",
     guildOnly: true,
-    run: async (message, args, emojis, prefix) => {
+    run: async (message, args, emojis, prefix, noPermsEmbed, errorEmbed) => {
 
-        if (!message.member.hasPermission("BAN_MEMBERS")) return message.channel.send("\`\`\`🔴 You do not have permission to ban members.\`\`\`");
+        if (!message.member.hasPermission("BAN_MEMBERS")) return message.channel.send(noPermsEmbed)
         if (!message.guild.me.hasPermission("BAN_MEMBERS")) return message.channel.send("\`\`\`🔴 I do not have permission to ban members. Fix this problem before you try again.\`\`\`");
 
         var banUser = message.guild.member(message.mentions.users.first()) || message.guild.members.cache.get(args[0]);
@@ -19,7 +19,7 @@ module.exports = {
             return;
         } else if (banUser) {
             banUser.ban(reason).catch(err => {
-                if (err) return message.channel.send("\`\`\`🔴 An error has occurred.\`\`\`");
+                if (err) return message.channel.send(errorEmbed);
             });
 
             message.channel.send({

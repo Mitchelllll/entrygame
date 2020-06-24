@@ -7,6 +7,7 @@ client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
 
 const fs = require("fs");
+const { setegid } = require('process');
 
 ["command"].forEach(handler => {
     require(`./handlers/${handler}`)(client);
@@ -32,6 +33,21 @@ client.on("ready", () => {
     //     status: 'online'
     // })
 });
+
+
+let noPermsEmbed = new Discord.MessageEmbed()
+    .title(`${emojis.cross} You do not have permissions to use this command`)
+    .setColor("RED")
+    .setTimestamp()
+    .setFooter(message.author.username)
+
+let errorEmbed = new Discord.MessageEmbed()
+        .setTitle(`${emojis.cross} An error has occurred`)
+        .setDescription(`\`${console.error}\``)
+        .setColor("RED")
+        .setTimestamp()
+        .setFooter(message.author.username)
+
 
 client.on('guildMemberAdd', member => {
 
@@ -119,7 +135,7 @@ client.on('message', async message => {
                     }
                 });
             }
-            commandFile.run(message, args, emojis, prefix);
+            commandFile.run(message, args, emojis, prefix, noPermsEmbed, errorEmbed);
         } catch (err) {
             console.log(err);
         }

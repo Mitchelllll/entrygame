@@ -3,7 +3,6 @@ const client = new Client();
 const { utc } = require('moment');
 const os = require('os');
 const ms = require('ms');
-const { url } = require('inspector');
 
 module.exports = {
     name: "botinfo",
@@ -16,7 +15,7 @@ module.exports = {
         const core = os.cpus()[0];
         const embed = new MessageEmbed()
             .setTitle("Botinfo")
-            .setThumbnail(url = client.user.AvatarURL({ dynamic: true }))
+            // .setThumbnail(client.user.AvatarURL({ dynamic: true }))
             .setColor(message.guild.me.displayHexColor || "BLUE")
             .addField('General', [
                 `**❯ Client:** ${client.user.tag} | ${client.user.id}`,

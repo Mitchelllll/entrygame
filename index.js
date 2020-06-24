@@ -36,17 +36,17 @@ client.on("ready", () => {
 
 
 let noPermsEmbed = new Discord.MessageEmbed()
-    .title(`${emojis.cross} You do not have permissions to use this command`)
+    .setTitle(`${emojis.cross} You do not have permissions to use this command`)
     .setColor("RED")
     .setTimestamp()
     .setFooter(message.author.username)
 
 let errorEmbed = new Discord.MessageEmbed()
-        .setTitle(`${emojis.cross} An error has occurred`)
-        .setDescription(`\`${console.error}\``)
-        .setColor("RED")
-        .setTimestamp()
-        .setFooter(message.author.username)
+    .setTitle(`${emojis.cross} An error has occurred`)
+    .setDescription(`\`${console.error}\``)
+    .setColor("RED")
+    .setTimestamp()
+    .setFooter(message.author.username)
 
 
 client.on('guildMemberAdd', member => {

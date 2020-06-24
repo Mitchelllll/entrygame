@@ -1,6 +1,5 @@
 const { MessageEmbed, version: djsversion, Client } = require('discord.js');
 const client = new Client();
-const { version } = require('/Users/mjbri/OneDrive/Bureaublad/Entrygame/entrygame/package.json');
 const { utc } = require('moment');
 const os = require('os');
 const ms = require('ms');
@@ -26,7 +25,6 @@ module.exports = {
                 `**❯ Channels:** ${client.channels.cache.size.toLocaleString()}`,
                 `**❯ Creation Date:** ${utc(client.user.createdTimestamp).format('Do MMMM YYYY HH:mm:ss')}`,
                 `**❯ Node.js:** ${process.version}`,
-                `**❯ Version:** v${version}`,
                 `**❯ Discord.js:** v${djsversion}`,
                 '\u200b'
             ])

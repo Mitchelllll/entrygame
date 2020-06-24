@@ -5,7 +5,16 @@ module.exports = {
     category: "Normal",
     description: "Check my respondtime!",
     run: async (message, args, emojis, prefix, noPermsEmbed, errorEmbed) => {
-        message.channel.send(`🏓 Pong!\nI reacted in ${Date.now() - message.createdTimestamp}ms!`);
+        message.channel.send('🏓 Pinging...').then(msg => msg.edit({
+            embed: {
+                title: `🏓 Pong!`,
+                description: `My ping is ${Date.now() - message.createdTimestamp}ms!`,
+                timestamp: new Date(),
+                footer: {
+                    text: message.member.displayName
+                }
+            }
+        }));
 
     }
 }

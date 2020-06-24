@@ -10,7 +10,7 @@ module.exports = {
         if (message.channel.name.startsWith("ticket-")) {
             message.channel.send({
                 embed: {
-                    title: "This ticket will be deleted in 5 seconds.",
+                    title: `${emojis.check} This ticket will be deleted in 5 seconds.`,
                     color: "RED",
                     timestamp: new Date(),
                     footer: {

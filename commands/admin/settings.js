@@ -9,8 +9,8 @@ module.exports = {
     args: true,
     usage: "<key> <value>",
     guildOnly: true,
-    run: async (message, args, emojis, prefix) => {
-        // if (!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send("\`\`\`🔴 You do not have permission to change the bot settings for this server.\`\`\`");
+    run: async (message, args, emojis, prefix, noPermsEmbed, errorEmbed) => {
+        // if (!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send(noPermsEmbed);
 
         // var key = args[0];
         // var value = args[1];
@@ -43,7 +43,7 @@ module.exports = {
         //     var prefix = prefixes[message.guild.id].prefixes;
 
         //     fs.writeFileSync("././data/botSettings.json", JSON.stringify(prefixes), (err) => {
-        //         if (err) message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
+        //         if (err) message.channel.send(errorEmbed);
         //     });
 
         //     message.channel.send({

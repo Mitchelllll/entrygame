@@ -9,8 +9,8 @@ module.exports = {
     args: true,
     usage: "<amount> [user]",
     guildOnly: true,
-    run: async (message, args, emojis, prefix) => {
-        if (!message.member.hasPermission("MANAGE_MESSAGES")) return message.reply("you do not have permissions to delete messages.");
+    run: async (message, args, emojis, prefix, noPermsEmbed, errorEmbed) => {
+        if (!message.member.hasPermission("MANAGE_MESSAGES")) return message.reply(noPermsEmbed);
 
         if (Number.isInteger(parseInt(args[0]))) {
 
@@ -22,7 +22,7 @@ module.exports = {
 
                     if (args[0] <= 0) {
                         message.channel.send("\`\`\`🟠 Enter a number bigger then 0.\`\`\`").then(m => m.delete({ timeout: 2500 })).catch(err => {
-                            message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
+                            message.channel.send(errorEmbed);
                         });
                     } else if (args[0] == 1) {
                         var clearEmbedOne = new Discord.MessageEmbed()
@@ -42,7 +42,7 @@ module.exports = {
                         message.channel.send(clearEmbed).then(msg => msg.delete({ timeout: 7000 }));
                     }
                 }).catch(err => {
-                    message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
+                    message.channel.send(errorEmbed);
                 });
             } else if (pUser && args[1]) {
 
@@ -52,7 +52,7 @@ module.exports = {
                     msgs.forEach(msg => {
                         if (msg.author.id == pUser.id && msg.author.id != client.user.id) {
                             msg.delete().catch((err) => {
-                                message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
+                                message.channel.send(errorEmbed);
                             });
                             dMsg++
                         } else {
@@ -64,7 +64,7 @@ module.exports = {
 
                     if (args[0] <= 0) {
                         message.channel.send("\`\`\`🟠 Enter a number bigger then 0.\`\`\`").then(m => m.delete({ timeout: 2500 })).catch(err => {
-                            message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
+                            message.channel.send(errorEmbed);
                         });
                     } else if (args[0] == 1) {
                         var clearEmbedOne = new Discord.MessageEmbed()
@@ -84,12 +84,12 @@ module.exports = {
                         message.channel.send(clearEmbed);
                     }
                 }).catch(err => {
-                    message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
+                    message.channel.send(errorEmbed);
                 });
             }
 
         } else {
-            return message.channel.send("\`\`\`🔴 Enter a valid number.\`\`\`");
+            return message.channel.send(errorEmbed);
         }
 
     }

@@ -6,7 +6,7 @@ module.exports = {
     aliases: ["open", "new"],
     description: "Create a channel with just you and the staff!",
     guildOnly: true,
-    run: async (message, args, emojis, prefix) => {
+    run: async (message, args, emojis, prefix, noPermsEmbed, errorEmbed) => {
         var userName = message.author.username;
 
         var ticketExcists = false;
@@ -55,7 +55,7 @@ module.exports = {
 
             }
         ).catch(err => {
-            message.channel.send('\`\`\`🔴 An error has occurred.\`\`\`');
+            message.channel.send(errorEmbed);
         });
 
     }

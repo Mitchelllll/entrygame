@@ -8,7 +8,7 @@ module.exports = {
     description: "A list with all my commands, or specific info about a command!",
     usage: "[command]",
     guildOnly: true,
-    run: async (message, args, emojis, prefix) => {
+    run: async (message, args, emojis, prefix, noPermsEmbed, errorEmbed) => {
         const data = [];
         const { commands } = message.client;
 

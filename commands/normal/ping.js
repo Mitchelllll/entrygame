@@ -4,7 +4,7 @@ module.exports = {
     name: "ping",
     category: "Normal",
     description: "Check my respondtime!",
-    run: async (message, args, emojis, prefix) => {
+    run: async (message, args, emojis, prefix, noPermsEmbed, errorEmbed) => {
         message.channel.send(`🏓 Pong!\nI reacted in ${Date.now() - message.createdTimestamp}ms!`);
 
     }

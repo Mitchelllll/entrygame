@@ -1,5 +1,5 @@
-const { MessageEmbed, version: djsversion, Client } = require('discord.js');
-const client = new Client();
+const Discord = require('discord.js');
+const client = new Discord.Client();
 const { utc } = require('moment');
 const os = require('os');
 const ms = require('ms');
@@ -13,7 +13,7 @@ module.exports = {
     run: async (message, args, emojis, prefix, noPermsEmbed, errorEmbed) => {
 
         const core = os.cpus()[0];
-        const embed = new MessageEmbed()
+        const embed = new Discord.MessageEmbed()
             .setTitle("Botinfo")
             // .setThumbnail(client.user.AvatarURL({ dynamic: true }))
             .setColor(message.guild.me.displayHexColor || "BLUE")
@@ -25,7 +25,7 @@ module.exports = {
                 `**❯ Channels:** ${client.channels.cache.size.toLocaleString()}`,
                 `**❯ Creation Date:** ${utc(client.user.createdTimestamp).format('Do MMMM YYYY HH:mm:ss')}`,
                 `**❯ Node.js:** ${process.version}`,
-                `**❯ Discord.js:** v${djsversion}`,
+                // `**❯ Discord.js:** v${djsversion}`,
                 '\u200b'
             ])
             .addField('System', [

@@ -34,21 +34,6 @@ client.on("ready", () => {
     // })
 });
 
-
-let noPermsEmbed = new Discord.MessageEmbed()
-    .setTitle(`${emojis.cross} You do not have permissions to use this command`)
-    .setColor("RED")
-    .setTimestamp()
-    .setFooter(message.author.username)
-
-let errorEmbed = new Discord.MessageEmbed()
-    .setTitle(`${emojis.cross} An error has occurred`)
-    .setDescription(`\`${console.error}\``)
-    .setColor("RED")
-    .setTimestamp()
-    .setFooter(message.author.username)
-
-
 client.on('guildMemberAdd', member => {
 
     const channel = member.guild.channels.cache.find(ch => ch.name === '👋welcome');
@@ -98,6 +83,19 @@ client.on('guildMemberRemove', member => {
 });
 
 client.on('message', async message => {
+
+    let noPermsEmbed = new Discord.MessageEmbed()
+        .setTitle(`${emojis.cross} You do not have permissions to use this command`)
+        .setColor("RED")
+        .setTimestamp()
+        .setFooter(message.author.username)
+
+    let errorEmbed = new Discord.MessageEmbed()
+        .setTitle(`${emojis.cross} An error has occurred`)
+        .setDescription(`\`${console.error}\``)
+        .setColor("RED")
+        .setTimestamp()
+        .setFooter(message.author.username)
 
     let args = message.content.slice(prefix.length).trim().split(/ +/g);
     let command = args.shift().toLowerCase();

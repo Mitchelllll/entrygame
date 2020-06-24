@@ -10,6 +10,7 @@ module.exports = {
                 title: `🏓 Pong!`,
                 description: `My ping is ${Date.now() - message.createdTimestamp}ms!`,
                 timestamp: new Date(),
+                color: "GREEN",
                 footer: {
                     text: message.member.displayName
                 }

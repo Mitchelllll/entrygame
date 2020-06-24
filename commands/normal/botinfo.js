@@ -18,7 +18,7 @@ module.exports = {
             // .setThumbnail(client.user.AvatarURL({ dynamic: true }))
             .setColor(message.guild.me.displayHexColor || "BLUE")
             .addField('General', [
-                `**❯ Client:** ${client.user.tag} | ${client.user.id}`,
+                `**❯ Client:** ${client.user.username} | ${client.user.id}`,
                 `**❯ Commands:** ${client.commands.size}`,
                 `**❯ Servers:** ${client.guilds.cache.size.toLocaleString()}`,
                 `**❯ Users:** ${client.guilds.cache.reduce((a, b) => a + b.memberCount, 0).toLocaleString()}`,

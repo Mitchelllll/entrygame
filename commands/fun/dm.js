@@ -8,7 +8,7 @@ module.exports = {
     args: true,
     usage: "<user> <message>",
     guildOnly: true,
-    run: async (message, args, emojis, prefix, noPermsEmbed, errorEmbed) => {
+    run: async (client, message, args, emojis, prefix, noPermsEmbed, errorEmbed) => {
         var user = message.guild.member(message.mentions.users.first()) || message.guild.members.cache.get(args[0]);
         var msg = args.slice(1).join(" ");
 

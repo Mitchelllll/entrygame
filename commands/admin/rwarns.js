@@ -9,7 +9,7 @@ module.exports = {
     description: "Remove all warns from a member or yourself!",
     usage: "[user]",
     guildOnly: true,
-    run: async (message, args, emojis, prefix, noPermsEmbed, errorEmbed) => {
+    run: async (client, message, args, emojis, prefix, noPermsEmbed, errorEmbed) => {
         if (!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send(noPermsEmbed);
         if (!message.guild.me.hasPermission("KICK_MEMBERS")) return message.channel.send("\`\`\`🔴 I do not have permission to remove warns from members. Fix this problem before you try again.\`\`\`");
 

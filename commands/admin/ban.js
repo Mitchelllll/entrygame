@@ -7,7 +7,7 @@ module.exports = {
     args: true,
     usage: "<user> [reason]",
     guildOnly: true,
-    run: async (message, args, emojis, prefix, noPermsEmbed, errorEmbed) => {
+    run: async (client, message, args, emojis, prefix, noPermsEmbed, errorEmbed) => {
 
         if (!message.member.hasPermission("BAN_MEMBERS")) return message.channel.send(noPermsEmbed)
         if (!message.guild.me.hasPermission("BAN_MEMBERS")) return message.channel.send("\`\`\`🔴 I do not have permission to ban members. Fix this problem before you try again.\`\`\`");

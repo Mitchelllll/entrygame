@@ -8,7 +8,7 @@ module.exports = {
     args: true,
     usage: "<rock/paper/scissor>",
     guildOnly: true,
-    run: async (message, args, emojis, prefix, noPermsEmbed, errorEmbed) => {
+    run: async (client, message, args, emojis, prefix, noPermsEmbed, errorEmbed) => {
         var options = ["rock", "paper", "scissor"];
         var result = options[Math.floor(Math.random() * options.length)];
         if (!args[0]) return;

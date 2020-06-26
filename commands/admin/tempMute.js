@@ -9,7 +9,7 @@ module.exports = {
     args: true,
     usage: "<user> <time (s/m/h/d)>",
     guildOnly: true,
-    run: async (message, args, emojis, prefix, noPermsEmbed, errorEmbed) => {
+    run: async (client, message, args, emojis, prefix, noPermsEmbed, errorEmbed) => {
         if (!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send(noPermsEmbed);
         if (!message.guild.me.hasPermission("KICK_MEMBERS")) return message.channel.send("\`\`\`🔴 I do not have permission to tempmute members. Fix this problem before you try again.\`\`\`");
 

@@ -9,7 +9,7 @@ module.exports = {
     args: true,
     usage: "<key> <value>",
     guildOnly: true,
-    run: async (message, args, emojis, prefix, noPermsEmbed, errorEmbed) => {
+    run: async (client, message, args, emojis, prefix, noPermsEmbed, errorEmbed) => {
         // if (!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send(noPermsEmbed);
 
         // var key = args[0];

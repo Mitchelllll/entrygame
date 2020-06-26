@@ -133,7 +133,7 @@ client.on('message', async message => {
                     }
                 });
             }
-            commandFile.run(message, args, emojis, prefix, noPermsEmbed, errorEmbed);
+            commandFile.run(client, message, args, emojis, prefix, noPermsEmbed, errorEmbed);
         } catch (err) {
             console.log(err);
         }

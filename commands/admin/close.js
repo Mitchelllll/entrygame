@@ -5,7 +5,7 @@ module.exports = {
     category: "Admin",
     description: "Close a ticket!",
     guildOnly: true,
-    run: async (message, args, emojis, prefix, noPermsEmbed, errorEmbed) => {
+    run: async (client, message, args, emojis, prefix, noPermsEmbed, errorEmbed) => {
         if (!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send(noPermsEmbed)
         if (message.channel.name.startsWith("ticket-")) {
             message.channel.send({

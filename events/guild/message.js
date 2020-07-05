@@ -12,7 +12,9 @@ module.exports = (client, message) => {
         id: message.guild.id
     }) : null;
     const prefix = db && db.prefix ? db.prefix : defPrefix;
-
+    if (message.content.toLowerCase() === `${prefix}test`) {
+        message.channel.send(`${emojis.check} Test complete.`);
+    };
     if (message.channel.type === "text" && !message.content.startsWith(prefix) && message.mentions.members.find(user => user.id === client.user.id)) {
         return msg(`My prefix for this server is: \`${prefix}\``);
     };

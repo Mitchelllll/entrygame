@@ -8,7 +8,7 @@ module.exports = {
     description: "See ypur exp!",
     // usage: "<key> <toggle/set/view> <value>",
     guildOnly: true,
-    run: async (client, message, args, emojis, err, msg) => {
+    run: async (client, message, args, emojis, prefix, err, msg) => {
         Level.findOne({
             userID: message.author.id,
             guildID: message.guild.id
@@ -69,6 +69,7 @@ module.exports = {
                     }
                 });
             }
-        })
+        });
+        console.log(prefix);
     }
 }

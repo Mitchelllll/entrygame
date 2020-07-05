@@ -1,67 +1,74 @@
 const Discord = require('discord.js');
+const guildModel = require('../../models/Guild');
+const defPrefix = require('../../data/botConfig.json').prefix;
 
-const fs = require("fs");
 module.exports = {
     name: "settings",
-    category: "Admin",
+    category: "Test",
     aliases: ["config", "setup"],
     description: "Change the bot settings for this server!",
-    args: true,
-    usage: "<key> <value>",
+    usage: "<key> <toggle/set/view> <value>",
     guildOnly: true,
-    run: async (client, message, args, emojis, prefix, noPermsEmbed, errorEmbed) => {
-        // if (!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send(noPermsEmbed);
+    run: async (client, message, args, emojis, prefix, err, msg) => {
+        let key = args[0];
+        let option = args[1];
+        let value = args[2];
 
-        // var key = args[0];
-        // var value = args[1];
+        if (!key) {
+            err(`You must give a key that you want to change or see.\n\nYou can choose from:\n\`prefix\`: Change or see the prefix for this server.`);
+        } else if (key.toLowerCase() === 'prefix') {
+            if (!option.toLowerCase()) {
+                err(`You must give an option to specify what you want to do with \`${key}\`\n\nYou can choose from:\n\`set\`: Set a custom prefix for this server.\n\`view\`: Shows the current prefix for this guild.\n\`reset\`: Reset the custom prefix to th default prefix.`);
+            } else if (option.toLowerCase() === 'view' || option.toLowerCase() === 'see' || option.toLowerCase() === 'current') {
+                const db = await guildModel.findOne({
+                    id: message.guild.id
+                });
 
-        // if (!key) return message.channel.send({
-        //     embed: {
-        //         title: "Bot Settings",
-        //         description: "You must give a key.\n\nYou can choose from:\n- prefix",
-        //         color: "RED"
-        //     }
-        // });
+                if (!db) return err(`There is no custom prefix in this server.\nUse \`${prefix}prefix set <newPrefix>\` to create one.`);
 
-        // if (key == "prefix") {
+                return msg(`The custom prefix for this server is \`${db.prefix}\`.\nUse \`${prefix}prefix reset\` to reset.`);
 
-        //     var prefixes = JSON.parse(fs.readFileSync("./././data/botSettings.json"));
-        //     var prefix = prefixes[message.guild.id].prefixes;
+            } else if (option.toLowerCase() === "set" || option.toLowerCase() === "change" || option.toLowerCase() === "edit" || option.toLowerCase() === "new") {
+                const db = await guildModel.findOne({
+                    id: message.guild.id
+                });
+                if (!db) {
+                    const dbNew = new guildModel({
+                        id: message.guild.id
+                    });
+                    await dbNew.save();
+                };
 
-        //     if (!value) return message.channel.send({
-        //         embed: {
-        //             title: "Bot Settings",
-        //             description: `In case you wonder what the prefix is, it is ${prefix}\n\nIf you want to change this, you must give the new value for ${key}.\n${prefix}settings <key> <value>`,
-        //             color: "ORANGE"
-        //         }
-        //     });
+                if (args[4]) return;
+                if (!value) return err(`Specify the prefix you want to set.\nUse \`${prefix}prefix set <newPrefix>\`.`);
+                if (value.includes("\\")) return err(`Can not set prefix including \`\\\` (backslash character).\nUse \`${prefix}prefix set <newPrefix>\`.`)
+                if (value === defPrefix) return err(`Can not set custom prefix to default prefix.\nUse \`${prefix}prefix reset\` instead.`);
+                if (value.length > 5) return err(`Prefix can not be longer than 5 characters.\nUse \`${prefix}prefix set <newPrefix>\`.`)
 
-        //     var prefixes = JSON.parse(fs.readFileSync("././data/botSettings.json"));
-        //     prefixes[message.guild.id] = {
-        //         prefixes: value
-        //     };
-        //     var prefix = prefixes[message.guild.id].prefixes;
+                const dbSet = await guildModel.findOneAndUpdate({
+                    id: message.guild.id
+                }, {
+                    $set: {
+                        prefix: value.toString()
+                    }
+                }, {
+                    new: true
+                });
 
-        //     fs.writeFileSync("././data/botSettings.json", JSON.stringify(prefixes), (err) => {
-        //         if (err) message.channel.send(errorEmbed);
-        //     });
+                return msg(`Succesfully set prefix to \`${dbSet.prefix}\`.`);
 
-        //     message.channel.send({
-        //         embed: {
-        //             title: `Prefix changed`,
-        //             description: `The prefix has been changed to ${prefix}`,
-        //             color: "GREEN"
-        //         }
-        //     });
+            } else if (option.toLowerCase() === "reset" || option.toLowerCase() === "default") {
+                const db = await guildModel.findOneAndDelete({
+                    id: message.guild.id
+                });
 
-        // } else {
-        //     message.channel.send({
-        //         embed: {
-        //             title: "Bot Settings",
-        //             description: "You must give a valid key.\n\nYou can choose between:\n- prefix",
-        //             color: "RED"
-        //         }
-        //     });
-        // }
+                if (value) return;
+                if (!db) return err(`There is no custom prefix in this server.\nUse \`${prefix}prefix set <newPrefix>\`.`);
+
+                return msg(`Succesfully reset prefix from \`${db.prefix}\` to default \`${defPrefix}\`.`);
+            }
+        }/*  else if (key.toLowerCase() === '') {
+
+        } */
     }
 }

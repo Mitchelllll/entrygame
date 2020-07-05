@@ -13,4 +13,5 @@ module.exports =
             })
         }, 7500);
         console.log(`${client.user.tag} is online!`);
+        console.log(prefix);
     }

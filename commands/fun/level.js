@@ -70,6 +70,5 @@ module.exports = {
                 });
             }
         });
-        console.log(prefix);
     }
 }
